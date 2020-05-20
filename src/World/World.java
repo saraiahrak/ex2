@@ -1,5 +1,8 @@
 package World;
 
+import Sensor.KeySensor;
+import View.CoordinateSystem;
+import View.View;
 import com.jogamp.newt.Window;
 import com.jogamp.newt.event.KeyAdapter;
 import com.jogamp.newt.event.KeyEvent;
@@ -11,9 +14,14 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
+import javax.media.opengl.glu.GLU;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import static java.lang.System.exit;
 
 
 /************************
@@ -28,13 +36,22 @@ import java.awt.event.WindowEvent;
 public class World extends KeyAdapter implements GLEventListener {
     public GLCanvas canvas;
     public Frame frame;
-    public final Animator animator;
+    public Animator animator;
+    public GLU glu;
+    public CoordinateSystem coordinates;
+    public View view;
     private float rotateT = 0.0f;
 
 
-
     public World() {
+        initFrame();
+        glu = new GLU();
+        coordinates = new CoordinateSystem();
+        view = new View(glu);
+        canvas.addKeyListener(new KeySensor(coordinates));
+    }
 
+    public void initFrame() {
         frame = new Frame("Graphics");
         frame.setSize(800, 600);
         frame.setLayout(new BorderLayout());
@@ -54,12 +71,8 @@ public class World extends KeyAdapter implements GLEventListener {
             }
         });
 
-
         canvas = new GLCanvas();
         animator.add(canvas);
-
-
-
     }
 
 
@@ -83,6 +96,7 @@ public class World extends KeyAdapter implements GLEventListener {
         }
     }
 
+    @Override
     public void dispose(GLAutoDrawable drawable) {
     }
 
@@ -143,33 +157,25 @@ public class World extends KeyAdapter implements GLEventListener {
 
     }
 
-    public void reshape(GLAutoDrawable drawable, int x, int y, int width,
-                        int height) {
 
+    public void displayChanged(GLAutoDrawable arg0, boolean arg1, boolean arg2) {
+        // TODO Auto-generated method stub
+
+    }
+
+
+    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         GL2 gl = drawable.getGL().getGL2();
-
         float h = (float) height / (float) width;
-
         gl.glMatrixMode(GL2.GL_PROJECTION);
-
         gl.glLoadIdentity();
-
         if (h < 1)
             gl.glFrustum(-1.0f, 1.0f, -h, h, 1.0f, 60.0f);
         else {
             h = 1.0f / h;
             gl.glFrustum(-h, h, -1.0f, 1.0f, 1.0f, 60.0f);
         }
-
         gl.glMatrixMode(GL2.GL_MODELVIEW);
-
-    }
-
-    public void keyPressed(KeyEvent e) {
-        int kc = e.getKeyCode();
-        if (KeyEvent.VK_ESCAPE == kc) {
-            System.exit(0);
-        }
     }
 
 

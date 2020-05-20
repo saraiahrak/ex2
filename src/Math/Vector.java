@@ -151,7 +151,7 @@ public class Vector {
      * @param scalar scalar
      * @return vector
      */
-    public Vector scalar(double scalar) {
+    public Vector multByScalar(double scalar) {
         Vector res = new Vector(dim);
         for (int i = 0; i < dim; i++) {
             res.vector[i] = this.at(i) * scalar;
@@ -168,7 +168,7 @@ public class Vector {
      */
     public Vector proj(Vector v) {
         double scalar = v.dot(this) / Math.pow(v.getSize(), 2);
-        return v.scalar(scalar);
+        return v.multByScalar(scalar);
     }
 
     /**
@@ -209,7 +209,7 @@ public class Vector {
      * @return normalized vector
      */
     public Vector normalize() {
-        return scalar(1 / getSize());
+        return multByScalar(1 / getSize());
     }
 
     /**
