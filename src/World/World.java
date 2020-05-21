@@ -5,7 +5,6 @@ import View.CoordinateSystem;
 import View.View;
 import com.jogamp.newt.Window;
 import com.jogamp.newt.event.KeyAdapter;
-import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.awt.AWTKeyAdapter;
 import com.jogamp.opengl.util.Animator;
 
@@ -16,13 +15,8 @@ import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import static java.lang.System.exit;
-
 
 /************************
  * Dekel Yosef 315634071 *
@@ -39,15 +33,14 @@ public class World extends KeyAdapter implements GLEventListener {
     public Animator animator;
     public GLU glu;
     public CoordinateSystem coordinates;
-    public View view;
     private float rotateT = 0.0f;
 
 
     public World() {
         initFrame();
         glu = new GLU();
+        new View();
         coordinates = new CoordinateSystem();
-        view = new View(glu);
         canvas.addKeyListener(new KeySensor(coordinates));
     }
 
@@ -104,6 +97,10 @@ public class World extends KeyAdapter implements GLEventListener {
 
         // Get the GL corresponding to the drawable we are animating
         GL2 gl = drawable.getGL().getGL2();
+
+        glu.gluLookAt(View.position.at(0), View.position.at(1), View.position.at(2),
+                View.lookAt.at(0), View.lookAt.at(1), View.lookAt.at(2),
+                View.up.at(0), View.up.at(1), View.up.at(2));
 
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
