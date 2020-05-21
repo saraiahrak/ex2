@@ -38,7 +38,6 @@ public class World extends KeyAdapter implements GLEventListener {
 
     public World() {
         initFrame();
-        glu = new GLU();
         new View();
         coordinates = new CoordinateSystem();
         canvas.addKeyListener(new KeySensor(coordinates));
@@ -70,6 +69,7 @@ public class World extends KeyAdapter implements GLEventListener {
 
 
     public void init(GLAutoDrawable drawable) {
+        glu = new GLU();
         GL2 gl = drawable.getGL().getGL2();
 
         gl.glClearDepth(1.0f); // Depth Buffer Setup
