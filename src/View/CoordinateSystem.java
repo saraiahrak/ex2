@@ -48,25 +48,25 @@ public class CoordinateSystem {
      * Changing the look
      */
     public void rotate(char axis, double angle) {
-        Vector xN, yN, zN;
+        Vector xNew, yNew, zNew;
         // look up or down
         if (axis == 'X') {
-            yN = zAxis.multByScalar(Math.sin(angle)).add(yAxis.multByScalar(Math.cos(angle)));
-            yAxis = yN.normalize();
-            zN = zAxis.multByScalar(Math.cos(angle)).add(yAxis.multByScalar(Math.sin(angle)));
-            zAxis = zN.normalize();
+            yNew = zAxis.multByScalar(Math.sin(angle)).add(yAxis.multByScalar(Math.cos(angle)));
+            yAxis = yNew.normalize();
+            zNew = zAxis.multByScalar(Math.cos(angle)).add(yAxis.multByScalar(Math.sin(angle)));
+            zAxis = zNew.normalize();
         // look left or right
         } if (axis == 'Y') {
-            xN = xAxis.multByScalar(Math.cos(angle)).add(zAxis.multByScalar(Math.sin(angle)));
-            xAxis = xN.normalize();
-            zN = xAxis.multByScalar(Math.sin(angle)).add(zAxis.multByScalar(Math.cos(angle)));
-            zAxis = zN.normalize();
+            xNew = xAxis.multByScalar(Math.cos(angle)).add(zAxis.multByScalar(Math.sin(angle)));
+            xAxis = xNew.normalize();
+            zNew = xAxis.multByScalar(Math.sin(angle)).add(zAxis.multByScalar(Math.cos(angle)));
+            zAxis = zNew.normalize();
         // divert the look to right or left
         } if (axis == 'Z') {
-            xN = xAxis.multByScalar(Math.cos(angle)).add(yAxis.multByScalar(Math.sin(angle)));
-            xAxis = xN.normalize();
-            yN = xAxis.multByScalar(Math.sin(angle)).add(yAxis.multByScalar(Math.cos(angle)));
-            yAxis = yN.normalize();
+            xNew = xAxis.multByScalar(Math.cos(angle)).add(yAxis.multByScalar(Math.sin(angle)));
+            xAxis = xNew.normalize();
+            yNew = xAxis.multByScalar(Math.sin(angle)).add(yAxis.multByScalar(Math.cos(angle)));
+            yAxis = yNew.normalize();
         }
     }
 
