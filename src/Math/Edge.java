@@ -1,6 +1,6 @@
 package Math;
 
-import World.Drawable;
+import world.Drawable;
 
 import java.awt.*;
 
@@ -13,7 +13,7 @@ import java.awt.*;
 /*************
  * Class Edge
  * ***********/
-public class Edge implements Drawable {
+public class Edge {
 
     /**
      * Edge is represented as parametric equation
@@ -323,7 +323,6 @@ public class Edge implements Drawable {
      *
      * @param g graphics
      */
-    @Override
     public void draw(Graphics g) {
         g.drawLine((int) p0.getX(), (int) p0.getY(), (int) p1.getX(), (int) p1.getY());
     }

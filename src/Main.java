@@ -1,4 +1,4 @@
-import World.World;
+import world.*;
 
 
 /************************
@@ -19,12 +19,6 @@ public class Main {
     public static void main(String[] args) {
         // TODO Auto-generated method stub
 
-        final World world = new World();
-
-        world.canvas.addGLEventListener(world);
-        world.frame.add(world.canvas, java.awt.BorderLayout.CENTER);
-        world.frame.validate();
-
-        world.show();
+        TextureDemo.main(args);
     }
 }

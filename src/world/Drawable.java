@@ -1,5 +1,6 @@
-package World;
+package world;
 
+import javax.media.opengl.GL2;
 import java.awt.*;
 
 /************************
@@ -13,5 +14,5 @@ import java.awt.*;
  * *****************/
 public interface Drawable {
 
-    void draw(Graphics g);
+    void draw(GL2 gl);
 }
