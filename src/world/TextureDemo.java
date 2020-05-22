@@ -23,6 +23,7 @@ import com.jogamp.opengl.util.texture.TextureIO;
 import world.objects.Box;
 import world.objects.Ceiling;
 import world.objects.Floor;
+import world.objects.Wall;
 
 public class TextureDemo extends KeyAdapter implements GLEventListener, Drawable {
     private float xrot;        // X Rotation ( NEW )
@@ -77,8 +78,11 @@ public class TextureDemo extends KeyAdapter implements GLEventListener, Drawable
 //        Box box = new Box("wood");
         Floor floor = new Floor("floor");
         Ceiling ceiling = new Ceiling("ceiling");
+        Wall wall = new Wall("wall");
+
         addDrawable(ceiling);
         addDrawable(floor);
+        addDrawable(wall);
 //        addDrawable(box);
 
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR);

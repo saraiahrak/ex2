@@ -28,13 +28,13 @@ public class Wall implements Drawable {
         gl.glBegin(GL2.GL_QUADS);
         // Front Face
         gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(-3.5f, -1.9f, -7.0f);
+        gl.glVertex3f(-3.5f, 2f, 1f);
         gl.glTexCoord2f(2f, 0.0f);
         gl.glVertex3f(-3.5f, -1.9f, 1.0f);
         gl.glTexCoord2f(2f, 1.0f);
-        gl.glVertex3f(3.5f, -1.9f, 1.0f);
+        gl.glVertex3f(-3.5f, -1.9f, -7.0f);
         gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(3.5f, -1.9f, -7.0f);
+        gl.glVertex3f(-3.5f, 2f, -7.0f);
 
         gl.glEnd();
 
