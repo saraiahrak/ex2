@@ -11,16 +11,16 @@ package Math;
  * ***********/
 public class Vertex {
 
-    private double x;
-    private double y;
-    private double z;
-    private double w;
+    private float x;
+    private float y;
+    private float z;
+    private float w;
 
 
     /*************
      * Constructors
      * ***********/
-    public Vertex(double xv, double yv, double zv) {
+    public Vertex(float xv, float yv, float zv) {
         x = xv;
         y = yv;
         z = zv;
@@ -32,19 +32,19 @@ public class Vertex {
      * Getters
      * ***********/
 
-    public double getX() {
+    public float getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
-    public double getZ() {
+    public float getZ() {
         return z;
     }
 
-    public double getW() {
+    public float getW() {
         return w;
     }
 
@@ -71,7 +71,7 @@ public class Vertex {
      * @param pos position
      * @return value
      */
-    public double at(int pos) {
+    public float at(int pos) {
         if (pos == 0) {
             return x;
         }

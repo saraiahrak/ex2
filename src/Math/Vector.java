@@ -13,7 +13,7 @@ import java.util.Arrays;
  * ***********/
 public class Vector {
 
-    private double[] vector;
+    private float[] vector;
     private int dim;
 
 
@@ -21,18 +21,18 @@ public class Vector {
      * Constructors
      * ***********/
 
-    public Vector(double[] res) {
+    public Vector(float[] res) {
         vector = res;
         dim = res.length;
     }
 
     public Vector(int num) {
-        vector = new double[]{1, 1, 1, 1};
+        vector = new float[]{1, 1, 1, 1};
         dim = num;
     }
 
-    public Vector(double x, double y, double z) {
-        vector = new double[]{x, y, z, 1};
+    public Vector(float x, float y, float z) {
+        vector = new float[]{x, y, z, 1};
         dim = 4;
     }
 
@@ -40,28 +40,28 @@ public class Vector {
     /*************
      * Getters
      * ***********/
-    public double[] getVector() {
+    public float[] getVector() {
         return vector;
     }
 
-    public double getX() {
+    public float getX() {
         return vector[0];
     }
 
-    public double getY() {
+    public float getY() {
         return vector[1];
     }
 
-    public double getZ() {
+    public float getZ() {
         return vector[2];
     }
 
-    public double getDim() {
+    public float getDim() {
         return dim;
     }
 
-    public double getSize() {
-        return Math.sqrt(this.dot(this));
+    public float getSize() {
+        return (float)Math.sqrt(this.dot(this));
     }
 
 
@@ -77,7 +77,7 @@ public class Vector {
      * @return cross product vector
      */
     public Vector cross(Vector v) {
-        double[] res = new double[dim];
+        float[] res = new float[dim];
 
         res[0] = vector[1] * v.vector[2] - vector[2] * v.vector[1];
         res[1] = vector[2] * v.vector[0] - vector[0] * v.vector[2];
@@ -94,8 +94,8 @@ public class Vector {
      * @param v other vector
      * @return dot product
      */
-    public double dot(Vector v) {
-        double res = 0;
+    public float dot(Vector v) {
+        float res = 0;
         for (int i = 0; i < dim; i++) {
             res += vector[i] * v.vector[i];
         }
@@ -110,8 +110,8 @@ public class Vector {
      * @param theta angle
      * @return dot product
      */
-    public double dot(Vector v, double theta) {
-        return getSize() * v.getSize() * Math.cos(theta);
+    public float dot(Vector v, float theta) {
+        return getSize() * v.getSize() * (float)Math.cos(theta);
     }
 
     /**
@@ -151,7 +151,7 @@ public class Vector {
      * @param scalar scalar
      * @return vector
      */
-    public Vector multByScalar(double scalar) {
+    public Vector multByScalar(float scalar) {
         Vector res = new Vector(dim);
         for (int i = 0; i < dim; i++) {
             res.vector[i] = this.at(i) * scalar;
@@ -167,7 +167,7 @@ public class Vector {
      * @return projection vector
      */
     public Vector proj(Vector v) {
-        double scalar = v.dot(this) / Math.pow(v.getSize(), 2);
+        float scalar = v.dot(this) / (float)Math.pow(v.getSize(), 2);
         return v.multByScalar(scalar);
     }
 
@@ -198,7 +198,7 @@ public class Vector {
      * @param pos position
      * @return value
      */
-    public double at(int pos) {
+    public float at(int pos) {
         return vector[pos];
     }
 
@@ -218,8 +218,8 @@ public class Vector {
      *
      * @return angle
      */
-    public double getTheta(Vector v) {
-        return Math.acos(this.dot(v) / (getSize() * v.getSize()));
+    public float getTheta(Vector v) {
+        return (float) Math.acos(this.dot(v) / (getSize() * v.getSize()));
     }
 
     /**
@@ -229,7 +229,7 @@ public class Vector {
      * @return the clone
      */
     public Vector clone() {
-        double[] copy = Arrays.copyOf(vector, vector.length);
+        float[] copy = Arrays.copyOf(vector, vector.length);
         return new Vector(copy);
     }
 }

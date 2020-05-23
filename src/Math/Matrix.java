@@ -15,14 +15,14 @@ import java.util.Arrays;
 public class Matrix {
     private int rows;
     private int cols;
-    private double[][] matrix;
+    private float[][] matrix;
 
 
     /*************
      * Constructors
      * ***********/
 
-    public Matrix(double[][] mat) {
+    public Matrix(float[][] mat) {
         matrix = mat;
         rows = mat.length;
         cols = mat[0].length;
@@ -31,7 +31,7 @@ public class Matrix {
     public Matrix(int row, int col) {
         rows = row;
         cols = col;
-        matrix = new double[row][col];
+        matrix = new float[row][col];
 
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
@@ -47,7 +47,7 @@ public class Matrix {
     public Matrix(Vector vecX, Vector vecY, Vector vecZ) {
         rows = 4;
         cols = 4;
-        matrix = new double[4][4];
+        matrix = new float[4][4];
         matrix[0][0] = vecX.getX();
         matrix[0][1] = vecX.getY();
         matrix[0][2] = vecX.getZ();
@@ -57,7 +57,7 @@ public class Matrix {
         matrix[2][0] = vecZ.getX();
         matrix[2][1] = vecZ.getY();
         matrix[2][2] = vecZ.getZ();
-        matrix[3] = new double[]{0, 0, 0, 1};
+        matrix[3] = new float[]{0, 0, 0, 1};
     }
 
 
@@ -68,7 +68,7 @@ public class Matrix {
         cols = col;
     }
 
-    public void setMatrix(double[][] mat) {
+    public void setMatrix(float[][] mat) {
         matrix = mat;
     }
 
@@ -88,7 +88,7 @@ public class Matrix {
         return rows;
     }
 
-    public double[][] getMatrix() {
+    public float[][] getMatrix() {
         return matrix;
     }
 
@@ -105,7 +105,7 @@ public class Matrix {
      * @return the result matrix
      */
     public Matrix mult(Matrix m) {
-        double[][] res = new double[rows][cols];
+        float[][] res = new float[rows][cols];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < m.cols; j++) {
@@ -125,7 +125,7 @@ public class Matrix {
      * @return result vertex
      */
     public Vertex mult(Vertex v) {
-        double[] res = new double[rows];
+        float[] res = new float[rows];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 res[i] += this.at(i, j) * v.at(j);
@@ -142,7 +142,7 @@ public class Matrix {
      * @return addition matrix
      */
     public Matrix add(Matrix m) {
-        double[][] mat = new double[rows][cols];
+        float[][] mat = new float[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 mat[i][j] = m.at(i, j) + this.at(i, j);
@@ -159,7 +159,7 @@ public class Matrix {
      * @return subtraction matrix
      */
     public Matrix sub(Matrix m) {
-        double[][] res = new double[rows][cols];
+        float[][] res = new float[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 res[i][j] = this.at(i, j) - m.at(i, j);
@@ -175,8 +175,8 @@ public class Matrix {
      * @param scalar scalar
      * @return result matrix
      */
-    public Matrix scalar(double scalar) {
-        double[][] res = new double[rows][cols];
+    public Matrix scalar(float scalar) {
+        float[][] res = new float[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 res[i][j] = this.at(i, j) * scalar;
@@ -216,7 +216,7 @@ public class Matrix {
      * @param col row
      * @return value
      */
-    public double at(int row, int col) {
+    public float at(int row, int col) {
         return matrix[row][col];
     }
 
@@ -228,7 +228,7 @@ public class Matrix {
      * @param col col position
      * @param num set value
      */
-    public void set(int row, int col, double num) {
+    public void set(int row, int col, float num) {
         matrix[row][col] = num;
     }
 
@@ -239,10 +239,10 @@ public class Matrix {
      * @return the clone
      */
     public Matrix clone() {
-        double[][] matCopy = new double[rows][cols];
+        float[][] matCopy = new float[rows][cols];
 
         for (int i = 0; i < rows; i++) {
-            double[] rowCopy = Arrays.copyOf(matrix[i], matrix[i].length);
+            float[] rowCopy = Arrays.copyOf(matrix[i], matrix[i].length);
             matCopy[i] = rowCopy;
         }
         return new Matrix(matCopy);

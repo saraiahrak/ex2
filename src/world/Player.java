@@ -16,8 +16,8 @@ public class Player {
 
     private void init() {
         coordinates = new CoordinateSystem();
-        position = new Vector(0.5, 0, 0.5);
-        lookAt = new Vector(-0.5, 0.5, 1).normalize();
+        position = new Vector(0f, 0f, -3.0f);
+        lookAt = new Vector(0.0f, 0.0f, 1f).normalize();
         up = new Vector(0, 1, 0);
     }
 

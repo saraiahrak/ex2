@@ -1,5 +1,6 @@
 package world.objects;
 
+import Math.*;
 import com.jogamp.opengl.util.texture.Texture;
 import design.TextureFactory;
 import world.Drawable;
@@ -10,9 +11,18 @@ public class Box implements Drawable {
 
     private String textureKey;
     private Texture texture;
+    private Vertex bottomLeft;
 
-    public Box(String key) {
+    private float depth = 1;
+    private float height = 1;
+    private float width = 1;
+
+    public Box(String key, Vertex left, float d, float h, float w) {
         textureKey = key;
+        bottomLeft = left.clone();
+        depth = d;
+        height = h;
+        width = w;
     }
 
     @Override
@@ -25,62 +35,72 @@ public class Box implements Drawable {
 
         texture.bind(gl);
 
-//        gl.glScalef(0.5f, 0.5f, 0.5f);
         gl.glBegin(GL2.GL_QUADS);
+
+        float x = bottomLeft.getX();
+        float y = bottomLeft.getY();
+        float z = bottomLeft.getZ();
+
         // Front Face
         gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(-1.0f, -1.0f, 1.0f);
-        gl.glTexCoord2f(2f, 0.0f);
-        gl.glVertex3f(1.0f, -1.0f, 1.0f);
-        gl.glTexCoord2f(2f, 1.0f);
-        gl.glVertex3f(1.0f, 1.0f, 1.0f);
-        gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(-1.0f, 1.0f, 1.0f);
+        gl.glVertex3f(x, y + height, z + depth);
+        gl.glTexCoord2f(0f, 1.0f);
+        gl.glVertex3f(x, y, z + depth);
+        gl.glTexCoord2f(1f, 1f);
+        gl.glVertex3f(x + width, y, z + depth);
+        gl.glTexCoord2f(1f, 0.0f);
+        gl.glVertex3f(x + width, y + height, z + depth);
+
         // Back Face
-        gl.glTexCoord2f(1.0f, 0.0f);
-        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
-        gl.glTexCoord2f(1.0f, 1.0f);
-        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
-        gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(1.0f, 1.0f, -1.0f);
         gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glVertex3f(x, y + height, z);
+        gl.glTexCoord2f(0f, 1.0f);
+        gl.glVertex3f(x, y, z);
+        gl.glTexCoord2f(1f, 1f);
+        gl.glVertex3f(x + width, y, z);
+        gl.glTexCoord2f(1f, 0.0f);
+        gl.glVertex3f(x + width, y + height, z);
+
         // Top Face
-        gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
         gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(-1.0f, 1.0f, 1.0f);
-        gl.glTexCoord2f(1.0f, 0.0f);
-        gl.glVertex3f(1.0f, 1.0f, 1.0f);
-        gl.glTexCoord2f(1.0f, 1.0f);
-        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glVertex3f(x, y + height, z);
+        gl.glTexCoord2f(0f, 1.0f);
+        gl.glVertex3f(x, y + height, z + depth);
+        gl.glTexCoord2f(1f, 1f);
+        gl.glVertex3f(x + width, y + height, z + depth);
+        gl.glTexCoord2f(1f, 0.0f);
+        gl.glVertex3f(x + width, y + height, z);
+
         // Bottom Face
-        gl.glTexCoord2f(1.0f, 1.0f);
-        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
-        gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(1.0f, -1.0f, -1.0f);
         gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(1.0f, -1.0f, 1.0f);
-        gl.glTexCoord2f(1.0f, 0.0f);
-        gl.glVertex3f(-1.0f, -1.0f, 1.0f);
-        // Right face
-        gl.glTexCoord2f(1.0f, 0.0f);
-        gl.glVertex3f(1.0f, -1.0f, -1.0f);
-        gl.glTexCoord2f(1.0f, 1.0f);
-        gl.glVertex3f(1.0f, 1.0f, -1.0f);
-        gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(1.0f, 1.0f, 1.0f);
+        gl.glVertex3f(x, y, z);
+        gl.glTexCoord2f(0f, 1.0f);
+        gl.glVertex3f(x, y, z + depth);
+        gl.glTexCoord2f(1f, 1f);
+        gl.glVertex3f(x + width, y, z + depth);
+        gl.glTexCoord2f(1f, 0.0f);
+        gl.glVertex3f(x + width, y, z);
+
+        // Left face
         gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(1.0f, -1.0f, 1.0f);
-        // Left Face
+        gl.glVertex3f(x, y + height, z + depth);
+        gl.glTexCoord2f(0f, 1.0f);
+        gl.glVertex3f(x, y, z + depth);
+        gl.glTexCoord2f(1f, 1f);
+        gl.glVertex3f(x, y, z);
+        gl.glTexCoord2f(1f, 0.0f);
+        gl.glVertex3f(x, y + height, z);
+
+        // Right Face
         gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
-        gl.glTexCoord2f(1.0f, 0.0f);
-        gl.glVertex3f(-1.0f, -1.0f, 1.0f);
-        gl.glTexCoord2f(1.0f, 1.0f);
-        gl.glVertex3f(-1.0f, 1.0f, 1.0f);
-        gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glVertex3f(x + width, y + height, z + depth);
+        gl.glTexCoord2f(0f, 1.0f);
+        gl.glVertex3f(x + width, y, z + depth);
+        gl.glTexCoord2f(1f, 1f);
+        gl.glVertex3f(x + width, y, z);
+        gl.glTexCoord2f(1f, 0.0f);
+        gl.glVertex3f(x + width, y + height, z);
+
         gl.glEnd();
 
     }

@@ -1,7 +1,5 @@
 package Math;
 
-import world.Drawable;
-
 import java.awt.*;
 
 /************************
@@ -170,7 +168,7 @@ public class Edge {
      * @param t parameter
      * @return the vertex on the edge
      */
-    public Vertex getPointOnLine(double t) {
+    public Vertex getPointOnLine(float t) {
         return new Vertex(p0.getX() + t * v.getX(), p0.getY() + t * v.getY(), p0.getZ() + t * v.getZ());
     }
 
@@ -194,8 +192,8 @@ public class Edge {
      * @return intersection vertex
      */
     public Vertex intersectionWith(Edge other) {
-        double t = calculateT(other);
-        double s = 0;
+        float t = calculateT(other);
+        float s = 0;
         if (!other.isParallelToX() && !other.isParallelToY()) {
             s = calculateS(other, t);
         }
@@ -215,19 +213,19 @@ public class Edge {
      * @param other edge
      * @return t parameter
      */
-    private double calculateT(Edge other) {
-        double x0 = p0.getX();
-        double y0 = p0.getY();
-        double vx = v.getX();
-        double vy = v.getY();
+    private float calculateT(Edge other) {
+        float x0 = p0.getX();
+        float y0 = p0.getY();
+        float vx = v.getX();
+        float vy = v.getY();
 
-        double m0 = other.p0.getX();
-        double k0 = other.p0.getY();
-        double wx = other.v.getX();
-        double wy = other.v.getY();
+        float m0 = other.p0.getX();
+        float k0 = other.p0.getY();
+        float wx = other.v.getX();
+        float wy = other.v.getY();
 
-        double beta = ((wy * vx) - (wx * vy));
-        double t = (wx * (y0 - k0)) - (wy * (x0 - m0));
+        float beta = ((wy * vx) - (wx * vy));
+        float t = (wx * (y0 - k0)) - (wy * (x0 - m0));
         return t / beta;
     }
 
@@ -240,18 +238,18 @@ public class Edge {
      * @param t     calculated parameter
      * @return s parameter
      */
-    private double calculateS(Edge other, double t) {
-        double x0 = this.p0.getX();
-        double y0 = this.p0.getY();
-        double vx = this.v.getX();
-        double vy = this.v.getY();
+    private float calculateS(Edge other, float t) {
+        float x0 = this.p0.getX();
+        float y0 = this.p0.getY();
+        float vx = this.v.getX();
+        float vy = this.v.getY();
 
-        double m0 = other.p0.getX();
-        double k0 = other.p0.getY();
-        double wx = other.v.getX();
-        double wy = other.v.getY();
+        float m0 = other.p0.getX();
+        float k0 = other.p0.getY();
+        float wx = other.v.getX();
+        float wy = other.v.getY();
 
-        double s = x0 + t * vx - m0;
+        float s = x0 + t * vx - m0;
         return s / wx;
     }
 

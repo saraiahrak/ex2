@@ -1,8 +1,6 @@
-package world;
+package world.Space;
 
 import java.awt.Frame;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.media.opengl.GL2;
@@ -14,25 +12,18 @@ import javax.media.opengl.glu.GLU;
 
 import com.jogamp.newt.Window;
 import com.jogamp.newt.event.KeyAdapter;
-/* This code was written by: Oren Kapah */
 import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.awt.AWTKeyAdapter;
 import com.jogamp.opengl.util.Animator;
-import com.jogamp.opengl.util.texture.Texture;
-import com.jogamp.opengl.util.texture.TextureIO;
-import world.objects.Box;
-import world.objects.Ceiling;
-import world.objects.Floor;
-import world.objects.Wall;
+import world.Drawable;
+import world.Player;
+import world.objects.*;
+import Math.*;
 
-public class TextureDemo extends KeyAdapter implements GLEventListener, Drawable {
-    private float xrot;        // X Rotation ( NEW )
-    private float yrot;        // Y Rotation ( NEW )
-    private float zrot;        // Z Rotation ( NEW )
+public class World extends KeyAdapter implements GLEventListener, Drawable {
 
     private Player player = new Player();
-    private ArrayList<Drawable> drawables = new ArrayList<>();
-
+    private ArrayList<Drawable> drawables;
 
     private static GLU glu = new GLU();
     private static GLCanvas canvas = new GLCanvas();
@@ -43,30 +34,34 @@ public class TextureDemo extends KeyAdapter implements GLEventListener, Drawable
         final GL2 gl = gLDrawable.getGL().getGL2();
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();  // Reset The View
-//
-//        glu.gluLookAt(player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ()
-//                , player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
-//                player.getUp().getX(), player.getUp().getY(), player.getUp().getZ()); //set the camera view
 
-        gl.glTranslatef(0.0f, 0.0f, -5.0f);
+        glu.gluLookAt(player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
+                player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ(),
+                player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
 
-        gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f);
-        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f);
-        gl.glRotatef(zrot, 0.0f, 0.0f, 1.0f);
+//        gl.glTranslatef(0.0f, 0.0f, 0.0f);
 
         this.draw(gl);
-//
-//        xrot += 0.02f;
-//        yrot += 0.01f;
-//        zrot += 0.02f;
     }
 
-    public void displayChanged(GLAutoDrawable gLDrawable,
-                               boolean modeChanged, boolean deviceChanged) {
-    }
 
     public void init(GLAutoDrawable drawable) {
         final GL2 gl = drawable.getGL().getGL2();
+
+        initDrawables();
+        initGL(gl);
+
+        if (drawable instanceof Window) {
+            Window window = (Window) drawable;
+            window.addKeyListener(this);
+        } else if (GLProfile.isAWTAvailable() && drawable instanceof java.awt.Component) {
+            java.awt.Component comp = (java.awt.Component) drawable;
+            new AWTKeyAdapter(this, drawable).addTo(comp);
+        }
+    }
+
+    private void initGL(GL2 gl) {
+
         gl.glShadeModel(GL2.GL_SMOOTH);              // Enable Smooth Shading
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);    // Black Background
         gl.glClearDepth(1.0f);                      // Depth Buffer Setup
@@ -75,25 +70,9 @@ public class TextureDemo extends KeyAdapter implements GLEventListener, Drawable
         // Really Nice Perspective Calculations
         gl.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST);
 
-//        Box box = new Box("wood");
-        Floor floor = new Floor("floor");
-        Ceiling ceiling = new Ceiling("ceiling");
-        Wall wall = new Wall("wall");
-
-        addDrawable(ceiling);
-        addDrawable(floor);
-        addDrawable(wall);
-//        addDrawable(box);
 
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR);
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR);
-        if (drawable instanceof Window) {
-            Window window = (Window) drawable;
-            window.addKeyListener(this);
-        } else if (GLProfile.isAWTAvailable() && drawable instanceof java.awt.Component) {
-            java.awt.Component comp = (java.awt.Component) drawable;
-            new AWTKeyAdapter(this, drawable).addTo(comp);
-        }
     }
 
     public void reshape(GLAutoDrawable drawable, int x,
@@ -116,20 +95,37 @@ public class TextureDemo extends KeyAdapter implements GLEventListener, Drawable
         }
     }
 
-    public void keyReleased(KeyEvent e) {
-    }
-
-    public void keyTyped(KeyEvent e) {
-    }
-
     public static void exit() {
         animator.stop();
         frame.dispose();
         System.exit(0);
     }
 
-    public static void main(String[] args) {
-        canvas.addGLEventListener(new TextureDemo());
+    private void addDrawable(Drawable d) {
+        drawables.add(d);
+    }
+
+
+    public void initDrawables() {
+        drawables = new ArrayList<>();
+        createObjects();
+    }
+
+    public void createObjects() {
+
+        Box box = new Box("wood", new Vertex(-5.5f, -2f, -13f), 1, 1, 1);
+        Box box1 = new Box("LightWood", new Vertex(1f, -2f, -6f), 1, 0.5f, 1);
+        Box box2 = new Box("washedWood", new Vertex(4.5f, -2f, -11f), 1, 1, 1);
+        Room room = new Room();
+
+        addDrawable(room);
+        addDrawable(box);
+        addDrawable(box1);
+        addDrawable(box2);
+    }
+
+    public void show() {
+        canvas.addGLEventListener(new World());
         frame.add(canvas);
         frame.setSize(1000, 600);
 
@@ -148,10 +144,6 @@ public class TextureDemo extends KeyAdapter implements GLEventListener, Drawable
         canvas.requestFocus();
     }
 
-    private void addDrawable(Drawable d) {
-        drawables.add(d);
-    }
-
     @Override
     public void draw(GL2 gl) {
         for (Drawable d : drawables) {
@@ -162,6 +154,19 @@ public class TextureDemo extends KeyAdapter implements GLEventListener, Drawable
     @Override
     public void dispose(GLAutoDrawable arg0) {
         // TODO Auto-generated method stub
+    }
+
+
+    public void keyReleased(KeyEvent e) {
 
     }
+
+
+    public void keyTyped(KeyEvent e) {
+    }
+
+    public void displayChanged(GLAutoDrawable gLDrawable,
+                               boolean modeChanged, boolean deviceChanged) {
+    }
+
 }

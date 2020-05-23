@@ -1,4 +1,4 @@
-import world.*;
+import world.Space.World;
 
 
 /************************
@@ -18,7 +18,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-
-        TextureDemo.main(args);
+        World world = new World();
+        world.show();
     }
 }
