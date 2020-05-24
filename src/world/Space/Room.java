@@ -23,7 +23,7 @@ public class Room implements Drawable {
         left = new Wall("brick", new Vertex(-5.5f, -2f, -13f), 4f, 0f, 14f);
         front = new Wall("brick", new Vertex(-5.5f, -2f, -13f), 4f, 11f, 0f);
         right = new Wall("brick", new Vertex(5.5f, -2f, -13f), 4f, 0f, 14f);
-//        back = new Wall("brick", new Vertex(-5.5f, -2f, 13f), 4f, 11f, 0f);
+        back = new Wall("brick", new Vertex(-5.5f, -2f, 1f), 4f, 11f, 0f);
     }
 
     @Override
@@ -33,6 +33,6 @@ public class Room implements Drawable {
         left.draw(gl);
         front.draw(gl);
         right.draw(gl);
-//        back.draw(gl);
+        back.draw(gl);
     }
 }

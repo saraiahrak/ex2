@@ -20,6 +20,13 @@ public class Vertex {
     /*************
      * Constructors
      * ***********/
+    public Vertex() {
+        x = 1;
+        y = 1;
+        z = 1;
+        w = 1;
+    }
+
     public Vertex(float xv, float yv, float zv) {
         x = xv;
         y = yv;
@@ -48,6 +55,27 @@ public class Vertex {
         return w;
     }
 
+
+
+    /*************
+     * Setters
+     * ***********/
+
+    public void setX(float val) {
+        x = val;
+    }
+
+    public void setY(float val) {
+        y = val;
+    }
+
+    public void setZ(float val) {
+        z = val;
+    }
+
+    public void setW(float val) {
+        w = val;
+    }
 
     /*************
      * Methods
@@ -94,4 +122,6 @@ public class Vertex {
     public Vertex clone() {
         return new Vertex(x, y, z);
     }
+
+
 }

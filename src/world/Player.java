@@ -1,10 +1,10 @@
 package world;
-
+import Sensor.KeySensor;
 import View.*;
 import Math.*;
 
 public class Player {
-    private CoordinateSystem coordinates;
+    public CoordinateSystem coordinates;
     private Vector position;
     private Vector lookAt;
     private Vector up;
@@ -16,9 +16,19 @@ public class Player {
 
     private void init() {
         coordinates = new CoordinateSystem();
-        position = new Vector(0f, 0f, -3.0f);
-        lookAt = new Vector(0.0f, 0.0f, 1f).normalize();
+        position = new Vector(0f, 0f, 0f);
+        lookAt = coordinates.getzAxis().sub(position);
+        //lookAt = new Vector(0.0f, 0.0f, 1f);
+        lookAt.normalize();
         up = new Vector(0, 1, 0);
+    }
+
+    public void update() {
+        coordinates = KeySensor.coordinates;
+        position = coordinates.getOrigin();
+        lookAt = coordinates.getzAxis().add(position);
+        lookAt.normalize();
+        up = coordinates.getyAxis();
     }
 
     public Vector getLookAt() {
@@ -53,5 +63,3 @@ public class Player {
         this.up = up;
     }
 }
-
-

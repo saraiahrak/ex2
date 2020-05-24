@@ -10,9 +10,9 @@ import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 
+import Sensor.KeySensor;
 import com.jogamp.newt.Window;
 import com.jogamp.newt.event.KeyAdapter;
-import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.awt.AWTKeyAdapter;
 import com.jogamp.opengl.util.Animator;
 import world.Drawable;
@@ -35,21 +35,47 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();  // Reset The View
 
+        player.update();
         glu.gluLookAt(player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
                 player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ(),
                 player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
 
-//        gl.glTranslatef(0.0f, 0.0f, 0.0f);
+        // set lighting positions
+        float	roomLightPos[] = {0f,0f,0f,1.0f};
+        float redLightPos[] = {4.5f, 0f, -11.5f, 1.0f};
 
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, roomLightPos , 0);
+        gl.glEnable(GL2.GL_LIGHT0);
+
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, redLightPos , 0);
+        gl.glEnable(GL2.GL_LIGHT1);
+
+//        gl.glTranslatef(0.0f, 0.0f, 0.0f);
         this.draw(gl);
     }
 
 
     public void init(GLAutoDrawable drawable) {
         final GL2 gl = drawable.getGL().getGL2();
+        // enable light
+        gl.glEnable(GL2.GL_LIGHTING);
 
         initDrawables();
         initGL(gl);
+
+        // set colors
+        float	ambient0[] = {1f,1f,1f,1.0f};
+        float	diffuse0[] = {0.5f,0f,0f,1.0f};
+
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambient0 , 0);
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, diffuse0 , 0);
+
+        // set colors
+        float	ambient1[] = {1f,1f,1f,1.0f};
+        float	diffuse1[] = {1f,1f,0f,1.0f};
+
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, ambient1 , 0);
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1 , 0);
 
         if (drawable instanceof Window) {
             Window window = (Window) drawable;
@@ -75,8 +101,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR);
     }
 
-    public void reshape(GLAutoDrawable drawable, int x,
-                        int y, int width, int height) {
+    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         GL2 gl = drawable.getGL().getGL2();
         if (height <= 0) {
             height = 1;
@@ -87,12 +112,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         glu.gluPerspective(50.0f, h, 1.0, 1000.0);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
-    }
-
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            exit();
-        }
     }
 
     public static void exit() {
@@ -126,6 +145,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
 
     public void show() {
         canvas.addGLEventListener(new World());
+        canvas.addKeyListener(new KeySensor(player.getCoordinates()));
         frame.add(canvas);
         frame.setSize(1000, 600);
 
@@ -154,15 +174,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     @Override
     public void dispose(GLAutoDrawable arg0) {
         // TODO Auto-generated method stub
-    }
-
-
-    public void keyReleased(KeyEvent e) {
-
-    }
-
-
-    public void keyTyped(KeyEvent e) {
     }
 
     public void displayChanged(GLAutoDrawable gLDrawable,
