@@ -2,10 +2,12 @@ package world.objects;
 
 import com.jogamp.opengl.util.texture.Texture;
 import design.TextureFactory;
+import world.Collidable;
 import world.Drawable;
 import Math.*;
 
 import javax.media.opengl.GL2;
+import java.util.ArrayList;
 
 public class Wall implements Drawable {
 
