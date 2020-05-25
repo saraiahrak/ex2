@@ -1,10 +1,9 @@
-package Math;
-
 /************************
  * Dekel Yosef 315634071 *
  * Sarai Ahrak 204894000 *
  * *********************/
 
+package Math;
 
 /*************
  * Class Vertex
@@ -122,6 +121,5 @@ public class Vertex {
     public Vertex clone() {
         return new Vertex(x, y, z);
     }
-
 
 }

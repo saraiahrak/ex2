@@ -1,3 +1,8 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package design;
 
 import com.jogamp.opengl.util.texture.Texture;
@@ -6,6 +11,10 @@ import com.jogamp.opengl.util.texture.TextureIO;
 import javax.media.opengl.GL2;
 import java.io.File;
 import java.io.IOException;
+
+/*************
+ * Class Texture Factory
+ * ***********/
 
 public class TextureFactory {
 

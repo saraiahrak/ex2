@@ -1,17 +1,16 @@
-package Math;
-
-import java.util.Arrays;
-
 /************************
  * Dekel Yosef 315634071 *
  * Sarai Ahrak 204894000 *
  * *********************/
 
+package Math;
+import world.CollisionObject;
+import java.util.Arrays;
 
 /*************
  * Class Vector
  * ***********/
-public class Vector {
+public class Vector extends CollisionObject {
 
     private float[] vector;
     private int dim;
@@ -36,6 +35,13 @@ public class Vector {
         dim = 4;
     }
 
+    public Vector(Vertex ver, Vector vec) {
+        float x = ver.getX() - vec.getX();
+        float y = ver.getY() - vec.getY();
+        float z = ver.getZ() - vec.getZ();
+        vector = new float[]{x, y, z, 1};
+        dim = 4;
+    }
 
     /*************
      * Getters
@@ -219,7 +225,7 @@ public class Vector {
      * @return angle
      */
     public float getTheta(Vector v) {
-        return (float) Math.acos(this.dot(v) / (getSize() * v.getSize()));
+        return (float) Math.toDegrees(Math.acos(this.dot(v) / (this.getSize() * v.getSize())));
     }
 
     /**
@@ -232,4 +238,10 @@ public class Vector {
         float[] copy = Arrays.copyOf(vector, vector.length);
         return new Vector(copy);
     }
+
+    @Override
+    public boolean isVector() {
+        return true;
+    }
+
 }

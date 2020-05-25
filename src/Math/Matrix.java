@@ -1,13 +1,10 @@
-package Math;
-
-import java.util.Arrays;
-
-
 /************************
  * Dekel Yosef 315634071 *
  * Sarai Ahrak 204894000 *
  * *********************/
 
+package Math;
+import java.util.Arrays;
 
 /*************
  * Class Matrix

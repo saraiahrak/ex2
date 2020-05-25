@@ -1,3 +1,8 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package world.Space;
 
 import java.awt.Frame;
@@ -11,34 +16,77 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 
 import Sensor.KeySensor;
+import View.CoordinateSystem;
 import com.jogamp.newt.Window;
 import com.jogamp.newt.event.KeyAdapter;
 import com.jogamp.newt.event.awt.AWTKeyAdapter;
 import com.jogamp.opengl.util.Animator;
+import world.CollisionObject;
 import world.Drawable;
 import world.Player;
 import world.objects.*;
 import Math.*;
 
+/*************
+ * Class World
+ * ***********/
 public class World extends KeyAdapter implements GLEventListener, Drawable {
 
     private Player player = new Player();
+    private Vector nextPosition = new Vector(0,0,0);
+    private Player player2 = new Player();
     private ArrayList<Drawable> drawables;
+    public static ArrayList<CollisionObject> collisionObjects;
+    public static boolean wasCollision = false;
 
     private static GLU glu = new GLU();
     private static GLCanvas canvas = new GLCanvas();
     private static Frame frame = new Frame("Room");
     private static Animator animator = new Animator(canvas);
+    private CoordinateSystem coordinateSystem = new CoordinateSystem();
+
+//    public World() {
+//        player = new Player();
+//        wasCollision = false;
+//        glu = new GLU();
+//        canvas = new GLCanvas();
+//        frame = new Frame("Room");
+//        animator = new Animator(canvas);
+//    }
 
     public void display(GLAutoDrawable gLDrawable) {
         final GL2 gl = gLDrawable.getGL().getGL2();
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();  // Reset The View
 
-        player.update();
+
+//        for (CollisionObject c : collisionObjects) {
+//            if (CollisionDetection.colDetect(c, player.getPosition())) {
+//                wasCollision = true;
+//            }
+//        }
+
+
+//        if (wasCollision) {
+//            player.copyOf(player2);
+//            player2.copyOf(player);
+//            wasCollision = false;
+//        } else {
+//            player2.copyOf(player);
+//            //nextPosition = player.getPosition();
+//            player.update();
+//        }
+
+
+
         glu.gluLookAt(player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
                 player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ(),
                 player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
+
+        if (!wasCollision) {
+            player.update();
+        }
+
 
         // set lighting positions
         float	roomLightPos[] = {0f,0f,0f,1.0f};
@@ -87,7 +135,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     }
 
     private void initGL(GL2 gl) {
-
         gl.glShadeModel(GL2.GL_SMOOTH);              // Enable Smooth Shading
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);    // Black Background
         gl.glClearDepth(1.0f);                      // Depth Buffer Setup
@@ -95,7 +142,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glDepthFunc(GL2.GL_LEQUAL);               // The Type Of Depth Testing To Do
         // Really Nice Perspective Calculations
         gl.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST);
-
 
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR);
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR);
@@ -124,10 +170,32 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         drawables.add(d);
     }
 
-
     public void initDrawables() {
         drawables = new ArrayList<>();
+        initCollidables();
         createObjects();
+    }
+
+    private void addCollidable(CollisionObject c) {
+        collisionObjects.add(c);
+    }
+
+    private void addCollidable(Box box) {
+        collisionObjects.add(box.backWall);
+        collisionObjects.add(box.frontWall);
+        collisionObjects.add(box.leftWall);
+        collisionObjects.add(box.rightWall);
+    }
+
+    private void addCollidable(Room room) {
+        collisionObjects.add(room.back);
+        collisionObjects.add(room.front);
+        collisionObjects.add(room.left);
+        collisionObjects.add(room.right);
+    }
+
+    public void initCollidables() {
+        collisionObjects = new ArrayList<>();
     }
 
     public void createObjects() {
@@ -141,6 +209,11 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         addDrawable(box);
         addDrawable(box1);
         addDrawable(box2);
+
+        addCollidable(room);
+        addCollidable(box);
+        addCollidable(box1);
+        addCollidable(box2);
     }
 
     public void show() {
@@ -181,3 +254,4 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     }
 
 }
+

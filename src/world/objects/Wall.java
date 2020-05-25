@@ -1,23 +1,31 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package world.objects;
 
 import com.jogamp.opengl.util.texture.Texture;
 import design.TextureFactory;
-import world.Collidable;
+import world.CollisionObject;
 import world.Drawable;
 import Math.*;
-
 import javax.media.opengl.GL2;
-import java.util.ArrayList;
 
-public class Wall implements Drawable {
+/*************
+ * Class Wall
+ * ***********/
+public class Wall extends CollisionObject implements Drawable {
 
     private String textureKey;
     private Texture texture = null;
-    private float height;
-    private float depth;
-    private float width;
-    private Vertex corner;
-
+    public float height;
+    public float depth;
+    public float width;
+    public Vertex corner;
+    public Vertex corner1;
+    public Vertex corner2;
+    public Vertex corner3;
 
 
     public Wall(String key, Vertex c, float h, float w, float d) {
@@ -26,6 +34,7 @@ public class Wall implements Drawable {
         height = h;
         width = w;
         depth = d;
+        setCorners();
     }
 
     @Override
@@ -54,6 +63,17 @@ public class Wall implements Drawable {
         gl.glVertex3f(x + width, y, z + depth);
 
         gl.glEnd();
+    }
 
+    public void setCorners() {
+        corner1 = new Vertex(corner.getX(), corner.getY() + height, corner.getZ());
+        corner2 = new Vertex(corner.getX() + width,
+                corner.getY() + height, corner.getZ() + depth);
+        corner3 = new Vertex(corner.getX() + width, corner.getY(), corner.getZ() + depth);
+    }
+
+    @Override
+    public boolean isWall() {
+        return true;
     }
 }

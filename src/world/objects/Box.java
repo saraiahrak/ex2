@@ -1,17 +1,28 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package world.objects;
 
 import Math.*;
 import com.jogamp.opengl.util.texture.Texture;
 import design.TextureFactory;
 import world.Drawable;
-
 import javax.media.opengl.GL2;
 
+/*************
+ * Class Box
+ * ***********/
 public class Box implements Drawable {
 
     private String textureKey;
     private Texture texture;
     private Vertex bottomLeft;
+    public Wall frontWall;
+    public Wall backWall;
+    public Wall leftWall;
+    public Wall rightWall;
 
     private float depth = 1;
     private float height = 1;
@@ -23,6 +34,16 @@ public class Box implements Drawable {
         depth = d;
         height = h;
         width = w;
+
+        float x = bottomLeft.getX();
+        float y = bottomLeft.getY();
+        float z = bottomLeft.getZ();
+
+        // collision objects
+        frontWall = new Wall("box", new Vertex(x,y,z),height, width, 0);
+        rightWall = new Wall("box", new Vertex(x,y,z),height, 0, width);
+        leftWall = new Wall("box", new Vertex(x,y,z),height, 0, width);
+        backWall = new Wall("box", new Vertex(x,y,z),height, width, 0);
     }
 
     @Override
@@ -102,6 +123,5 @@ public class Box implements Drawable {
         gl.glVertex3f(x + width, y + height, z);
 
         gl.glEnd();
-
     }
 }

@@ -1,16 +1,13 @@
-import world.Space.World;
-
 /************************
  * Dekel Yosef 315634071 *
  * Sarai Ahrak 204894000 *
  * *********************/
 
+import world.Space.World;
 
 /*****************
  * Class Main
  * ***************/
-
-
 public class Main {
     /**
      * @param args
@@ -19,5 +16,6 @@ public class Main {
         // TODO Auto-generated method stub
         World world = new World();
         world.show();
+
     }
 }

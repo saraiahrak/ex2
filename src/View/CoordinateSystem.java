@@ -1,6 +1,10 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package View;
 import Math.*;
-
 
 /*****************
  * Class CoordinateSystem
@@ -20,7 +24,7 @@ public class CoordinateSystem {
 
     /**
      * init
-     * Call initializers
+     * Call initializer
      */
     private void init() {
         initAxes();
@@ -46,7 +50,7 @@ public class CoordinateSystem {
      * initialize origin vector
      */
     private void initOrigin() {
-        origin = new Vector(0f, 0f, 0f);
+        origin = new Vector(0f, 0f, -1f);
     }
 
     /********
@@ -72,6 +76,9 @@ public class CoordinateSystem {
     /**
      * rotate
      * Changing the look
+     *
+     * @param axis - x, y, or z axis
+     * @param angle - rotate angle
      */
     public void rotate(char axis, double angle) {
         Vector xNew, yNew, zNew;
@@ -100,6 +107,9 @@ public class CoordinateSystem {
     /**
      * move
      * Multiply the step with the correct axis and add it to the origin
+     *
+     * @param axis - x, y or z axis
+     * @param step - size of movement
      */
     public void move(char axis, float step) {
         if (axis == 'X') {

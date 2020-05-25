@@ -1,3 +1,8 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package world.objects;
 
 import com.jogamp.opengl.util.texture.Texture;
@@ -6,6 +11,9 @@ import world.Drawable;
 
 import javax.media.opengl.GL2;
 
+/*************
+ * Class Ceiling
+ * ***********/
 public class Ceiling implements Drawable {
 
     private String textureKey;

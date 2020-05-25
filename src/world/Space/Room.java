@@ -1,3 +1,8 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package world.Space;
 
 import world.Drawable;
@@ -8,14 +13,17 @@ import Math.*;
 
 import javax.media.opengl.GL2;
 
+/*************
+ * Class Room
+ * ***********/
 public class Room implements Drawable {
 
     private Floor floor;
     private Ceiling ceiling;
-    private Wall left;
-    private Wall front;
-    private Wall right;
-    private Wall back;
+    public Wall left;
+    public Wall front;
+    public Wall right;
+    public Wall back;
 
     public Room() {
         floor = new Floor("floor");
