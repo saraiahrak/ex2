@@ -58,7 +58,7 @@ public class CollisionDetection {
             }
         }
 
-        if (sum <= 340) {
+        if (sum <= 330) {
             return false;
         }
         return true;

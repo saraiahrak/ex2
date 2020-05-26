@@ -34,7 +34,7 @@ public class Player extends CollisionObject {
 
     private void init() {
         coordinates = new CoordinateSystem();
-        position = new Vector(0f, 0f, -1f);
+        position = new Vector(0f, 0f, -3f);
         lookAt = coordinates.getzAxis().sub(position);
         lookAt.normalize();
         up = new Vector(0, 1, 0);

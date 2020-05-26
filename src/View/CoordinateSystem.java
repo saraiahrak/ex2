@@ -50,7 +50,7 @@ public class CoordinateSystem {
      * initialize origin vector
      */
     private void initOrigin() {
-        origin = new Vector(0f, 0f, -1f);
+        origin = new Vector(0f, 0f, -3f);
     }
 
     /********

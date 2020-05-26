@@ -19,10 +19,6 @@ import java.awt.event.MouseEvent;
 public class KeySensor implements KeyListener {
 
     public static CoordinateSystem coordinates;
-    public static boolean frontCollision = false;
-    public static boolean backCollision = false;
-    public static boolean rightCollision = false;
-    public static boolean leftCollision = false;
 
     /*****************
      * Constructor
@@ -35,7 +31,6 @@ public class KeySensor implements KeyListener {
      * Events
      * ********/
 
-
     /**
      * keyPressed
      * Key pressed event
@@ -44,8 +39,15 @@ public class KeySensor implements KeyListener {
      */
     public void keyPressed(KeyEvent e) {
         double angle = 0.1;
-        float step = 0.3f;
+        float step = 0.2f;
+
         World.wasCollision = false;
+
+        if (wasCollision()) {
+            World.wasCollision = true;
+            // if was collision stay in last position
+            step = -step;
+        }
 
         if (e.getKeyChar() == 'i' || e.getKeyChar() == 'I') {
             coordinates.rotate('X', angle);
@@ -60,40 +62,12 @@ public class KeySensor implements KeyListener {
         } else if (e.getKeyChar() == 'u' || e.getKeyChar() == 'U') {
             coordinates.rotate('Z', -angle);
         } else if (e.getKeyChar() == 'w' || e.getKeyChar() == 'W') {
-            frontCollision = wasCollision();
-            if (frontCollision) {
-                World.wasCollision = true;
-                coordinates.move('Z', step);
-                frontCollision = false;
-                return;
-            }
             coordinates.move('Z', -step);
         } else if (e.getKeyChar() == 's' || e.getKeyChar() == 'S') {
-            backCollision = wasCollision();
-            if (backCollision) {
-                World.wasCollision = true;
-                coordinates.move('Z', -step);
-                backCollision = false;
-                return;
-            }
             coordinates.move('Z', step);
         } else if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D') {
-            rightCollision = wasCollision();
-            if (rightCollision) {
-                World.wasCollision = true;
-                coordinates.move('X', -step);
-                rightCollision = false;
-                return;
-            }
             coordinates.move('X', step);
         } else if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
-            leftCollision = wasCollision();
-            if (leftCollision) {
-                World.wasCollision = true;
-                coordinates.move('X', step);
-                leftCollision = false;
-                return;
-            }
             coordinates.move('X', -step);
         } else if (e.getKeyChar() == 'e' || e.getKeyChar() == 'E') {
             coordinates.move('Y', step);
@@ -105,6 +79,12 @@ public class KeySensor implements KeyListener {
         }
     }
 
+    /**
+     * wasCollision
+     * Checks if was Collision between the player and list of collision objects
+     *
+     * @return true if was collision, otherwise false
+     */
     public boolean wasCollision() {
         for (CollisionObject c : World.collisionObjects) {
             if (CollisionDetection.colDetect(c, coordinates.getOrigin())) {
