@@ -5,8 +5,6 @@
 
 package Sensor;
 import View.CoordinateSystem;
-import world.CollisionDetection;
-import world.CollisionObject;
 import world.Space.World;
 
 import java.awt.event.KeyEvent;
@@ -41,14 +39,6 @@ public class KeySensor implements KeyListener {
         double angle = 0.1;
         float step = 0.2f;
 
-        World.wasCollision = false;
-
-        if (wasCollision()) {
-            World.wasCollision = true;
-            // if was collision stay in last position
-            step = -step;
-        }
-
         if (e.getKeyChar() == 'i' || e.getKeyChar() == 'I') {
             coordinates.rotate('X', angle);
         } else if (e.getKeyChar() == 'k' || e.getKeyChar() == 'K') {
@@ -78,22 +68,6 @@ public class KeySensor implements KeyListener {
             World.exit();
         }
     }
-
-    /**
-     * wasCollision
-     * Checks if was Collision between the player and list of collision objects
-     *
-     * @return true if was collision, otherwise false
-     */
-    public boolean wasCollision() {
-        for (CollisionObject c : World.collisionObjects) {
-            if (CollisionDetection.colDetect(c, coordinates.getOrigin())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     public void keyReleased(KeyEvent arg0) {
         // TODO Auto-generated method stub

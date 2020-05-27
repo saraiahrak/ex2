@@ -16,12 +16,10 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 
 import Sensor.KeySensor;
-import View.CoordinateSystem;
 import com.jogamp.newt.Window;
 import com.jogamp.newt.event.KeyAdapter;
 import com.jogamp.newt.event.awt.AWTKeyAdapter;
 import com.jogamp.opengl.util.Animator;
-import world.CollisionObject;
 import world.Drawable;
 import world.Player;
 import world.objects.*;
@@ -34,8 +32,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
 
     private Player player = new Player();
     private ArrayList<Drawable> drawables;
-    public static ArrayList<CollisionObject> collisionObjects;
-    public static boolean wasCollision = false;
 
     private static GLU glu = new GLU();
     private static GLCanvas canvas = new GLCanvas();
@@ -56,9 +52,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
                 player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ(),
                 player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
 
-        if (!wasCollision) {
-            player.update();
-        }
+        player.update();
 
         // set lighting positions
         float	roomLightPos[] = {0f,0f,0f,1.0f};
@@ -85,7 +79,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         // enable light
         gl.glEnable(GL2.GL_LIGHTING);
 
-        initCollidables();
         initDrawables();
         initGL(gl);
 
@@ -182,37 +175,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     }
 
     /**
-     * addCollidable
-     * Add collidable to list of collision objects
-     *
-     * @param c - collidable
-     */
-    private void addCollidable(CollisionObject c) {
-        collisionObjects.add(c);
-    }
-
-    /**
-     * addCollidable
-     * Add collidable to list of collision objects
-     *
-     * @param room - collidables
-     */
-    private void addCollidable(Room room) {
-        collisionObjects.add(room.back);
-        collisionObjects.add(room.front);
-        collisionObjects.add(room.left);
-        collisionObjects.add(room.right);
-    }
-
-    /**
-     * initCollidables
-     * Initialize the list
-     */
-    public void initCollidables() {
-        collisionObjects = new ArrayList<>();
-    }
-
-    /**
      * createObjects
      */
     public void createObjects() {
@@ -226,8 +188,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         addDrawable(box);
         addDrawable(box1);
         addDrawable(box2);
-
-        addCollidable(room);
     }
 
     /**

@@ -11,7 +11,7 @@ import Math.*;
 /*************
  * Class Player
  * ***********/
-public class Player extends CollisionObject {
+public class Player {
     public CoordinateSystem coordinates;
     private Vector position;
     private Vector lookAt;
@@ -25,16 +25,9 @@ public class Player extends CollisionObject {
         init();
     }
 
-    public Player(CoordinateSystem c, Vector p, Vector l, Vector u) {
-        coordinates = c;
-        position = p;
-        lookAt = l;
-        up = u;
-    }
-
     private void init() {
         coordinates = new CoordinateSystem();
-        position = new Vector(0f, 0f, -3f);
+        position = new Vector(0f, 0f, 0f);
         lookAt = coordinates.getzAxis().sub(position);
         lookAt.normalize();
         up = new Vector(0, 1, 0);
@@ -86,14 +79,5 @@ public class Player extends CollisionObject {
 
     public void setUp(Vector up) {
         this.up = up;
-    }
-
-    public void copyOf(Player player) {
-        coordinates = player.getCoordinates();
-        position = player.getPosition();
-        lookAt = player.getLookAt();
-        lookAt.normalize();
-        up = player.getUp();
-        //return new Player(coordinates, position, lookAt, up);
     }
 }

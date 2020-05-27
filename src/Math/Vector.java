@@ -4,13 +4,12 @@
  * *********************/
 
 package Math;
-import world.CollisionObject;
 import java.util.Arrays;
 
 /*************
  * Class Vector
  * ***********/
-public class Vector extends CollisionObject {
+public class Vector {
 
     private float[] vector;
     private int dim;
@@ -237,11 +236,6 @@ public class Vector extends CollisionObject {
     public Vector clone() {
         float[] copy = Arrays.copyOf(vector, vector.length);
         return new Vector(copy);
-    }
-
-    @Override
-    public boolean isVector() {
-        return true;
     }
 
 }

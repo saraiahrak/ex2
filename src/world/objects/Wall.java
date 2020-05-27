@@ -7,7 +7,6 @@ package world.objects;
 
 import com.jogamp.opengl.util.texture.Texture;
 import design.TextureFactory;
-import world.CollisionObject;
 import world.Drawable;
 import Math.*;
 import javax.media.opengl.GL2;
@@ -15,7 +14,7 @@ import javax.media.opengl.GL2;
 /*************
  * Class Wall
  * ***********/
-public class Wall extends CollisionObject implements Drawable {
+public class Wall implements Drawable {
 
     private String textureKey;
     private Texture texture = null;
@@ -71,9 +70,5 @@ public class Wall extends CollisionObject implements Drawable {
                 corner.getY() + height, corner.getZ() + depth);
         corner3 = new Vertex(corner.getX() + width, corner.getY(), corner.getZ() + depth);
     }
-
-    @Override
-    public boolean isWall() {
-        return true;
-    }
 }
+
