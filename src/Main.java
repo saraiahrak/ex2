@@ -3,7 +3,7 @@
  * Sarai Ahrak 204894000 *
  * *********************/
 
-import world.Space.World;
+import World.Space.World;
 
 /*****************
  * Class Main
@@ -16,6 +16,5 @@ public class Main {
         // TODO Auto-generated method stub
         World world = new World();
         world.show();
-
     }
 }

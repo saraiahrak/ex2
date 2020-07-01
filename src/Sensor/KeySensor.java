@@ -4,8 +4,11 @@
  * *********************/
 
 package Sensor;
+import World.*;
+import World.CollisionDetection.CollisionObject;
+import World.CollisionDetection.CollisionDetection;
+import World.Space.World;
 import View.CoordinateSystem;
-import world.Space.World;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -37,7 +40,15 @@ public class KeySensor implements KeyListener {
      */
     public void keyPressed(KeyEvent e) {
         double angle = 0.1;
-        float step = 0.2f;
+        float step = 0.35f;
+
+        World.wasCollision = false;
+
+        if (wasCollision()) {
+            World.wasCollision = true;
+            // if was collision stay in last position
+            step = -step;
+        }
 
         if (e.getKeyChar() == 'i' || e.getKeyChar() == 'I') {
             coordinates.rotate('X', angle);
@@ -64,6 +75,11 @@ public class KeySensor implements KeyListener {
         } else if (e.getKeyChar() == 'q' || e.getKeyChar() == 'Q') {
             coordinates.move('Y', -step);
         }
+
+        if (e.getKeyCode() == KeyEvent.VK_F1) {
+            coordinates.init(0f, 0.5f, 20f);
+            World.initLevel2();
+        }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             World.exit();
         }
@@ -87,5 +103,24 @@ public class KeySensor implements KeyListener {
     public void mouseMoved(MouseEvent arg0) {
         // TODO Auto-generated method stub
 
+    }
+
+
+    /**
+     * wasCollision
+     * Checks if was Collision between the player and list of collision objects
+     *
+     * @return true if was collision, otherwise false
+     */
+    public boolean wasCollision() {
+        for (CollisionObject c : World.collisionObjects) {
+            if (CollisionDetection.colDetect(c, coordinates.getOrigin())) {
+                if (c.getTextureKey().equals("caveEntry")) {
+                    return CollisionDetection.checkBoundaries(coordinates.getOrigin());
+                }
+                return true;
+            }
+        }
+        return false;
     }
 }

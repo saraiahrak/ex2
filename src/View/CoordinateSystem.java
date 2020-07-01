@@ -18,24 +18,24 @@ public class CoordinateSystem {
     /**
      * constructor
      */
-    public CoordinateSystem() {
-        init();
+    public CoordinateSystem(float xPos, float yPos, float zPos) {
+        init(xPos, yPos, zPos);
     }
 
     /**
      * init
      * Call initializer
      */
-    private void init() {
+    public void init(float xPos, float yPos, float zPos) {
         initAxes();
-        initOrigin();
+        initOrigin(xPos, yPos, zPos);
     }
 
     /**
      * initAxes
      * initialize axes vectors
      */
-    private void initAxes() {
+    public void initAxes() {
         // X-Axis
         xAxis = new Vector(1.0f, 0, 0);
         // Y-Axis
@@ -49,8 +49,8 @@ public class CoordinateSystem {
      * initOrigin
      * initialize origin vector
      */
-    private void initOrigin() {
-        origin = new Vector(0f, 0f, 0f);
+    public void initOrigin(float xPos, float yPos, float zPos) {
+        origin = new Vector(xPos, yPos, zPos);
     }
 
     /********
