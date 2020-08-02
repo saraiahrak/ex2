@@ -11,6 +11,8 @@ import Design.TextureFactory;
 import World.Drawable;
 import Math.*;
 import javax.media.opengl.GL2;
+import java.util.ArrayList;
+import java.util.List;
 
 /*************
  * Class Wall
@@ -73,6 +75,32 @@ public class Wall extends CollisionObject implements Drawable {
         corner2 = new Vertex(corner.getX() + width,
                 corner.getY() + height, corner.getZ() + depth);
         corner3 = new Vertex(corner.getX() + width, corner.getY(), corner.getZ() + depth);
+    }
+
+
+    /**
+     * createWalls
+     * Create walls from string of coordinates
+     *
+     * @param lines string of coordinates
+     * @param texture name
+     * @return walls array
+     */
+    public static ArrayList<Wall> createWalls(List<String> lines, String texture) {
+        ArrayList<Wall> wallsList = new ArrayList<>();
+
+        for (String line : lines) {
+            String[] coordinate = line.split(" ");
+            float x = Float.parseFloat(coordinate[0]);
+            float y = Float.parseFloat(coordinate[1]);
+            float z = Float.parseFloat(coordinate[2]);
+            float h = Float.parseFloat(coordinate[3]);
+            float w = Float.parseFloat(coordinate[4]);
+            float d = Float.parseFloat(coordinate[5]);
+
+            wallsList.add(new Wall(texture, new Vertex(x, y, z), h, w, d));
+        }
+        return wallsList;
     }
 
     @Override

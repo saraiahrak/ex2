@@ -29,7 +29,7 @@ public class Player {
     private void init(float xPos, float yPos, float zPos) {
         coordinates = new CoordinateSystem(xPos, yPos, zPos);
         position = coordinates.getOrigin();
-        lookAt = coordinates.getzAxis().sub(position);
+        lookAt = position.sub(coordinates.getzAxis());
         lookAt.normalize();
         up = new Vector(0, 1, 0);
     }
@@ -38,7 +38,7 @@ public class Player {
     public void update() {
         coordinates = KeySensor.coordinates;
         position = coordinates.getOrigin();
-        lookAt = coordinates.getzAxis().add(position);
+        lookAt = position.sub(coordinates.getzAxis());
         lookAt.normalize();
         up = coordinates.getyAxis();
     }

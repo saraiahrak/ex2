@@ -12,16 +12,23 @@ import World.Models.OBJLoader;
 import World.Objects.Box;
 import World.Objects.Wall;
 import World.Space.World;
-import Math.*;
 
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import Math.*;
 
 /*************
  * Class Level 1
  * ***********/
 public class Level1 {
+
+    public Level1(GL2 gl) {
+        createSpace();
+        createObjects();
+        createModels(gl);
+    }
 
     /**
      * createSpace
@@ -42,6 +49,11 @@ public class Level1 {
      * createObjects
      */
     public static void createObjects() {
+        //Wall wall = new Wall("jasmine", new Vertex(10, -2, 170), 5, )
+
+        //Box cage = new Box("cage", new Vertex(10f, -2f, 170f), 5, 5, 5);
+        //addDrawable(cage);
+
 
  /*       Box box = new Box("wood", new Vertex(-5.5f, -2f, -13f), 1, 1, 1);
         Box box1 = new Box("LightWood", new Vertex(1f, -2f, -6f), 1, 0.5f, 1);
@@ -66,13 +78,8 @@ public class Level1 {
         createBenches(gl);
         // add coins
         createCoins(gl);
-
-
-        OBJLoader mapScroll = new OBJLoader("models/mapScroll/map_Scroll.obj", gl);
-        addDrawable(mapScroll.getModel());
-        mapScroll.getModel().translate(0, 0, 0);
-        mapScroll.getModel().scale(0.02f, 0.02f, 0.02f);
-
+        // add cops
+        createCops(gl);
     }
 
 
@@ -91,7 +98,7 @@ public class Level1 {
             addDrawable(singleLight.getModel());
             singleLight.getModel().translate(Float.parseFloat(values[0]),
                     Float.parseFloat(values[1]),Float.parseFloat(values[2]));
-            singleLight.getModel().scale(0.02f, 0.02f, 0.02f);
+            singleLight.getModel().scale(0.014f, 0.014f, 0.014f);
         }
     }
 
@@ -110,7 +117,7 @@ public class Level1 {
             addDrawable(bench.getModel());
             bench.getModel().translate(Float.parseFloat(values[0]),
                     Float.parseFloat(values[1]),Float.parseFloat(values[2]));
-            bench.getModel().scale(0.02f, 0.02f, 0.02f);
+            bench.getModel().scale(0.014f, 0.014f, 0.014f);
             bench.getModel().rotate(Float.parseFloat(values[3]), 0, 1, 0);
         }
     }
@@ -126,12 +133,32 @@ public class Level1 {
         for (String line : lines) {
             String[] values = line.split(" ");
 
-            OBJLoader coin = new OBJLoader("models/coin/uSOLDIER_Napoleon_Coin.obj", gl);
+            OBJLoader coin = new OBJLoader("models/coin/coin.obj", gl);
             addDrawable(coin.getModel());
             coin.getModel().translate(Float.parseFloat(values[0]),
                     Float.parseFloat(values[1]),Float.parseFloat(values[2]));
-            coin.getModel().scale(0.004f, 0.004f, 0.004f);
-            coin.getModel().movement(0.00000000001f, 0, 1, 0);
+            coin.getModel().scale(0.2f, 0.2f, 0.2f);
+            coin.getModel().rotate(90, 1, 0, 0);
+            coin.getModel().movement(0.01f, 0, 0, 1);
+        }
+    }
+
+
+    /**
+     * createCops
+     *
+     * @param gl - GL2
+     */
+    private static void createCops(GL2 gl) {
+        ArrayList<String> lines = Reader.readLines("resources/models/cops/cops.txt");
+        for (String line : lines) {
+            String[] values = line.split(" ");
+
+            OBJLoader cop = new OBJLoader("models/cops/Dusty_2.obj", gl);
+            addDrawable(cop.getModel());
+            cop.getModel().translate(Float.parseFloat(values[0]),
+                    -2, Float.parseFloat(values[1]));
+            cop.getModel().scale(0.0007f, 0.0007f, 0.0007f);
         }
     }
 

@@ -11,6 +11,7 @@ import World.Drawable;
 import World.Models.OBJLoader;
 import World.Objects.Box;
 import World.Objects.Wall;
+import World.Space.Level1.Cave;
 import World.Space.World;
 import Math.*;
 
@@ -22,16 +23,27 @@ import java.util.List;
  * Class Level 2
  * ***********/
 public class Level2 {
-    public GL2 gl;
+
+    public Level2(GL2 gl) {
+        createSpace();
+        createObjects();
+        createModels(gl);
+    }
 
     /**
      * constructor
      */
-    public Level2(GL2 g) {
-        gl = g;
-    }
+    public Level2() { }
 
     public static void createSpace() {
+
+        Garden garden = new Garden();
+        addDrawable(garden);
+        // collision!!!
+
+        Palace palace = new Palace();
+        addDrawable(palace);
+        addCollidable(palace);
 
 /*        MarketPlace market = new MarketPlace();
         Cave cave = new Cave();
@@ -43,50 +55,34 @@ public class Level2 {
         addCollidable(cave);*/
     }
 
+
     /**
      * createObjects
      */
     public static void createObjects() {
 
-        Box box = new Box("wood", new Vertex(-5.5f, -2f, -13f), 1, 1, 1);
-        Box box1 = new Box("LightWood", new Vertex(1f, -2f, -6f), 1, 0.5f, 1);
-        Box box2 = new Box("washedWood", new Vertex(4.5f, -2f, -11f), 1, 1, 1);
+        Box box = new Box("wood", new Vertex(5.5f, 0f, 13f), 1, 1, 1);
+        Box box1 = new Box("LightWood", new Vertex(1f, 0f, 6f), 1, 0.5f, 1);
+        Box box2 = new Box("washedWood", new Vertex(4.5f, 0f, 11f), 1, 1, 1);
+
 
         addDrawable(box);
         addDrawable(box1);
         addDrawable(box2);
+
     }
 
 
     /**
      * createModels
      */
-    public static void createModels() {
-        // add street light
-/*        ArrayList<String> lines = Reader.readLines("resources/models/Lights.txt");
-        for (String line: lines) {
-            String[] values = line.split(" ");
+    public static void createModels(GL2 gl2) {
 
-            OBJLoader singleLight = new OBJLoader("models/dualLight/classic_dual_light.obj", gl);
-            addDrawable(singleLight.getModel());
-            singleLight.getModel().translate(Float.parseFloat(values[0]),
-                    Float.parseFloat(values[1]),Float.parseFloat(values[2]));
-            singleLight.getModel().scale(Float.parseFloat(values[3]),
-                    Float.parseFloat(values[4]), Float.parseFloat(values[5]));
-        }
+        OBJLoader carpet = new OBJLoader("models/carpet/PersianCarpet.obj", gl2);
+        addDrawable(carpet.getModel());
+        carpet.getModel().translate(15f, 5f, 15f);
+        carpet.getModel().scale(0.014f, 0.014f, 0.014f);
 
-        OBJLoader bench = new OBJLoader("models/bench/classic_park_bench.obj", gl);
-        addDrawable(bench.getModel());
-        bench.getModel().translate(-5f,-2f,32f);
-        bench.getModel().scale(0.02f,0.02f,0.02f);
-        bench.getModel().rotate(270, 0, 1, 0);
-
-
-        OBJLoader coin = new OBJLoader("models/coin/uSOLDIER_Napoleon_Coin.obj", gl);
-        addDrawable(coin.getModel());
-        coin.getModel().translate(0f,0.5f,32f);
-        coin.getModel().scale(0.01f,0.01f,0.01f);
-        coin.getModel().movement(0.00000000001f, 0, 1, 0);*/
     }
 
 
@@ -100,6 +96,23 @@ public class Level2 {
         World.collisionObjects.add(c);
     }
 
+    /**
+     * addCollidable
+     * Add collidable to list of collision objects
+     *
+     * @param palace - collidables
+     */
+    private static void addCollidable(Palace palace) {
+        List<Wall> internalWalls = palace.getInternalWalls();
+        for (Wall wall: internalWalls) {
+            World.collisionObjects.add(wall);
+        }
+
+        List<Wall> externalWalls = palace.getExternalWalls();
+        for (Wall wall: externalWalls) {
+            World.collisionObjects.add(wall);
+        }
+    }
 
 
     /**

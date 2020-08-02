@@ -7,12 +7,8 @@ package World.Space;
 
 import java.awt.Frame;
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.media.opengl.GL2;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLEventListener;
-import javax.media.opengl.GLProfile;
+import javax.media.opengl.*;
 import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 
@@ -37,11 +33,12 @@ import World.Player;
  * ***********/
 public class World extends KeyAdapter implements GLEventListener, Drawable {
 
-    public Player player = new Player(0f, 0.5f, 0f);
+    public Player player = new Player(0f, 0.5f, 187f);
     public static ArrayList<Drawable> drawables;
     public static ArrayList<CollisionObject> collisionObjects;
     public static boolean wasCollision = false;
     public static boolean firstLevel = true;
+    public static boolean secondLevel = false;
 
     private static GLU glu = new GLU();
     private static GLCanvas canvas = new GLCanvas();
@@ -59,13 +56,19 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();  // Reset The View
 
-        glu.gluLookAt(player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
-                player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ(),
-                player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
+        if (!firstLevel && !secondLevel) {
+            secondLevel = true;
+            initLevel2(gl);
+        }
 
         //if (!wasCollision) {
         player.update();
         //}
+
+        glu.gluLookAt(player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ(),
+                player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
+                player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
+
 
         // set lighting positions
         float	roomLightPos[] = {0f,0f,0f,1.0f};
@@ -80,6 +83,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
 //        gl.glTranslatef(0.0f, 0.0f, 0.0f);
         this.draw(gl);
     }
+
 
     /**
      * init
@@ -119,25 +123,17 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
 
 
     public static void initLevel1(GL2 gl) {
-        // set the gl to the second level
-        new Level2(gl);
-
         initCollidables();
         initDrawables();
 
-        Level1.createSpace();
-        Level1.createObjects();
-        Level1.createModels(gl);
+        new Level1(gl);
     }
 
-    public static void initLevel2() {
-
+    public static void initLevel2(GL2 gl) {
         initCollidables();
         initDrawables();
 
-        Level2.createSpace();
-        Level2.createObjects();
-        Level2.createModels();
+        new Level2(gl);
     }
 
 
@@ -240,6 +236,9 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     @Override
     public void draw(GL2 gl) {
         gl.glPushMatrix();
+/*        if (!firstLevel) {
+            firstLevel = true;
+        }*/
         for (Drawable d : drawables) {
             d.draw(gl);
         }

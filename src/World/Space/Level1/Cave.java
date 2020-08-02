@@ -56,8 +56,9 @@ public class Cave implements Drawable {
      */
     private void initMaze() {
         ArrayList<String> lines = Reader.readLines("resources/maze/walls.txt");
-        maze = createWalls(lines);
+        maze = Wall.createWalls(lines, "cave");
     }
+
 
     /**
      * Getter
@@ -67,27 +68,4 @@ public class Cave implements Drawable {
         return maze;
     }
 
-    /**
-     * createWalls
-     * Create walls from string of coordinates
-     *
-     * @param lines string of coordinates
-     * @return walls array
-     */
-    private ArrayList<Wall> createWalls(List<String> lines) {
-        ArrayList<Wall> wallsList = new ArrayList<>();
-
-        for (String line : lines) {
-            String[] coordinate = line.split(" ");
-            float x = Float.parseFloat(coordinate[0]);
-            float y = Float.parseFloat(coordinate[1]);
-            float z = Float.parseFloat(coordinate[2]);
-            float h = Float.parseFloat(coordinate[3]);
-            float w = Float.parseFloat(coordinate[4]);
-            float d = Float.parseFloat(coordinate[5]);
-
-            wallsList.add(new Wall("cave", new Vertex(x, y, z), h, w, d));
-        }
-        return wallsList;
-    }
 }

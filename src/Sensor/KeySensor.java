@@ -77,8 +77,8 @@ public class KeySensor implements KeyListener {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_F1) {
-            coordinates.init(0f, 0.5f, 20f);
-            World.initLevel2();
+            coordinates.init(50f, 34f, 5f);
+            World.firstLevel = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             World.exit();
