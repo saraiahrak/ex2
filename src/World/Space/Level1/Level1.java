@@ -6,18 +6,14 @@
 package World.Space.Level1;
 
 import Utils.Reader;
-import World.CollisionDetection.CollisionObject;
 import World.Drawable;
 import World.Models.OBJLoader;
-import World.Objects.Box;
 import World.Objects.Wall;
 import World.Space.World;
 
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import Math.*;
 
 /*************
  * Class Level 1
@@ -26,7 +22,6 @@ public class Level1 {
 
     public Level1(GL2 gl) {
         createSpace();
-        createObjects();
         createModels(gl);
     }
 
@@ -43,26 +38,6 @@ public class Level1 {
 
         addCollidable(market);
         addCollidable(cave);
-    }
-
-    /**
-     * createObjects
-     */
-    public static void createObjects() {
-        //Wall wall = new Wall("jasmine", new Vertex(10, -2, 170), 5, )
-
-        //Box cage = new Box("cage", new Vertex(10f, -2f, 170f), 5, 5, 5);
-        //addDrawable(cage);
-
-
- /*       Box box = new Box("wood", new Vertex(-5.5f, -2f, -13f), 1, 1, 1);
-        Box box1 = new Box("LightWood", new Vertex(1f, -2f, -6f), 1, 0.5f, 1);
-        Box box2 = new Box("washedWood", new Vertex(4.5f, -2f, -11f), 1, 1, 1);
-
-        addDrawable(box);
-        addDrawable(box1);
-        addDrawable(box2);*/
-
     }
 
 
@@ -162,16 +137,6 @@ public class Level1 {
         }
     }
 
-
-    /**
-     * addCollidable
-     * Add collidable to list of collision objects
-     *
-     * @param c - collidable
-     */
-    private void addCollidable(CollisionObject c) {
-        World.collisionObjects.add(c);
-    }
 
     /**
      * addCollidable

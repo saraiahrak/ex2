@@ -33,7 +33,7 @@ import World.Player;
  * ***********/
 public class World extends KeyAdapter implements GLEventListener, Drawable {
 
-    public Player player = new Player(0f, 0.5f, 187f);
+    public Player player = new Player(5f, 0.5f, 180f);
     public static ArrayList<Drawable> drawables;
     public static ArrayList<CollisionObject> collisionObjects;
     public static boolean wasCollision = false;

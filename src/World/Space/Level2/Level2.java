@@ -23,36 +23,25 @@ import java.util.List;
  * Class Level 2
  * ***********/
 public class Level2 {
-
+    /**
+     * constructor
+     */
     public Level2(GL2 gl) {
         createSpace();
         createObjects();
         createModels(gl);
     }
 
-    /**
-     * constructor
-     */
-    public Level2() { }
-
     public static void createSpace() {
 
         Garden garden = new Garden();
-        addDrawable(garden);
-        // collision!!!
-
         Palace palace = new Palace();
+
+        addDrawable(garden);
         addDrawable(palace);
+
+        addCollidable(garden);
         addCollidable(palace);
-
-/*        MarketPlace market = new MarketPlace();
-        Cave cave = new Cave();
-
-        addDrawable(market);
-        addDrawable(cave);
-
-        addCollidable(market);
-        addCollidable(cave);*/
     }
 
 
@@ -61,28 +50,37 @@ public class Level2 {
      */
     public static void createObjects() {
 
+        Wall jasmine = new Wall("jasmine", new Vertex(240, 32, -16.1f),12, 12, 0);
+        Box cage = new Box("cage", new Vertex(240f, 32f, -16f), 12, 12, 12);
         Box box = new Box("wood", new Vertex(5.5f, 0f, 13f), 1, 1, 1);
         Box box1 = new Box("LightWood", new Vertex(1f, 0f, 6f), 1, 0.5f, 1);
         Box box2 = new Box("washedWood", new Vertex(4.5f, 0f, 11f), 1, 1, 1);
 
 
-        addDrawable(box);
+
+        addDrawable(jasmine);
+        addDrawable(cage);
         addDrawable(box1);
         addDrawable(box2);
 
+        addCollidable(jasmine);
+        addCollidable(cage);
+        addCollidable(box);
+        addCollidable(box1);
+        addCollidable(box2);
     }
+
+
 
 
     /**
      * createModels
      */
     public static void createModels(GL2 gl2) {
-
         OBJLoader carpet = new OBJLoader("models/carpet/PersianCarpet.obj", gl2);
         addDrawable(carpet.getModel());
         carpet.getModel().translate(15f, 5f, 15f);
         carpet.getModel().scale(0.014f, 0.014f, 0.014f);
-
     }
 
 
@@ -92,7 +90,7 @@ public class Level2 {
      *
      * @param c - collidable
      */
-    private void addCollidable(CollisionObject c) {
+    private static void addCollidable(CollisionObject c) {
         World.collisionObjects.add(c);
     }
 
@@ -111,6 +109,25 @@ public class Level2 {
         List<Wall> externalWalls = palace.getExternalWalls();
         for (Wall wall: externalWalls) {
             World.collisionObjects.add(wall);
+        }
+    }
+
+
+    /**
+     * addCollidable
+     * Add collidable to list of collision objects
+     *
+     * @param garden - collidables
+     */
+    private static void addCollidable(Garden garden) {
+        World.collisionObjects.add(garden.back);
+        World.collisionObjects.add(garden.front);
+        World.collisionObjects.add(garden.left);
+        World.collisionObjects.add(garden.right);
+
+        List<Box> boxes = garden.getObstacles();
+        for (Box box : boxes) {
+            World.collisionObjects.add(box);
         }
     }
 

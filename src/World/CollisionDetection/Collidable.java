@@ -22,5 +22,11 @@ public interface Collidable {
      */
     public boolean isWall();
 
+    /**
+     * isBox
+     * @return true if is a box, otherwise false
+     */
+    public boolean isBox();
+
     public String getTextureKey();
 }

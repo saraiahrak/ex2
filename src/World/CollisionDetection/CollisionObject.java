@@ -18,5 +18,9 @@ public class CollisionObject implements Collidable {
         return false;
     }
 
+    public boolean isBox() {
+        return false;
+    }
+
     public String getTextureKey() {return null; }
 }

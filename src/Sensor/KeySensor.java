@@ -4,7 +4,6 @@
  * *********************/
 
 package Sensor;
-import World.*;
 import World.CollisionDetection.CollisionObject;
 import World.CollisionDetection.CollisionDetection;
 import World.Space.World;
@@ -77,7 +76,8 @@ public class KeySensor implements KeyListener {
         }
 
         if (e.getKeyCode() == KeyEvent.VK_F1) {
-            coordinates.init(50f, 34f, 5f);
+            //coordinates.init(50f, 34f, 5f);
+            coordinates.init(80f, 3f, 80f);
             World.firstLevel = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
