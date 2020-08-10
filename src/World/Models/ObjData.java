@@ -19,14 +19,16 @@ import javax.media.opengl.GL2;
 public class ObjData implements Drawable {
 
     private String path;
-    private String fly = null;
+    private String fly;
+    public boolean wasCollision;
+    public boolean wasUsed;
     private Texture texture;
     private int list;
     private Material material;
     private float[] scale = {1,1,1};
     private float[] translate = {0,0,0};
     private float[] rotate = {0,0,0,0};
-    private float[] movement = {0,0,0,0};
+    private float[] motion = {0,0,0};
 
     /*****************
      * Constructor
@@ -34,6 +36,9 @@ public class ObjData implements Drawable {
 
     public ObjData(String modelPath) {
         path = modelPath;
+        fly = null;
+        wasCollision = false;
+        wasUsed = false;
     }
 
     /*************
@@ -107,38 +112,44 @@ public class ObjData implements Drawable {
 
 
     /**
-     * movement
-     * rotate the OBJ over the x,y,z axis consecutively according to the given parameters
+     * motion
+     * move the OBJ over the x,y,z axis according to the given parameters
      *
-     * @param angle value
      * @param x value
      * @param y value
      * @param z value
      */
-    public void movement(float angle, float x, float y, float z) {
-        movement[0] += angle;
-        movement[1] += x;
-        movement[2] += y;
-        movement[3] += z;
+    public void motion(float x, float y, float z) {
+        motion[0] = x;
+        motion[1] = y;
+        motion[2] = z;
     }
+
 
     @Override
     public void draw(GL2 gl) {
+
         gl.glPushMatrix();
 
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR);
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR);
 
-        gl.glTranslatef(translate[0],translate[1],translate[2]);
+        if (this.wasCollision) {
+            this.wasCollision = false;
+            for (int i = 0; i < 3; i++) {
+                this.motion[i] *= -1;
+            }
+        }
+        this.translate(this.motion[0], this.motion[1], this.motion[2]);
+        gl.glTranslatef(translate[0], translate[1], translate[2]);
+
         gl.glScalef(scale[0],scale[1],scale[2]);
         gl.glRotatef(rotate[0], rotate[1], rotate[2], rotate[3]);
-        if (movement[0] != 0) {
-            if (movement[0] >= 360) {
-                movement[0] = 1;
-            } else {
-                movement[0] += movement[0];
-            }
-            gl.glRotatef(movement[0], movement[1], movement[2], movement[3]);
+
+        if (this.path.contains("coin")) {
+            gl.glRotatef(90, 1, 0, 0);
+            rotateCoin();
+            gl.glRotatef(rotate[0], rotate[1], rotate[2], rotate[3]);
         }
 
         if (texture != null) {
@@ -151,11 +162,24 @@ public class ObjData implements Drawable {
 
 
     /**
+     * rotateCoin
+     * update the angle
+     */
+    private void rotateCoin() {
+        if (rotate[0] >= 360) {
+            rotate[0] = 1;
+        } else {
+            rotate[0] += rotate[0];
+        }
+    }
+
+
+    /**
      * drawMotionModel
      *
      * @param gl - GL2
      */
-    public void drawMotionModel(GL2 gl) {
+    public void drawModelThatFollowsPlayer(GL2 gl) {
         gl.glPushMatrix();
 
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR);

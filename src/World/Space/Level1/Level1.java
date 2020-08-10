@@ -113,8 +113,7 @@ public class Level1 {
             coin.getModel().translate(Float.parseFloat(values[0]),
                     Float.parseFloat(values[1]),Float.parseFloat(values[2]));
             coin.getModel().scale(0.2f, 0.2f, 0.2f);
-            coin.getModel().rotate(90, 1, 0, 0);
-            coin.getModel().movement(0.01f, 0, 0, 1);
+            coin.getModel().rotate(0.01f, 0, 1, 0);
         }
     }
 
@@ -134,6 +133,7 @@ public class Level1 {
             cop.getModel().translate(Float.parseFloat(values[0]),
                     -2, Float.parseFloat(values[1]));
             cop.getModel().scale(0.0007f, 0.0007f, 0.0007f);
+            cop.getModel().setMotion(0.01f, 0f, 0f);
         }
     }
 

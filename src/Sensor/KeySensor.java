@@ -128,12 +128,13 @@ public class KeySensor implements KeyListener {
                             ("x", coordinates.getOrigin(), 0, 9);
 
                 }
+
                 if (c.getTextureKey().equals("palace")) {
                     if (CollisionDetection.checkBoundaries
                             ("x", coordinates.getOrigin(), 47, 52)) {
                         if (CollisionDetection.checkBoundaries
                                 ("y", coordinates.getOrigin(), 34.5f, 40)) {
-                            Model.wasUsed = true;
+                            //Model.wasUsed = true;
                             return false;
                         }
                     }
@@ -148,6 +149,7 @@ public class KeySensor implements KeyListener {
     /**
      * fly
      * Checks if was Collision between the player and the carpet
+     * Models collision!!!
      *
      * @return true if was collision, otherwise false
      */

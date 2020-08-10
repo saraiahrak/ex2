@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Model implements Drawable {
 
     private ArrayList<ObjData> dataList;
-    public static boolean wasUsed = false;
+    //public static boolean wasUsed = false;
 
     public Model(ArrayList<ObjData> list) {
         setDataList(list);
@@ -73,34 +73,32 @@ public class Model implements Drawable {
     }
 
     /**
-     * movement
-     * rotate the OBJ over the x,y,z axis consecutively according to the given parameters
+     * setMotion
+     * move the OBJ over the x,y,z axis according to the given parameters
      *
-     * @param angle value
-     * @param x value
-     * @param y value
-     * @param z value
+     * @param xStep value
+     * @param yStep value
+     * @param zStep value
      */
-    public void movement(float angle, float x, float y, float z) {
+    public void setMotion(float xStep, float yStep, float zStep) {
         for (ObjData data: dataList) {
-            data.movement(angle, x, y, z);
+            data.motion(xStep, yStep, zStep);
         }
     }
-
 
     @Override
     public void draw(GL2 gl) {
         for (ObjData data : dataList) {
             if (World.player.coordinates.getTraced()) {
                 if (data.getPath().contains("carpet")) {
-                    if (wasUsed) {
+                    if (data.wasUsed) {
                         dataList.remove(data);
                         if (dataList.isEmpty()) {
                             return;
                         }
                         continue;
                     }
-                    data.drawMotionModel(gl);
+                    data.drawModelThatFollowsPlayer(gl);
                     continue;
                 }
             }
