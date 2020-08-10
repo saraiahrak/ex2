@@ -88,7 +88,6 @@ public class KeySensor implements KeyListener {
             World.exit();
         }
         // checks if the carpet was found
-        World.secondLevel = true;
         if (World.secondLevel && !onFly) {
             if(fly()) {
                 coordinates.init(42f, 10f, 67f);

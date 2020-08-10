@@ -34,8 +34,8 @@ import World.Player;
  * ***********/
 public class World extends KeyAdapter implements GLEventListener, Drawable {
 
-    //public Player player = new Player(5f, 0.5f, 180f);
-    public static Player player = new Player(32f, 3.5f, 86f);
+    public static Player player = new Player(5f, 0.5f, 180f);
+    //public static Player player = new Player(32f, 3.5f, 86f);
     public static ArrayList<Drawable> drawables;
     public static ArrayList<CollisionObject> collisionObjects;
     public static boolean wasCollision = false;
@@ -97,8 +97,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         // enable light
         gl.glEnable(GL2.GL_LIGHTING);
 
-        //initLevel1(gl);
-        initLevel2(gl);
+        initLevel1(gl);
         initGL(gl);
 
         // set colors
