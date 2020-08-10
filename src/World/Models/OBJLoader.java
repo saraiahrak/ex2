@@ -17,6 +17,7 @@ import java.util.zip.ZipInputStream;
 
 import javax.media.opengl.GL2;
 
+import World.Space.World;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
 
@@ -112,7 +113,7 @@ public class OBJLoader {
 
     private void SetOBJ(GL2 gl) {
         SetFaceRenderType();
-        ObjData data = new ObjData();
+        ObjData data = new ObjData(OBJModelPath);
         // get the tDisplayListID
         data.setList(ConstructInterleavedArray(gl));
         addToList(objDataName, data);

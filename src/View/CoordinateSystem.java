@@ -14,12 +14,17 @@ public class CoordinateSystem {
     private Vector yAxis;
     private Vector zAxis;
     private Vector origin;
+    private float angleX;
+    private float angleY;
+    private float angleZ;
+    private boolean traced;
 
     /**
      * constructor
      */
     public CoordinateSystem(float xPos, float yPos, float zPos) {
         init(xPos, yPos, zPos);
+        traced = false;
     }
 
     /**
@@ -29,6 +34,9 @@ public class CoordinateSystem {
     public void init(float xPos, float yPos, float zPos) {
         initAxes();
         initOrigin(xPos, yPos, zPos);
+        angleX = 0;
+        angleY = 0;
+        angleZ = 0;
     }
 
     /**
@@ -73,6 +81,34 @@ public class CoordinateSystem {
         return origin;
     }
 
+    public float getAngleX() { return angleX; }
+
+    public float getAngleY() { return angleY; }
+
+    public float getAngleZ() { return angleZ; }
+
+    public boolean getTraced() { return traced; }
+
+    /********
+     * Setters
+     * ******/
+
+    public void setAngleXFromPlayer(float x) {
+        this.angleX += 150 * x;
+    }
+
+    public void setAngleYFromPlayer(float y) {
+        this.angleY += 50 * y;
+    }
+
+    public void setAngleZFromPlayer(float z) {
+        this.angleZ += 150 * z;
+    }
+
+    public void setTraced() {
+        traced = true;
+    }
+
     /**
      * rotate
      * Changing the look
@@ -84,12 +120,14 @@ public class CoordinateSystem {
         Vector xNew, yNew, zNew;
         // look up or down
         if (axis == 'X') {
+            setAngleXFromPlayer((float)angle);
             yNew = zAxis.multByScalar((float) Math.sin(angle)).add(yAxis.multByScalar((float) Math.cos(angle)));
             yAxis = yNew.normalize();
             zNew = zAxis.multByScalar((float) Math.cos(angle)).sub(yAxis.multByScalar((float) Math.sin(angle)));
             zAxis = zNew.normalize();
         }
         if (axis == 'Y') {
+            setAngleYFromPlayer((float)angle);
             zNew = xAxis.multByScalar((float) Math.sin(angle)).add(zAxis.multByScalar((float) Math.cos(angle)));
             zAxis = zNew.normalize();
             xNew = xAxis.multByScalar((float) Math.cos(angle)).sub(zAxis.multByScalar((float) Math.sin(angle)));
@@ -97,6 +135,7 @@ public class CoordinateSystem {
             // divert the look to right or left
         }
         if (axis == 'Z') {
+            setAngleZFromPlayer((float)angle);
             xNew = xAxis.multByScalar((float) Math.cos(angle)).sub(yAxis.multByScalar((float) Math.sin(angle)));
             xAxis = xNew.normalize();
             yNew = xAxis.multByScalar((float) Math.sin(angle)).add(yAxis.multByScalar((float) Math.cos(angle)));

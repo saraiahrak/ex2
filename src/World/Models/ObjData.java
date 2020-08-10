@@ -5,8 +5,12 @@
 
 package World.Models;
 
+import View.CoordinateSystem;
+import World.Space.World;
 import com.jogamp.opengl.util.texture.Texture;
 import World.Drawable;
+import sun.plugin.services.WPlatformService;
+
 import javax.media.opengl.GL2;
 
 /*************
@@ -14,6 +18,8 @@ import javax.media.opengl.GL2;
  * ***********/
 public class ObjData implements Drawable {
 
+    private String path;
+    private String fly = null;
     private Texture texture;
     private int list;
     private Material material;
@@ -25,7 +31,22 @@ public class ObjData implements Drawable {
     /*****************
      * Constructor
      * ***************/
-    public ObjData() { }
+
+    public ObjData(String modelPath) {
+        path = modelPath;
+    }
+
+    /*************
+     * Getters
+     * ***********/
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getFly() {
+        return fly;
+    }
 
     /*************
      * Setters
@@ -84,6 +105,7 @@ public class ObjData implements Drawable {
         rotate[3] += z;
     }
 
+
     /**
      * movement
      * rotate the OBJ over the x,y,z axis consecutively according to the given parameters
@@ -126,4 +148,35 @@ public class ObjData implements Drawable {
         gl.glCallList(list);
         gl.glPopMatrix();
     }
+
+
+    /**
+     * drawMotionModel
+     *
+     * @param gl - GL2
+     */
+    public void drawMotionModel(GL2 gl) {
+        gl.glPushMatrix();
+
+        gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR);
+        gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR);
+
+        gl.glTranslatef(World.player.getPosition().getX(),
+                World.player.getPosition().getY() - 2.5f,
+                World.player.getPosition().getZ() - 2f);
+
+        gl.glScalef(scale[0],scale[1],scale[2]);
+
+        gl.glRotatef(World.player.coordinates.getAngleX(), 1, 0, 0);
+        gl.glRotatef(World.player.coordinates.getAngleY(), 0, 1, 0);
+        gl.glRotatef(World.player.coordinates.getAngleZ(), 0, 0, 1);
+
+        if (texture != null) {
+            texture.bind(gl);
+        }
+        // causes the named display list to be executed
+        gl.glCallList(list);
+        gl.glPopMatrix();
+    }
+
 }

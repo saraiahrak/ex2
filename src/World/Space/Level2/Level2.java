@@ -6,6 +6,7 @@
 package World.Space.Level2;
 
 import Utils.Reader;
+import View.CoordinateSystem;
 import World.CollisionDetection.CollisionObject;
 import World.Drawable;
 import World.Models.OBJLoader;
@@ -23,13 +24,14 @@ import java.util.List;
  * Class Level 2
  * ***********/
 public class Level2 {
+
     /**
      * constructor
      */
     public Level2(GL2 gl) {
-        createSpace();
         createObjects();
         createModels(gl);
+        createSpace();
     }
 
     public static void createSpace() {
@@ -52,25 +54,13 @@ public class Level2 {
 
         Wall jasmine = new Wall("jasmine", new Vertex(240, 32, -16.1f),12, 12, 0);
         Box cage = new Box("cage", new Vertex(240f, 32f, -16f), 12, 12, 12);
-        Box box = new Box("wood", new Vertex(5.5f, 0f, 13f), 1, 1, 1);
-        Box box1 = new Box("LightWood", new Vertex(1f, 0f, 6f), 1, 0.5f, 1);
-        Box box2 = new Box("washedWood", new Vertex(4.5f, 0f, 11f), 1, 1, 1);
-
-
 
         addDrawable(jasmine);
         addDrawable(cage);
-        addDrawable(box1);
-        addDrawable(box2);
 
         addCollidable(jasmine);
         addCollidable(cage);
-        addCollidable(box);
-        addCollidable(box1);
-        addCollidable(box2);
     }
-
-
 
 
     /**
@@ -79,8 +69,10 @@ public class Level2 {
     public static void createModels(GL2 gl2) {
         OBJLoader carpet = new OBJLoader("models/carpet/PersianCarpet.obj", gl2);
         addDrawable(carpet.getModel());
-        carpet.getModel().translate(15f, 5f, 15f);
-        carpet.getModel().scale(0.014f, 0.014f, 0.014f);
+        carpet.getModel().translate(42f, 0.5f, 62f);
+        //carpet.getModel().translate(coordinates.getOrigin().getX(),0.5f,
+        //       coordinates.getOrigin().getZ() + 5f);
+        carpet.getModel().scale(0.07f, 0.07f, 0.09f);
     }
 
 

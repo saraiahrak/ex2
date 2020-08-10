@@ -26,7 +26,7 @@ public class Garden implements Drawable {
     public Wall right;
     public Wall back;
 
-    public static List<Box> boxes;
+    public static List<Box> bushes;
 
     /*****************
      * Constructor
@@ -39,7 +39,7 @@ public class Garden implements Drawable {
         right = new Wall("gardenWall", new Vertex(100f, 0f, 0f), 80f, 0f, 100f);
         back = new Wall("gardenWall", new Vertex(0f, 0f, 100f), 80f, 100f, 0f);
 
-        boxes = new ArrayList<>();
+        bushes = new ArrayList<>();
         initObstacles();
     }
 
@@ -50,7 +50,7 @@ public class Garden implements Drawable {
      */
     private static void initObstacles() {
         ArrayList<String> lines = Reader.readLines("resources/garden/obstacles.txt");
-        boxes = Box.createBoxes(lines);
+        bushes = Box.createBoxes(lines, "bush");
     }
 
     @Override
@@ -61,8 +61,8 @@ public class Garden implements Drawable {
         right.draw(gl);
         back.draw(gl);
         front.draw(gl);
-        for (Box box : boxes) {
-            box.draw(gl);
+        for (Box bush : bushes) {
+            bush.draw(gl);
         }
     }
 
@@ -72,8 +72,7 @@ public class Garden implements Drawable {
      * get list of boxes
      */
     public List<Box> getObstacles() {
-        return boxes;
+        return bushes;
     }
-
 
 }

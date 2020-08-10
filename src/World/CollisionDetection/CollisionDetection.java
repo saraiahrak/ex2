@@ -63,10 +63,20 @@ public class CollisionDetection {
         return true;
     }
 
-    public static boolean checkBoundaries(Vector origin) {
-        if (origin.getX() > 0 && origin.getX() < 9) {
-            return false;
+    public static boolean checkBoundaries(String axis, Vector origin, float min, float max) {
+        if (axis == "x") {
+            if (origin.getX() > min && origin.getX() < max) {
+                return true;
+            }
+        } else if (axis == "y") {
+            if (origin.getY() > min && origin.getY() < max) {
+                return true;
+            }
+        } else if (axis == "z") {
+            if (origin.getZ() > min && origin.getZ() < max) {
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 }

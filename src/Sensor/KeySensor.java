@@ -6,6 +6,8 @@
 package Sensor;
 import World.CollisionDetection.CollisionObject;
 import World.CollisionDetection.CollisionDetection;
+import World.Models.Model;
+import World.Models.ObjData;
 import World.Space.World;
 import View.CoordinateSystem;
 
@@ -19,12 +21,14 @@ import java.awt.event.MouseEvent;
 public class KeySensor implements KeyListener {
 
     public static CoordinateSystem coordinates;
+    private boolean onFly;
 
     /*****************
      * Constructor
      * ***************/
     public KeySensor(CoordinateSystem myCoordinates) {
         coordinates = myCoordinates;
+        onFly = false;
     }
 
     /*********
@@ -77,32 +81,37 @@ public class KeySensor implements KeyListener {
 
         if (e.getKeyCode() == KeyEvent.VK_F1) {
             //coordinates.init(50f, 34f, 5f);
-            coordinates.init(80f, 3f, 80f);
+            coordinates.init(32f, 3.5f, 86f);
             World.firstLevel = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             World.exit();
         }
+        // checks if the carpet was found
+        World.secondLevel = true;
+        if (World.secondLevel && !onFly) {
+            if(fly()) {
+                coordinates.init(42f, 10f, 67f);
+                coordinates.setTraced();
+                onFly = true;
+            }
+        }
     }
 
     public void keyReleased(KeyEvent arg0) {
         // TODO Auto-generated method stub
-
     }
 
     public void keyTyped(KeyEvent arg0) {
         // TODO Auto-generated method stub
-
     }
 
     public void mouseDragged(MouseEvent arg0) {
         // TODO Auto-generated method stub
-
     }
 
     public void mouseMoved(MouseEvent arg0) {
         // TODO Auto-generated method stub
-
     }
 
 
@@ -116,10 +125,40 @@ public class KeySensor implements KeyListener {
         for (CollisionObject c : World.collisionObjects) {
             if (CollisionDetection.colDetect(c, coordinates.getOrigin())) {
                 if (c.getTextureKey().equals("caveEntry")) {
-                    return CollisionDetection.checkBoundaries(coordinates.getOrigin());
+                    return !CollisionDetection.checkBoundaries
+                            ("x", coordinates.getOrigin(), 0, 9);
+
+                }
+                if (c.getTextureKey().equals("palace")) {
+                    if (CollisionDetection.checkBoundaries
+                            ("x", coordinates.getOrigin(), 47, 52)) {
+                        if (CollisionDetection.checkBoundaries
+                                ("y", coordinates.getOrigin(), 34.5f, 40)) {
+                            Model.wasUsed = true;
+                            return false;
+                        }
+                    }
                 }
                 return true;
             }
+        }
+        return false;
+    }
+
+
+    /**
+     * fly
+     * Checks if was Collision between the player and the carpet
+     *
+     * @return true if was collision, otherwise false
+     */
+    public boolean fly() {
+        boolean xFlag = CollisionDetection.checkBoundaries
+                ("x", coordinates.getOrigin(), 35, 48);
+        boolean zFlag = CollisionDetection.checkBoundaries
+                    ("z", coordinates.getOrigin(), 50, 70);
+        if (xFlag && zFlag) {
+            return true;
         }
         return false;
     }

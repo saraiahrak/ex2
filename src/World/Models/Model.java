@@ -6,6 +6,7 @@
 package World.Models;
 
 import World.Drawable;
+import World.Space.World;
 
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class Model implements Drawable {
 
     private ArrayList<ObjData> dataList;
+    public static boolean wasUsed = false;
 
     public Model(ArrayList<ObjData> list) {
         setDataList(list);
@@ -24,7 +26,6 @@ public class Model implements Drawable {
     private void setDataList(ArrayList<ObjData> list) {
         this.dataList = list;
     }
-
 
     /**
      * scale
@@ -89,7 +90,20 @@ public class Model implements Drawable {
 
     @Override
     public void draw(GL2 gl) {
-        for (ObjData data: dataList) {
+        for (ObjData data : dataList) {
+            if (World.player.coordinates.getTraced()) {
+                if (data.getPath().contains("carpet")) {
+                    if (wasUsed) {
+                        dataList.remove(data);
+                        if (dataList.isEmpty()) {
+                            return;
+                        }
+                        continue;
+                    }
+                    data.drawMotionModel(gl);
+                    continue;
+                }
+            }
             data.draw(gl);
         }
     }

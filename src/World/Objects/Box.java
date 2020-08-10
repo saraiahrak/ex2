@@ -124,22 +124,23 @@ public class Box extends CollisionObject implements Drawable {
      * Create boxes from string of coordinates
      *
      * @param lines string of coordinates
+     * @param texture name
      * @return boxes array
      */
-    public static ArrayList<Box> createBoxes(List<String> lines) {
+
+    public static ArrayList<Box> createBoxes(List<String> lines, String texture) {
         ArrayList<Box> boxesList = new ArrayList<>();
 
         for (String line : lines) {
             String[] coordinate = line.split(" ");
-            String texture = coordinate[0];
-            float x = Float.parseFloat(coordinate[1]);
-            float y = Float.parseFloat(coordinate[2]);
-            float z = Float.parseFloat(coordinate[3]);
-            float d = Float.parseFloat(coordinate[4]);
-            float h = Float.parseFloat(coordinate[5]);
-            float w = Float.parseFloat(coordinate[6]);
+            float x = Float.parseFloat(coordinate[0]);
+            float y = Float.parseFloat(coordinate[1]);
+            float z = Float.parseFloat(coordinate[2]);
+            float h = Float.parseFloat(coordinate[3]);
+            float w = Float.parseFloat(coordinate[4]);
+            float d = Float.parseFloat(coordinate[5]);
 
-            boxesList.add(new Box(texture, new Vertex(x, y, z), d, h, w));
+            boxesList.add(new Box(texture, new Vertex(x, y, z), h, w, d));
         }
         return boxesList;
     }
