@@ -5,13 +5,18 @@
 
 package World.Space.Level1;
 
+import Math.Vertex;
+import Utils.Reader;
+import World.CollisionDetection.Collidable;
 import World.Drawable;
-import World.Objects.*;
-import Math.*;
+import World.Objects.Ceiling;
+import World.Objects.Floor;
+import World.Objects.Wall;
 
 import javax.media.opengl.GL2;
-import java.util.*;
-import Utils.Reader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /*************
  * Class Cave
@@ -20,9 +25,10 @@ public class Cave implements Drawable {
 
     private Floor floor;
     private Ceiling ceiling;
-    public Wall exit;
-    public Wall genie;
-    public List<Wall> maze;
+    private Wall exit;
+    private Wall genie;
+    private List<Wall> maze;
+    private ArrayList<Collidable> collidables;
 
 
     /*****************
@@ -36,6 +42,7 @@ public class Cave implements Drawable {
 
         maze = new ArrayList<>();
         initMaze();
+        setCollidables();
     }
 
     @Override
@@ -49,7 +56,15 @@ public class Cave implements Drawable {
         }
     }
 
+    public ArrayList<Collidable> getCollidables() {
+        return collidables;
+    }
 
+    private void setCollidables() {
+        collidables = new ArrayList<>();
+        collidables.add(genie);
+        collidables.addAll(maze);
+    }
     /**
      * initMaze
      * Parse walls file, initialize maze walls

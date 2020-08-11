@@ -4,7 +4,12 @@
  * *********************/
 
 package View;
-import Math.*;
+
+import Math.Vector;
+import World.CollisionDetection.Collidable;
+import World.CollisionDetection.CollisionFactory;
+import World.CollisionDetection.CollisionHandler;
+import World.Space.World;
 
 /*****************
  * Class CoordinateSystem
@@ -62,8 +67,8 @@ public class CoordinateSystem {
     }
 
     /********
-    * Getters
-    * ******/
+     * Getters
+     * ******/
 
     public Vector getxAxis() {
         return xAxis;
@@ -122,23 +127,23 @@ public class CoordinateSystem {
         if (axis == 'X') {
             setAngleXFromPlayer((float)angle);
             yNew = zAxis.multByScalar((float) Math.sin(angle)).add(yAxis.multByScalar((float) Math.cos(angle)));
-            yAxis = yNew.normalize();
             zNew = zAxis.multByScalar((float) Math.cos(angle)).sub(yAxis.multByScalar((float) Math.sin(angle)));
+            yAxis = yNew.normalize();
             zAxis = zNew.normalize();
         }
         if (axis == 'Y') {
             setAngleYFromPlayer((float)angle);
             zNew = xAxis.multByScalar((float) Math.sin(angle)).add(zAxis.multByScalar((float) Math.cos(angle)));
-            zAxis = zNew.normalize();
             xNew = xAxis.multByScalar((float) Math.cos(angle)).sub(zAxis.multByScalar((float) Math.sin(angle)));
+            zAxis = zNew.normalize();
             xAxis = xNew.normalize();
             // divert the look to right or left
         }
         if (axis == 'Z') {
             setAngleZFromPlayer((float)angle);
             xNew = xAxis.multByScalar((float) Math.cos(angle)).sub(yAxis.multByScalar((float) Math.sin(angle)));
-            xAxis = xNew.normalize();
             yNew = xAxis.multByScalar((float) Math.sin(angle)).add(yAxis.multByScalar((float) Math.cos(angle)));
+            xAxis = xNew.normalize();
             yAxis = yNew.normalize();
         }
     }
@@ -151,15 +156,28 @@ public class CoordinateSystem {
      * @param step - size of movement
      */
     public void move(char axis, float step) {
+        Vector next = null;
+
         if (axis == 'X') {
-            origin = origin.add(xAxis.multByScalar(step));
+            next = origin.add(xAxis.multByScalar(step));
         }
         if (axis == 'Y') {
-            origin = origin.add(yAxis.multByScalar(step));
+            next = origin.add(yAxis.multByScalar(step));
         }
         if (axis == 'Z') {
-            origin = origin.add(zAxis.multByScalar(step));
+            next = origin.add(zAxis.multByScalar(step));
         }
+
+        CollisionHandler handler = CollisionFactory.create();
+
+        for (Collidable c : World.collidables) {
+            boolean intersection = handler.handle(c, next);
+            if (intersection) {
+                return;
+            }
+        }
+
+        origin = next;
     }
 
 }

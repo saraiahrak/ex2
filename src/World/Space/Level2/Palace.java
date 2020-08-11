@@ -5,12 +5,12 @@
 
 package World.Space.Level2;
 
+import Math.Vertex;
 import Utils.Reader;
 import World.Drawable;
 import World.Objects.Ceiling;
 import World.Objects.Floor;
 import World.Objects.Wall;
-import Math.*;
 
 import javax.media.opengl.GL2;
 import java.util.ArrayList;

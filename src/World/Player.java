@@ -4,9 +4,10 @@
  * *********************/
 
 package World;
+
+import Math.Vector;
 import Sensor.KeySensor;
-import View.*;
-import Math.*;
+import View.CoordinateSystem;
 
 /*************
  * Class Player
@@ -30,7 +31,6 @@ public class Player {
         coordinates = new CoordinateSystem(xPos, yPos, zPos);
         position = coordinates.getOrigin();
         lookAt = position.sub(coordinates.getzAxis());
-        lookAt.normalize();
         up = new Vector(0, 1, 0);
     }
 
@@ -39,7 +39,6 @@ public class Player {
         coordinates = KeySensor.coordinates;
         position = coordinates.getOrigin();
         lookAt = position.sub(coordinates.getzAxis());
-        lookAt.normalize();
         up = coordinates.getyAxis();
     }
 

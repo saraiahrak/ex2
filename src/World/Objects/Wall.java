@@ -5,25 +5,29 @@
 
 package World.Objects;
 
-import World.CollisionDetection.CollisionObject;
-import com.jogamp.opengl.util.texture.Texture;
 import Design.TextureFactory;
+import Math.Vertex;
+import World.CollisionDetection.Collidable;
 import World.Drawable;
-import Math.*;
+import com.jogamp.opengl.util.texture.Texture;
+
 import javax.media.opengl.GL2;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 /*************
  * Class Wall
  * ***********/
-public class Wall extends CollisionObject implements Drawable {
+public class Wall implements Drawable, Polygon {
 
     public String textureKey;
     public Texture texture = null;
     public float height;
     public float depth;
     public float width;
+
+    private ArrayList<Vertex> vertices;
     public Vertex corner;
     public Vertex corner1;
     public Vertex corner2;
@@ -40,6 +44,7 @@ public class Wall extends CollisionObject implements Drawable {
         width = w;
         depth = d;
         setCorners();
+        setVertices();
     }
 
     @Override
@@ -70,19 +75,36 @@ public class Wall extends CollisionObject implements Drawable {
         gl.glEnd();
     }
 
+
+    public void setVertices() {
+        vertices = new ArrayList<>();
+        vertices.add(corner);
+        vertices.add(corner1);
+        vertices.add(corner2);
+        vertices.add(corner3);
+    }
+
+    @Override
+    public ArrayList<Vertex> getVertices() {
+        return vertices;
+    }
+
     public void setCorners() {
         corner1 = new Vertex(corner.getX(), corner.getY() + height, corner.getZ());
         corner2 = new Vertex(corner.getX() + width,
                 corner.getY() + height, corner.getZ() + depth);
         corner3 = new Vertex(corner.getX() + width, corner.getY(), corner.getZ() + depth);
+
     }
+
+
 
 
     /**
      * createWalls
      * Create walls from string of coordinates
      *
-     * @param lines string of coordinates
+     * @param lines   string of coordinates
      * @param texture name
      * @return walls array
      */
@@ -103,14 +125,5 @@ public class Wall extends CollisionObject implements Drawable {
         return wallsList;
     }
 
-    @Override
-    public String getTextureKey() {
-        return textureKey;
-    }
-
-    @Override
-    public boolean isWall() {
-        return true;
-    }
 
 }

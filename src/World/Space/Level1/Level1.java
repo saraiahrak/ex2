@@ -65,14 +65,14 @@ public class Level1 {
      */
     private static void createStreetLights(GL2 gl) {
         ArrayList<String> lines = Reader.readLines("resources/models/dualLight/Lights.txt");
-        for (String line: lines) {
+        for (String line : lines) {
             String[] values = line.split(" ");
 
             OBJLoader singleLight =
                     new OBJLoader("models/dualLight/classic_dual_light.obj", gl);
             addDrawable(singleLight.getModel());
             singleLight.getModel().translate(Float.parseFloat(values[0]),
-                    Float.parseFloat(values[1]),Float.parseFloat(values[2]));
+                    Float.parseFloat(values[1]), Float.parseFloat(values[2]));
             singleLight.getModel().scale(0.014f, 0.014f, 0.014f);
         }
     }
@@ -91,7 +91,7 @@ public class Level1 {
             OBJLoader bench = new OBJLoader("models/bench/classic_park_bench.obj", gl);
             addDrawable(bench.getModel());
             bench.getModel().translate(Float.parseFloat(values[0]),
-                    Float.parseFloat(values[1]),Float.parseFloat(values[2]));
+                    Float.parseFloat(values[1]), Float.parseFloat(values[2]));
             bench.getModel().scale(0.014f, 0.014f, 0.014f);
             bench.getModel().rotate(Float.parseFloat(values[3]), 0, 1, 0);
         }
@@ -111,7 +111,7 @@ public class Level1 {
             OBJLoader coin = new OBJLoader("models/coin/coin.obj", gl);
             addDrawable(coin.getModel());
             coin.getModel().translate(Float.parseFloat(values[0]),
-                    Float.parseFloat(values[1]),Float.parseFloat(values[2]));
+                    Float.parseFloat(values[1]), Float.parseFloat(values[2]));
             coin.getModel().scale(0.2f, 0.2f, 0.2f);
             coin.getModel().rotate(0.01f, 0, 1, 0);
         }
@@ -145,10 +145,7 @@ public class Level1 {
      * @param marketPlace - collidables
      */
     private static void addCollidable(MarketPlace marketPlace) {
-        World.collisionObjects.add(marketPlace.back);
-        World.collisionObjects.add(marketPlace.cave);
-        World.collisionObjects.add(marketPlace.left);
-        World.collisionObjects.add(marketPlace.right);
+        World.collidables.addAll(marketPlace.getCollidables());
     }
 
     /**
@@ -158,11 +155,10 @@ public class Level1 {
      * @param cave - collidables
      */
     private static void addCollidable(Cave cave) {
-        World.collisionObjects.add(cave.genie);
-        List<Wall> walls = cave.getMaze();
-        for (Wall wall: walls) {
-            World.collisionObjects.add(wall);
-        }
+        World.collidables.addAll(cave.getCollidables());
+//        World.collidables.add(cave.genie);
+//        List<Wall> walls = cave.getMaze();
+//        World.collidables.addAll(walls);
     }
 
 

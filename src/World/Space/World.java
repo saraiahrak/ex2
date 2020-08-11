@@ -5,29 +5,25 @@
 
 package World.Space;
 
-import java.awt.Frame;
-import java.util.ArrayList;
-
-import javax.media.opengl.*;
-import javax.media.opengl.awt.GLCanvas;
-import javax.media.opengl.glu.GLU;
-
-import Utils.Reader;
-import View.CoordinateSystem;
-import World.CollisionDetection.CollisionObject;
 import Sensor.KeySensor;
-import World.Models.ObjData;
-import World.Models.OBJLoader;
-import World.Space.Level1.Cave;
+import World.CollisionDetection.Collidable;
+import World.Drawable;
+import World.Player;
 import World.Space.Level1.Level1;
 import World.Space.Level2.Level2;
-import World.Space.Level1.MarketPlace;
 import com.jogamp.newt.Window;
 import com.jogamp.newt.event.KeyAdapter;
 import com.jogamp.newt.event.awt.AWTKeyAdapter;
 import com.jogamp.opengl.util.Animator;
-import World.Drawable;
-import World.Player;
+
+import javax.media.opengl.GL2;
+import javax.media.opengl.GLAutoDrawable;
+import javax.media.opengl.GLEventListener;
+import javax.media.opengl.GLProfile;
+import javax.media.opengl.awt.GLCanvas;
+import javax.media.opengl.glu.GLU;
+import java.awt.*;
+import java.util.ArrayList;
 
 /*************
  * Class World
@@ -35,10 +31,10 @@ import World.Player;
 public class World extends KeyAdapter implements GLEventListener, Drawable {
 
     public static Player player = new Player(5f, 0.5f, 180f);
-    //public static Player player = new Player(32f, 3.5f, 86f);
+
     public static ArrayList<Drawable> drawables;
-    public static ArrayList<CollisionObject> collisionObjects;
-    public static boolean wasCollision = false;
+    public static ArrayList<Collidable> collidables;
+
     public static boolean firstLevel = true;
     public static boolean secondLevel = false;
 
@@ -63,9 +59,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
             initLevel2(gl);
         }
 
-        //if (!wasCollision) {
         player.update();
-        //}
 
         glu.gluLookAt(player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ(),
                 player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
@@ -82,8 +76,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, redLightPos , 0);
         gl.glEnable(GL2.GL_LIGHT1);
 
-//        gl.glTranslatef(0.0f, 0.0f, 0.0f);
-        this.draw(gl);
+        draw(gl);
     }
 
 
@@ -206,7 +199,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
      * Initialize the list
      */
     public static void initCollidables() {
-        collisionObjects = new ArrayList<>();
+        collidables = new ArrayList<>();
     }
 
 
@@ -238,9 +231,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     @Override
     public void draw(GL2 gl) {
         gl.glPushMatrix();
-/*        if (!firstLevel) {
-            firstLevel = true;
-        }*/
+
         for (Drawable d : drawables) {
             d.draw(gl);
         }

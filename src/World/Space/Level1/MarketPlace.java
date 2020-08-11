@@ -5,25 +5,28 @@
 
 package World.Space.Level1;
 
+import Math.Vertex;
+import World.CollisionDetection.Collidable;
 import World.Drawable;
 import World.Objects.Ceiling;
 import World.Objects.Floor;
 import World.Objects.Wall;
-import Math.*;
 
 import javax.media.opengl.GL2;
+import java.util.ArrayList;
 
 /*************
  * Class MarketPlace
  * ***********/
 public class MarketPlace implements Drawable {
 
+    private ArrayList<Collidable> collidables;
     private Floor floor;
     private Ceiling ceiling;
-    public Wall left;
-    public Wall cave;
-    public Wall right;
-    public Wall back;
+    private Wall left;
+    private Wall cave;
+    private Wall right;
+    private Wall back;
 
 
     /*****************
@@ -36,6 +39,20 @@ public class MarketPlace implements Drawable {
         right = new Wall("brick", new Vertex(20f, -2f, -13f), 10f, 0f, 200f);
         back = new Wall("back", new Vertex(-10f, -2f, 187f), 10f, 30f, 0f);
         cave = new Wall("caveEntry", new Vertex(-10f, -2f, -13f), 10f, 30f, 0f);
+
+        setCollidables();
+    }
+
+    public ArrayList<Collidable> getCollidables() {
+        return collidables;
+    }
+
+    private void setCollidables() {
+        collidables = new ArrayList<>();
+        collidables.add(back);
+        collidables.add(left);
+        collidables.add(cave);
+        collidables.add(right);
     }
 
     @Override
