@@ -71,17 +71,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
                 player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
                 player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
 
-
-        // set lighting positions
-        float	roomLightPos[] = {0f,0f,0f,1.0f};
-        float redLightPos[] = {4.5f, 0f, -11.5f, 1.0f};
-
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, roomLightPos , 0);
-        gl.glEnable(GL2.GL_LIGHT0);
-
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, redLightPos , 0);
-        gl.glEnable(GL2.GL_LIGHT1);
-
 //        gl.glTranslatef(0.0f, 0.0f, 0.0f);
         this.draw(gl);
     }
@@ -113,6 +102,17 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
 
         gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, ambient1 , 0);
         gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1 , 0);
+
+        // set lighting positions
+        float roomLightPos[] = {0f,0f,0f,1.0f};
+        float redLightPos[] = {0f,0f,0f,1.0f};
+        //float redLightPos[] = {15f, 0f, -11.5f, 1.0f};
+
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, roomLightPos , 0);
+        gl.glEnable(GL2.GL_LIGHT0);
+
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, redLightPos , 0);
+        gl.glEnable(GL2.GL_LIGHT1);
 
         if (drawable instanceof Window) {
             Window window = (Window) drawable;
