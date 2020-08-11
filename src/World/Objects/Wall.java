@@ -98,8 +98,6 @@ public class Wall implements Drawable, Polygon {
     }
 
 
-
-
     /**
      * createWalls
      * Create walls from string of coordinates

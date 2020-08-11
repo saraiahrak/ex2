@@ -35,9 +35,9 @@ public class Cave implements Drawable {
      * Constructor
      * ***************/
     public Cave() {
-        floor = new Floor("ceiling2", new Vertex(-40.5f, -2f, -113.02f), 0f, 90f, -13.02f);
-        ceiling = new Ceiling("ceiling2", new Vertex(-40.5f, 8f, -113.02f), 0f, 90f, -13.02f);
-        exit = new Wall("exit", new Vertex(-0.5f, -2, -13.5f), 10, 10, 0);
+        floor = new Floor("cave1", new Vertex(-40.5f, -2f, -113.6f), 0f, 90f, -13.6f);
+        ceiling = new Ceiling("cave1", new Vertex(-40.5f, 8f, -113.6f), 0f, 90f, -13.6f);
+        exit = new Wall("exit", new Vertex(-0.5f, -2, -13.6f), 10, 10, 0);
         genie = new Wall("genie", new Vertex(-0.5f, -2, -113.02f), 10, 10, 0);
 
         maze = new ArrayList<>();
