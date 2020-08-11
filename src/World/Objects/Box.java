@@ -5,11 +5,12 @@
 
 package World.Objects;
 
-import Math.*;
-import World.CollisionDetection.CollisionObject;
-import com.jogamp.opengl.util.texture.Texture;
 import Design.TextureFactory;
+import Math.Vertex;
+import World.CollisionDetection.Collidable;
 import World.Drawable;
+import com.jogamp.opengl.util.texture.Texture;
+
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 /*************
  * Class Box
  * ***********/
-public class Box extends CollisionObject implements Drawable {
+public class Box implements Drawable, Collidable {
 
     private String textureKey;
     private Texture texture;
@@ -143,10 +144,5 @@ public class Box extends CollisionObject implements Drawable {
             boxesList.add(new Box(texture, new Vertex(x, y, z), h, w, d));
         }
         return boxesList;
-    }
-
-    @Override
-    public boolean isBox() {
-        return true;
     }
 }

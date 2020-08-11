@@ -5,16 +5,20 @@
 
 package World.Objects;
 
-import com.jogamp.opengl.util.texture.Texture;
 import Design.TextureFactory;
+import Math.Vertex;
+import World.CollisionDetection.Collidable;
 import World.Drawable;
+import com.jogamp.opengl.util.texture.Texture;
+
 import javax.media.opengl.GL2;
-import Math.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /*************
  * Class Floor
  * ***********/
-public class Floor implements Drawable {
+public class Floor implements Drawable, Polygon {
 
     private String textureKey;
     private Texture texture;
@@ -25,6 +29,7 @@ public class Floor implements Drawable {
     public Vertex corner1;
     public Vertex corner2;
     public Vertex corner3;
+    private ArrayList<Vertex> vertices;
 
 
     /*****************
@@ -37,6 +42,7 @@ public class Floor implements Drawable {
         width = w;
         depth = d;
         setCorners();
+        setVertices();
     }
 
     @Override
@@ -72,5 +78,19 @@ public class Floor implements Drawable {
         corner2 = new Vertex(corner.getX() + width,
                 corner.getY() + height, corner.getZ() + depth);
         corner3 = new Vertex(corner.getX() + width, corner.getY(), corner.getZ() + depth);
+    }
+
+
+    public void setVertices() {
+        vertices = new ArrayList<>();
+        vertices.add(corner);
+        vertices.add(corner1);
+        vertices.add(corner2);
+        vertices.add(corner3);
+    }
+
+    @Override
+    public ArrayList<Vertex> getVertices() {
+        return vertices;
     }
 }

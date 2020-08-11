@@ -4,14 +4,15 @@
  * *********************/
 
 package Math;
-import World.CollisionDetection.CollisionObject;
+
+import World.CollisionDetection.Collidable;
 
 import java.util.Arrays;
 
 /*************
  * Class Vector
  * ***********/
-public class Vector extends CollisionObject {
+public class Vector implements Collidable {
 
     private float[] vector;
     private int dim;
@@ -68,7 +69,7 @@ public class Vector extends CollisionObject {
     }
 
     public float getSize() {
-        return (float)Math.sqrt(this.dot(this));
+        return (float) Math.sqrt(this.dot(this));
     }
 
 
@@ -103,7 +104,7 @@ public class Vector extends CollisionObject {
      */
     public float dot(Vector v) {
         float res = 0;
-        for (int i = 0; i < dim; i++) {
+        for (int i = 0; i < dim - 1; i++) {
             res += vector[i] * v.vector[i];
         }
         return res;
@@ -118,7 +119,7 @@ public class Vector extends CollisionObject {
      * @return dot product
      */
     public float dot(Vector v, float theta) {
-        return getSize() * v.getSize() * (float)Math.cos(theta);
+        return getSize() * v.getSize() * (float) Math.cos(theta);
     }
 
     /**
@@ -130,7 +131,7 @@ public class Vector extends CollisionObject {
      */
     public Vector add(Vector v) {
         Vector res = new Vector(dim);
-        for (int i = 0; i < dim; i++) {
+        for (int i = 0; i < dim - 1; i++) {
             res.vector[i] = vector[i] + v.vector[i];
         }
         return res;
@@ -145,7 +146,7 @@ public class Vector extends CollisionObject {
      */
     public Vector sub(Vector v) {
         Vector res = new Vector(dim);
-        for (int i = 0; i < dim; i++) {
+        for (int i = 0; i < dim - 1; i++) {
             res.vector[i] = vector[i] - v.vector[i];
         }
         return res;
@@ -174,7 +175,7 @@ public class Vector extends CollisionObject {
      * @return projection vector
      */
     public Vector proj(Vector v) {
-        float scalar = v.dot(this) / (float)Math.pow(v.getSize(), 2);
+        float scalar = v.dot(this) / (float) Math.pow(v.getSize(), 2);
         return v.multByScalar(scalar);
     }
 
@@ -239,10 +240,4 @@ public class Vector extends CollisionObject {
         float[] copy = Arrays.copyOf(vector, vector.length);
         return new Vector(copy);
     }
-
-    @Override
-    public boolean isVector() {
-        return true;
-    }
-
 }
