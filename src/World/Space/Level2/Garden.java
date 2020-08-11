@@ -33,7 +33,7 @@ public class Garden implements Drawable {
      * ***************/
     public Garden() {
         floor = new Floor("grass", new Vertex(0f, 0f, 0f), 0f, 100f, 100f);
-        ceiling = new Ceiling("ceiling3", new Vertex(0f, 80f, 0f), 0f, 100f, 100f);
+        ceiling = new Ceiling("gardenCeiling", new Vertex(0f, 80f, 0f), 0f, 100f, 100f);
         front = new Wall("palace", new Vertex(0f, 0f, 0f), 80f, 100f, 0f);
         left = new Wall("gardenWall", new Vertex(0f, 0f, 0f), 80f, 0f, 100f);
         right = new Wall("gardenWall", new Vertex(100f, 0f, 0f), 80f, 0f, 100f);

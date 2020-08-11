@@ -23,8 +23,8 @@ public class MarketPlace implements Drawable {
     private ArrayList<Collidable> collidables;
     private Floor floor;
     private Ceiling ceiling;
-    private Wall left;
     private Wall cave;
+    private Wall left;
     private Wall right;
     private Wall back;
 
@@ -51,7 +51,6 @@ public class MarketPlace implements Drawable {
         collidables = new ArrayList<>();
         collidables.add(back);
         collidables.add(left);
-        collidables.add(cave);
         collidables.add(right);
     }
 

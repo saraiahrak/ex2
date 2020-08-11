@@ -2,7 +2,6 @@ package World.CollisionDetection;
 
 import Math.*;
 import World.Objects.Polygon;
-import World.Objects.Wall;
 
 import java.util.ArrayList;
 
@@ -12,7 +11,6 @@ public class PolyPointCollision implements CollisionHandler {
     public boolean handle(Collidable c1, Collidable c2) {
         Polygon polygon = (Polygon) c1;
         Vector position = (Vector) c2;
-
 
         ArrayList<Vertex> vertices = polygon.getVertices();
         ArrayList<Vector> vectors = createVectors(polygon, position);
@@ -29,7 +27,6 @@ public class PolyPointCollision implements CollisionHandler {
             Vector connect = new Vector(v, position);
             vectors.add(connect);
         }
-
         return vectors;
     }
 

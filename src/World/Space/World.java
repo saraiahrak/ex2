@@ -24,6 +24,7 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 /*************
  * Class World
@@ -98,14 +99,19 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1 , 0);
 
         // set lighting positions
-        float roomLightPos[] = {0f,0f,0f,1.0f};
-        float redLightPos[] = {0f,0f,0f,1.0f};
-        //float redLightPos[] = {15f, 0f, -11.5f, 1.0f};
+        float LightPos1[] = {0f,0f,-113f,1.0f};
+        float LightPos2[] = {0f,0f,0f,1.0f};
 
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, roomLightPos , 0);
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos1 , 0);
         gl.glEnable(GL2.GL_LIGHT0);
 
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, redLightPos , 0);
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos1 , 0);
+        gl.glEnable(GL2.GL_LIGHT1);
+
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos2 , 0);
+        gl.glEnable(GL2.GL_LIGHT0);
+
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos2 , 0);
         gl.glEnable(GL2.GL_LIGHT1);
 
         if (drawable instanceof Window) {
