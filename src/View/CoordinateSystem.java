@@ -86,13 +86,21 @@ public class CoordinateSystem {
         return origin;
     }
 
-    public float getAngleX() { return angleX; }
+    public float getAngleX() {
+        return angleX;
+    }
 
-    public float getAngleY() { return angleY; }
+    public float getAngleY() {
+        return angleY;
+    }
 
-    public float getAngleZ() { return angleZ; }
+    public float getAngleZ() {
+        return angleZ;
+    }
 
-    public boolean getTraced() { return traced; }
+    public boolean getTraced() {
+        return traced;
+    }
 
     /********
      * Setters
@@ -118,21 +126,21 @@ public class CoordinateSystem {
      * rotate
      * Changing the look
      *
-     * @param axis - x, y, or z axis
+     * @param axis  - x, y, or z axis
      * @param angle - rotate angle
      */
     public void rotate(char axis, double angle) {
         Vector xNew, yNew, zNew;
         // look up or down
         if (axis == 'X') {
-            setAngleXFromPlayer((float)angle);
+            setAngleXFromPlayer((float) angle);
             yNew = zAxis.multByScalar((float) Math.sin(angle)).add(yAxis.multByScalar((float) Math.cos(angle)));
             zNew = zAxis.multByScalar((float) Math.cos(angle)).sub(yAxis.multByScalar((float) Math.sin(angle)));
             yAxis = yNew.normalize();
             zAxis = zNew.normalize();
         }
         if (axis == 'Y') {
-            setAngleYFromPlayer((float)angle);
+            setAngleYFromPlayer((float) angle);
             zNew = xAxis.multByScalar((float) Math.sin(angle)).add(zAxis.multByScalar((float) Math.cos(angle)));
             xNew = xAxis.multByScalar((float) Math.cos(angle)).sub(zAxis.multByScalar((float) Math.sin(angle)));
             zAxis = zNew.normalize();
@@ -140,7 +148,7 @@ public class CoordinateSystem {
             // divert the look to right or left
         }
         if (axis == 'Z') {
-            setAngleZFromPlayer((float)angle);
+            setAngleZFromPlayer((float) angle);
             xNew = xAxis.multByScalar((float) Math.cos(angle)).sub(yAxis.multByScalar((float) Math.sin(angle)));
             yNew = xAxis.multByScalar((float) Math.sin(angle)).add(yAxis.multByScalar((float) Math.cos(angle)));
             xAxis = xNew.normalize();
@@ -168,9 +176,9 @@ public class CoordinateSystem {
             next = origin.add(zAxis.multByScalar(step));
         }
 
-        CollisionHandler handler = CollisionFactory.create();
 
         for (Collidable c : World.collidables) {
+            CollisionHandler handler = CollisionFactory.create(c, next);
             boolean intersection = handler.handle(c, next);
             if (intersection) {
                 return;
