@@ -66,8 +66,10 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
                 player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
                 player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
 
+
 //        gl.glTranslatef(0.0f, 0.0f, 0.0f);
         this.draw(gl);
+        player.updateLife();
     }
 
 
@@ -91,7 +93,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambient0 , 0);
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, diffuse0 , 0);
 
-        // set colors
         float	ambient1[] = {1f,1f,1f,1.0f};
         float	diffuse1[] = {1f,1f,0f,1.0f};
 
@@ -99,20 +100,36 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1 , 0);
 
         // set lighting positions
-        float LightPos1[] = {0f,0f,-113f,1.0f};
-        float LightPos2[] = {0f,0f,0f,1.0f};
+        float LightPos0[] = {0f,0f,-113f,1.0f};
+        float LightPos1[] = {0f,0f,0f,1.0f};
 
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos1 , 0);
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos0 , 0);
+        gl.glEnable(GL2.GL_LIGHT1);
+
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos0 , 0);
         gl.glEnable(GL2.GL_LIGHT0);
 
         gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos1 , 0);
         gl.glEnable(GL2.GL_LIGHT1);
 
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos2 , 0);
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos1 , 0);
         gl.glEnable(GL2.GL_LIGHT0);
 
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos2 , 0);
-        gl.glEnable(GL2.GL_LIGHT1);
+/*        // set colors
+        float	ambient1[] = {8f,1f,1f,1.0f};
+        float	diffuse1[] = {1f,1f,0f,1.0f};
+
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, ambient1 , 0);
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1 , 0);
+
+        // set lighting positions
+        float LightPos3[] = {50f,-140f,0f,1.0f};
+
+        gl.glLightfv(GL2.GL_LIGHT2, GL2.GL_POSITION, LightPos3 , 0);
+        gl.glEnable(GL2.GL_LIGHT2);
+
+        gl.glLightfv(GL2.GL_LIGHT3, GL2.GL_POSITION, LightPos3 , 0);
+        gl.glEnable(GL2.GL_LIGHT3);*/
 
         if (drawable instanceof Window) {
             Window window = (Window) drawable;

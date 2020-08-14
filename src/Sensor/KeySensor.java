@@ -54,10 +54,10 @@ public class KeySensor implements KeyListener {
             coordinates.rotate('Y', -angle);
         } else if (e.getKeyChar() == 'j' || e.getKeyChar() == 'J') {
             coordinates.rotate('Y', angle);
-        } else if (e.getKeyChar() == 'o' || e.getKeyChar() == 'O') {
-            coordinates.rotate('Z', angle);
-        } else if (e.getKeyChar() == 'u' || e.getKeyChar() == 'U') {
-            coordinates.rotate('Z', -angle);
+//        } else if (e.getKeyChar() == 'o' || e.getKeyChar() == 'O') {
+//            coordinates.rotate('Z', angle);
+//        } else if (e.getKeyChar() == 'u' || e.getKeyChar() == 'U') {
+//            coordinates.rotate('Z', -angle);
         } else if (e.getKeyChar() == 'w' || e.getKeyChar() == 'W') {
             coordinates.move('Z', -step);
         } else if (e.getKeyChar() == 's' || e.getKeyChar() == 'S') {
@@ -66,15 +66,15 @@ public class KeySensor implements KeyListener {
             coordinates.move('X', step);
         } else if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
             coordinates.move('X', -step);
-        } else if (e.getKeyChar() == 'e' || e.getKeyChar() == 'E') {
+        } else if (e.getKeyChar() == 'e' || e.getKeyChar() == 'E' && onFly) {
             coordinates.move('Y', step);
-        } else if (e.getKeyChar() == 'q' || e.getKeyChar() == 'Q') {
+        } else if (e.getKeyChar() == 'q' || e.getKeyChar() == 'Q' && onFly) {
             coordinates.move('Y', -step);
         }
 
         if (e.getKeyCode() == KeyEvent.VK_F1) {
-            //coordinates.init(50f, 34f, 5f);
-            coordinates.init(32f, 3.5f, 86f);
+            coordinates.init(32f, 35f, 5f);
+            //coordinates.init(32f, 3.5f, 86f);
             World.firstLevel = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {

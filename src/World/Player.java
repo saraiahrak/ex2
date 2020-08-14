@@ -8,6 +8,8 @@ package World;
 import Math.Vector;
 import Sensor.KeySensor;
 import View.CoordinateSystem;
+import View.Life;
+import World.Space.World;
 
 /*************
  * Class Player
@@ -18,12 +20,14 @@ public class Player {
     private Vector position;
     private Vector lookAt;
     private Vector up;
+    private Life life;
 
     /*************
      * Constructors
      * ***********/
 
     public Player(float xPos, float yPos, float zPos) {
+        life = new Life();
         init(xPos, yPos, zPos);
     }
 
@@ -68,5 +72,9 @@ public class Player {
 
     public void setUp(Vector up) {
         this.up = up;
+    }
+
+    public void updateLife() {
+        life.display();
     }
 }

@@ -22,6 +22,7 @@ public class Palace implements Drawable {
     public List<Wall> internalWalls;
     private Floor floor;
     private Ceiling ceiling;
+    private Wall palaceEntry;
 
     /*****************
      * Constructor
@@ -29,9 +30,11 @@ public class Palace implements Drawable {
     public Palace() {
         floor = new Floor("palaceFloor", new Vertex(40f, 32f, -160f), 0f, 240f, -0.5f);
         ceiling = new Ceiling("palaceCeiling", new Vertex(40f, 57f, -160f), 0f, 240f, -0.5f);
+        palaceEntry = new Wall("palaceView", new Vertex(40, 32, -0.5f), 25, 240, 0);
 
         internalWalls = new ArrayList<>();
         externalWalls = new ArrayList<>();
+
         initPalace();
     }
 
@@ -39,6 +42,7 @@ public class Palace implements Drawable {
     public void draw(GL2 gl) {
         floor.draw(gl);
         ceiling.draw(gl);
+        palaceEntry.draw(gl);
         for (Wall wall : internalWalls) {
             wall.draw(gl);
         }
