@@ -7,13 +7,11 @@ package World.Objects;
 
 import Design.TextureFactory;
 import Math.Vertex;
-import World.CollisionDetection.Collidable;
 import World.Drawable;
 import com.jogamp.opengl.util.texture.Texture;
 
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /*************
  * Class Floor
@@ -45,6 +43,12 @@ public class Floor implements Drawable, Polygon {
         setVertices();
     }
 
+
+    @Override
+    public float getDistFactor() {
+        return ((float) Math.sqrt(height) + (float) Math.sqrt(width) + (float) Math.sqrt(depth)) / 2;
+    }
+
     @Override
     public void draw(GL2 gl) {
         if (texture == null)
@@ -64,9 +68,9 @@ public class Floor implements Drawable, Polygon {
         gl.glTexCoord2f(0.0f, 0.0f);
         gl.glVertex3f(x, y, z);
         gl.glTexCoord2f(0f, 28.0f);
-        gl.glVertex3f(x, y, depth);
+        gl.glVertex3f(x, y, z + depth);
         gl.glTexCoord2f(2f, 28.0f);
-        gl.glVertex3f((x + width), y, depth);
+        gl.glVertex3f((x + width), y, z + depth);
         gl.glTexCoord2f(2.0f, 0f);
         gl.glVertex3f((x + width), y, z);
 

@@ -13,7 +13,7 @@ import java.awt.*;
  * ***********/
 public class Coins {
 
-    int counter;
+    public int counter;
     TextRenderer textRenderer;
 
     /*************

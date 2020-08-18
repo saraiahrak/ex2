@@ -76,11 +76,24 @@ public class Player {
         this.up = up;
     }
 
-    public void updateLife() {
+    public void displayLife() {
         life.display();
     }
 
-    public void updateCoins() {
+    public void displayCoins() {
         coins.display();
     }
+
+    public void addScore() {
+        coins.addCoin();
+    }
+
+    public void reduceLife() {
+        life.reduceLife();
+    }
+
+    public int getScore() {
+        return coins.counter;
+    }
+
 }

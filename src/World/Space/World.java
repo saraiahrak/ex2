@@ -5,8 +5,9 @@
 
 package World.Space;
 
+import Game.Level;
 import Sensor.KeySensor;
-import View.Text.Level;
+import View.Text.LevelText;
 import World.CollisionDetection.Collidable;
 import World.Drawable;
 import World.Player;
@@ -31,20 +32,27 @@ import java.util.ArrayList;
  * ***********/
 public class World extends KeyAdapter implements GLEventListener, Drawable {
 
-    public static Player player = new Player(5f, 0.5f, 180f);
+    public static Player player = new Player(5f, 0.2f, 180f);
 
-    public static ArrayList<Drawable> drawables;
-    public static ArrayList<Collidable> collidables;
+    public static ArrayList<Drawable> drawables = new ArrayList<>();
+    public static ArrayList<Collidable> collidables = new ArrayList<>();
 
     public static boolean firstLevel = true;
     public static boolean secondLevel = false;
     public static boolean playerDisqualified = false;
 
+    private Level level;
+
+//    public static boolean showMenu = false;
+//    private Menu menu = null;
+
+
+
     private static GLU glu = new GLU();
     private static GLCanvas canvas = new GLCanvas();
     private static Frame frame = new Frame("Aladdin");
     private static Animator animator = new Animator(canvas);
-    private static Level level = new Level();
+    private static LevelText levelText = new LevelText();
 
 
     /**
@@ -56,6 +64,14 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         final GL2 gl = gLDrawable.getGL().getGL2();
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();  // Reset The View
+
+//
+//        if (menu == null)
+//            menu = new Menu(gl);
+
+//        if (showMenu)
+//            menu.draw(gl);
+
 
         if (!firstLevel && !secondLevel) {
             secondLevel = true;
@@ -78,9 +94,9 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
                 player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
 
         this.draw(gl);
-        player.updateLife();
-        player.updateCoins();
-        level.display();
+        player.displayLife();
+        player.displayCoins();
+        levelText.display();
     }
 
 
@@ -109,6 +125,18 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     }
 
 
+
+    public static void addScore(int score) {
+        player.addScore();
+    }
+
+    public static void reduceLife() {
+        player.reduceLife();
+    }
+
+
+
+
     /**
      * setLight
      *
@@ -134,18 +162,18 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glEnable(GL2.GL_LIGHT0);
 
         gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, ambient, 0);
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1 , 0);
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1, 0);
         gl.glEnable(GL2.GL_LIGHT1);
 
         // set lighting positions
-        float LightPos0[] = {0f,0f,-13f,1.0f};
-        float LightPos1[] = {0f,0f,0f,1.0f};
+        float LightPos0[] = {0f, 0f, -13f, 1.0f};
+        float LightPos1[] = {0f, 0f, 0f, 1.0f};
 
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos0 , 0);
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos1 , 0);
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos0, 0);
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos1, 0);
 
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos0 , 0);
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos1 , 0);
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos0, 0);
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos1, 0);
     }
 
 
@@ -154,11 +182,13 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
      *
      * @param gl - GL2 object
      */
-    public static void initLevel1(GL2 gl) {
+    public void initLevel1(GL2 gl) {
+        level = new Level1(gl);
+
         initCollidables();
         initDrawables();
 
-        new Level1(gl);
+//        new Level1(gl);
     }
 
 
@@ -167,11 +197,11 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
      *
      * @param gl - GL2 object
      */
-    public static void initLevel2(GL2 gl) {
+    public  void initLevel2(GL2 gl) {
+        level = new Level2(gl);
         initCollidables();
         initDrawables();
 
-        new Level2(gl);
     }
 
 
@@ -198,8 +228,8 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
      * reshape
      *
      * @param drawable - GL Auto Drawable
-     * @param x - coordinate
-     * @param y - coordinate
+     * @param x        - coordinate
+     * @param y        - coordinate
      * @param width
      * @param height
      */
@@ -232,19 +262,19 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
      * initDrawables
      * Initialize the list
      */
-    public static void initDrawables() {
+    public void initDrawables() {
         drawables = new ArrayList<>();
+        drawables = level.getDrawables();
     }
-
 
     /**
      * initCollidables
      * Initialize the list
      */
-    public static void initCollidables() {
+    public void initCollidables() {
         collidables = new ArrayList<>();
+        collidables = level.getCollidables();
     }
-
 
     /**
      * show
@@ -268,6 +298,15 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         frame.setVisible(true);
         animator.start();
         canvas.requestFocus();
+    }
+
+
+    public static void removeCollidable(Collidable c) {
+        collidables.remove(c);
+    }
+
+    public static void removeDrawable(Drawable d) {
+        drawables.remove(d);
     }
 
 

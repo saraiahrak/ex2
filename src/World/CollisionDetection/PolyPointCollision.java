@@ -1,6 +1,7 @@
 package World.CollisionDetection;
 
-import Math.*;
+import Math.Vector;
+import Math.Vertex;
 import World.Objects.Polygon;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class PolyPointCollision implements CollisionHandler {
 
         float sum = getAngleSum(vectors);
 
-        return sum > 350;
+        return sum > 360 - polygon.getDistFactor();
     }
 
     private ArrayList<Vector> createVectors(Polygon p, Vector position) {

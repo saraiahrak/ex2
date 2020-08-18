@@ -7,12 +7,10 @@ package World.Objects;
 
 import Design.TextureFactory;
 import Math.Vertex;
-import World.CollisionDetection.Collidable;
 import World.Drawable;
 import com.jogamp.opengl.util.texture.Texture;
 
 import javax.media.opengl.GL2;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +44,13 @@ public class Wall implements Drawable, Polygon {
         setCorners();
         setVertices();
     }
+
+
+    @Override
+    public float getDistFactor() {
+        return ((float) Math.sqrt(height) + (float) Math.sqrt(width) + (float) Math.sqrt(depth)) / 2;
+    }
+
 
     @Override
     public void draw(GL2 gl) {

@@ -1,12 +1,16 @@
 package World.Objects;
 
+import Math.Vertex;
 import World.CollisionDetection.Collidable;
 import World.Drawable;
-import Math.*;
 
 import java.util.ArrayList;
 
-public interface Polygon extends Collidable {
+public interface Polygon extends Collidable, Drawable {
 
     ArrayList<Vertex> getVertices();
+
+    float getDistFactor();
+
+
 }

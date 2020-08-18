@@ -48,6 +48,14 @@ public class KeySensor implements KeyListener {
         double angle = 0.1;
         float step = 0.35f;
 
+//
+//        if (e.getKeyChar() == 'm' || e.getKeyChar() == 'M') {
+//            World.showMenu = true;
+//        }
+//        if (e.getKeyChar() == 'b' || e.getKeyChar() == 'B') {
+//            World.showMenu = false;
+//        }
+
         if ((e.getKeyChar() == 'i' || e.getKeyChar() == 'I') && onFly) {
             World.playerDisqualified = true;
             if (angleAmount + angle <= 1) {

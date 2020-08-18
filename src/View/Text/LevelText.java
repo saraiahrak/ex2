@@ -10,9 +10,9 @@ import World.Space.World;
 import java.awt.*;
 
 /*************
- * Class Level
+ * Class LevelText
  * ***********/
-public class Level {
+public class LevelText {
 
     TextRenderer textRenderer;
     String level;
@@ -20,7 +20,7 @@ public class Level {
     /*************
      * Constructor
      * ***********/
-    public Level() {
+    public LevelText() {
         textRenderer = new TextRenderer(new Font("david", Font.PLAIN, 30));
     }
 
