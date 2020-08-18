@@ -55,7 +55,7 @@ public class Level2 {
         addDrawable(cage);
 
         addCollidable(jasmine);
-        addCollidable(cage);
+//        addCollidable(cage);
     }
 
 
@@ -115,8 +115,8 @@ public class Level2 {
         World.collidables.add(garden.left);
         World.collidables.add(garden.right);
 
-        List<Box> boxes = garden.getObstacles();
-        World.collidables.addAll(boxes);
+//        List<Box> boxes = garden.getObstacles();
+//        World.collidables.addAll(boxes);
 //        for (Box box : boxes) {
 //            World.collidables.add(box);
 //        }
