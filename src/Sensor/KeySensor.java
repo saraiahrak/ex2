@@ -23,6 +23,7 @@ public class KeySensor implements KeyListener {
 
     public static CoordinateSystem coordinates;
     private boolean onFly;
+    private float angleAmount;
 
     /*****************
      * Constructor
@@ -30,6 +31,7 @@ public class KeySensor implements KeyListener {
     public KeySensor(CoordinateSystem myCoordinates) {
         coordinates = myCoordinates;
         onFly = false;
+        angleAmount = 0;
     }
 
     /*********
@@ -46,10 +48,17 @@ public class KeySensor implements KeyListener {
         double angle = 0.1;
         float step = 0.35f;
 
-        if (e.getKeyChar() == 'i' || e.getKeyChar() == 'I') {
-            coordinates.rotate('X', angle);
-        } else if (e.getKeyChar() == 'k' || e.getKeyChar() == 'K') {
-            coordinates.rotate('X', -angle);
+        if ((e.getKeyChar() == 'i' || e.getKeyChar() == 'I') && onFly) {
+            World.playerDisqualified = true;
+            if (angleAmount + angle <= 1) {
+                angleAmount += angle;
+                coordinates.rotate('X', angle);
+            }
+        } else if ((e.getKeyChar() == 'k' || e.getKeyChar() == 'K') && onFly) {
+            if (angleAmount - angle >= -1) {
+                angleAmount -= angle;
+                coordinates.rotate('X', -angle);
+            }
         } else if (e.getKeyChar() == 'l' || e.getKeyChar() == 'L') {
             coordinates.rotate('Y', -angle);
         } else if (e.getKeyChar() == 'j' || e.getKeyChar() == 'J') {
@@ -66,15 +75,15 @@ public class KeySensor implements KeyListener {
             coordinates.move('X', step);
         } else if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
             coordinates.move('X', -step);
-        } else if (e.getKeyChar() == 'e' || e.getKeyChar() == 'E' && onFly) {
+        } else if ((e.getKeyChar() == 'e' || e.getKeyChar() == 'E') && onFly) {
             coordinates.move('Y', step);
-        } else if (e.getKeyChar() == 'q' || e.getKeyChar() == 'Q' && onFly) {
+        } else if ((e.getKeyChar() == 'q' || e.getKeyChar() == 'Q') && onFly) {
             coordinates.move('Y', -step);
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_F1) {
-            coordinates.init(32f, 35f, 5f);
-            //coordinates.init(32f, 3.5f, 86f);
+        if (e.getKeyCode() == KeyEvent.VK_F2) {
+            //coordinates.init(32f, 35f, 5f);
+            coordinates.init(32f, 3.5f, 86f);
             World.firstLevel = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {

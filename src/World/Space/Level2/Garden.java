@@ -12,11 +12,13 @@ import World.Objects.Box;
 import World.Objects.Ceiling;
 import World.Objects.Floor;
 import World.Objects.Wall;
-
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 import java.util.List;
 
+/*************
+ * Class Garden
+ * ***********/
 public class Garden implements Drawable {
 
     public Floor floor;

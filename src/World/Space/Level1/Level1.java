@@ -8,12 +8,9 @@ package World.Space.Level1;
 import Utils.Reader;
 import World.Drawable;
 import World.Models.OBJLoader;
-import World.Objects.Wall;
 import World.Space.World;
-
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
-import java.util.List;
 
 /*************
  * Class Level 1
@@ -131,7 +128,7 @@ public class Level1 {
             OBJLoader cop = new OBJLoader("models/cops/Dusty_2.obj", gl);
             addDrawable(cop.getModel());
             cop.getModel().translate(Float.parseFloat(values[0]),
-                    -2, Float.parseFloat(values[1]));
+                    -1.85f, Float.parseFloat(values[1]));
             cop.getModel().scale(0.0007f, 0.0007f, 0.0007f);
             cop.getModel().setMotion(0.01f, 0f, 0f);
         }

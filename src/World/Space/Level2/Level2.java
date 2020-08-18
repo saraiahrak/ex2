@@ -12,7 +12,6 @@ import World.Models.OBJLoader;
 import World.Objects.Box;
 import World.Objects.Wall;
 import World.Space.World;
-
 import javax.media.opengl.GL2;
 import java.util.List;
 

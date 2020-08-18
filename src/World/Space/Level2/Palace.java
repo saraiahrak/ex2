@@ -11,11 +11,13 @@ import World.Drawable;
 import World.Objects.Ceiling;
 import World.Objects.Floor;
 import World.Objects.Wall;
-
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 import java.util.List;
 
+/*************
+ * Class Palace
+ * ***********/
 public class Palace implements Drawable {
 
     public List<Wall> externalWalls;

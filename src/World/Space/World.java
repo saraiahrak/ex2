@@ -6,6 +6,7 @@
 package World.Space;
 
 import Sensor.KeySensor;
+import View.Text.Level;
 import World.CollisionDetection.Collidable;
 import World.Drawable;
 import World.Player;
@@ -24,7 +25,6 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 /*************
  * Class World
@@ -38,11 +38,13 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
 
     public static boolean firstLevel = true;
     public static boolean secondLevel = false;
+    public static boolean playerDisqualified = false;
 
     private static GLU glu = new GLU();
     private static GLCanvas canvas = new GLCanvas();
     private static Frame frame = new Frame("Aladdin");
     private static Animator animator = new Animator(canvas);
+    private static Level level = new Level();
 
 
     /**
@@ -60,16 +62,25 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
             initLevel2(gl);
         }
 
+        // if the player disqualified
+        setLight(gl);
+//        if (playerDisqualified) {
+//            playerDisqualified = false;
+//            disqualificationLight(gl);
+//        } else {
+//            setLight(gl);
+//        }
+
         player.update();
 
         glu.gluLookAt(player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ(),
                 player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
                 player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
 
-
-//        gl.glTranslatef(0.0f, 0.0f, 0.0f);
         this.draw(gl);
         player.updateLife();
+        player.updateCoins();
+        level.display();
     }
 
 
@@ -86,50 +97,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         initLevel1(gl);
         initGL(gl);
 
-        // set colors
-        float	ambient0[] = {1f,1f,1f,1.0f};
-        float	diffuse0[] = {0.5f,0f,0f,1.0f};
-
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambient0 , 0);
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, diffuse0 , 0);
-
-        float	ambient1[] = {1f,1f,1f,1.0f};
-        float	diffuse1[] = {1f,1f,0f,1.0f};
-
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, ambient1 , 0);
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1 , 0);
-
-        // set lighting positions
-        float LightPos0[] = {0f,0f,-113f,1.0f};
-        float LightPos1[] = {0f,0f,0f,1.0f};
-
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos0 , 0);
-        gl.glEnable(GL2.GL_LIGHT1);
-
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos0 , 0);
-        gl.glEnable(GL2.GL_LIGHT0);
-
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos1 , 0);
-        gl.glEnable(GL2.GL_LIGHT1);
-
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos1 , 0);
-        gl.glEnable(GL2.GL_LIGHT0);
-
-/*        // set colors
-        float	ambient1[] = {8f,1f,1f,1.0f};
-        float	diffuse1[] = {1f,1f,0f,1.0f};
-
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, ambient1 , 0);
-        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1 , 0);
-
-        // set lighting positions
-        float LightPos3[] = {50f,-140f,0f,1.0f};
-
-        gl.glLightfv(GL2.GL_LIGHT2, GL2.GL_POSITION, LightPos3 , 0);
-        gl.glEnable(GL2.GL_LIGHT2);
-
-        gl.glLightfv(GL2.GL_LIGHT3, GL2.GL_POSITION, LightPos3 , 0);
-        gl.glEnable(GL2.GL_LIGHT3);*/
+        setLight(gl);
 
         if (drawable instanceof Window) {
             Window window = (Window) drawable;
@@ -141,6 +109,51 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     }
 
 
+    /**
+     * setLight
+     *
+     * @param gl - GL2 object
+     */
+    private void setLight(GL2 gl) {
+        float[] ambient, diffuse0, diffuse1;
+
+        // set colors
+        if (playerDisqualified) {
+            ambient = new float[]{1f, 0f, 0f, 0f};
+            diffuse0 = new float[]{0.5f, 0f, 0f, 0f};
+            diffuse1 = new float[]{0.5f, 0f, 0f, 0f};
+            playerDisqualified = false;
+        } else {
+            ambient = new float[]{1f, 1f, 1f, 1f};
+            diffuse0 = new float[]{0f, 0f, 0f, 1f};
+            diffuse1 = new float[]{1f, 1f, 0f, 0f};
+        }
+
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambient, 0);
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, diffuse0, 0);
+        gl.glEnable(GL2.GL_LIGHT0);
+
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, ambient, 0);
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1 , 0);
+        gl.glEnable(GL2.GL_LIGHT1);
+
+        // set lighting positions
+        float LightPos0[] = {0f,0f,-13f,1.0f};
+        float LightPos1[] = {0f,0f,0f,1.0f};
+
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos0 , 0);
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos1 , 0);
+
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos0 , 0);
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, LightPos1 , 0);
+    }
+
+
+    /**
+     * initLevel1
+     *
+     * @param gl - GL2 object
+     */
     public static void initLevel1(GL2 gl) {
         initCollidables();
         initDrawables();
@@ -148,6 +161,12 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         new Level1(gl);
     }
 
+
+    /**
+     * initLevel2
+     *
+     * @param gl - GL2 object
+     */
     public static void initLevel2(GL2 gl) {
         initCollidables();
         initDrawables();
