@@ -12,17 +12,19 @@ import World.Objects.Box;
 import World.Objects.Ceiling;
 import World.Objects.Floor;
 import World.Objects.Wall;
-
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 import java.util.List;
 
+/*************
+ * Class Garden
+ * ***********/
 public class Garden implements Drawable {
 
-    private Floor floor;
-    private Ceiling ceiling;
+    public Floor floor;
+    public Ceiling ceiling;
     public Wall left;
-    public Wall front;
+    public Wall palaceEntry;
     public Wall right;
     public Wall back;
 
@@ -34,7 +36,7 @@ public class Garden implements Drawable {
     public Garden() {
         floor = new Floor("grass", new Vertex(0f, 0f, 0f), 0f, 100f, 100f);
         ceiling = new Ceiling("gardenCeiling", new Vertex(0f, 80f, 0f), 0f, 100f, 100f);
-        front = new Wall("palace", new Vertex(0f, 0f, 0f), 80f, 100f, 0f);
+        palaceEntry = new Wall("palace", new Vertex(0f, 0f, 0f), 80f, 100f, 0f);
         left = new Wall("gardenWall", new Vertex(0f, 0f, 0f), 80f, 0f, 100f);
         right = new Wall("gardenWall", new Vertex(100f, 0f, 0f), 80f, 0f, 100f);
         back = new Wall("gardenWall", new Vertex(0f, 0f, 100f), 80f, 100f, 0f);
@@ -60,7 +62,7 @@ public class Garden implements Drawable {
         left.draw(gl);
         right.draw(gl);
         back.draw(gl);
-        front.draw(gl);
+        palaceEntry.draw(gl);
         for (Box bush : bushes) {
             bush.draw(gl);
         }
