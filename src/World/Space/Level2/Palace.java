@@ -22,16 +22,16 @@ public class Palace implements Drawable {
 
     public List<Wall> externalWalls;
     public List<Wall> internalWalls;
+    public Wall palaceEntry;
     private Floor floor;
     private Ceiling ceiling;
-    private Wall palaceEntry;
 
     /*****************
      * Constructor
      * ***************/
     public Palace() {
-        floor = new Floor("palaceFloor", new Vertex(40f, 32f, -160f), 0f, 240f, -0.5f);
-        ceiling = new Ceiling("palaceCeiling", new Vertex(40f, 57f, -160f), 0f, 240f, -0.5f);
+        floor = new Floor("palaceFloor", new Vertex(40f, 32f, -160f), 0f, 240f, 159.5f);
+        ceiling = new Ceiling("palaceCeiling", new Vertex(40f, 57f, -160f), 0f, 240f, 159.5f);
         palaceEntry = new Wall("palaceView", new Vertex(40, 32, -0.5f), 25, 240, 0);
 
         internalWalls = new ArrayList<>();

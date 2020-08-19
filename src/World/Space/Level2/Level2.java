@@ -13,7 +13,6 @@ import World.Models.OBJLoader;
 import World.Objects.Box;
 import World.Objects.CarpetObject;
 import World.Objects.Wall;
-import World.Space.World;
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ import java.util.List;
  * Class LevelText 2
  * ***********/
 public class Level2 implements Level {
-
 
     private ArrayList<Drawable> drawables;
     private ArrayList<Collidable> collidables;

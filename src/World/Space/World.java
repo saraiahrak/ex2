@@ -8,6 +8,7 @@ package World.Space;
 import Game.Level;
 import Sensor.KeySensor;
 import View.Text.LevelText;
+import View.Text.Message;
 import World.CollisionDetection.Collidable;
 import World.Drawable;
 import World.Player;
@@ -17,7 +18,6 @@ import com.jogamp.newt.Window;
 import com.jogamp.newt.event.KeyAdapter;
 import com.jogamp.newt.event.awt.AWTKeyAdapter;
 import com.jogamp.opengl.util.Animator;
-
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 /*************
  * Class World
  * ***********/
+
 public class World extends KeyAdapter implements GLEventListener, Drawable {
 
     public static Player player = new Player(5f, 0.2f, 180f);
@@ -40,6 +41,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     public static boolean firstLevel = true;
     public static boolean secondLevel = false;
     public static boolean playerDisqualified = false;
+    public static boolean showMessage = false;
 
     private Level level;
 
@@ -53,6 +55,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     private static Frame frame = new Frame("Aladdin");
     private static Animator animator = new Animator(canvas);
     private static LevelText levelText = new LevelText();
+    public static Message message = new Message();
 
 
     /**
@@ -78,14 +81,8 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
             initLevel2(gl);
         }
 
-        // if the player disqualified
+        // set world light
         setLight(gl);
-//        if (playerDisqualified) {
-//            playerDisqualified = false;
-//            disqualificationLight(gl);
-//        } else {
-//            setLight(gl);
-//        }
 
         player.update();
 
@@ -97,6 +94,9 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         player.displayLife();
         player.displayCoins();
         levelText.display();
+        if (showMessage) {
+            message.display();
+        }
     }
 
 
@@ -123,18 +123,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
             new AWTKeyAdapter(this, drawable).addTo(comp);
         }
     }
-
-
-
-    public static void addScore(int score) {
-        player.addScore();
-    }
-
-    public static void reduceLife() {
-        player.reduceLife();
-    }
-
-
 
 
     /**
@@ -199,9 +187,9 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
      */
     public  void initLevel2(GL2 gl) {
         level = new Level2(gl);
+        player.coordinates.init(32f, 3.5f, 86f);
         initCollidables();
         initDrawables();
-
     }
 
 
