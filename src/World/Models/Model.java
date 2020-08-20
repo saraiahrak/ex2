@@ -5,6 +5,7 @@
 
 package World.Models;
 
+import View.CoordinateSystem;
 import World.Drawable;
 import World.Space.World;
 
@@ -16,16 +17,26 @@ import java.util.ArrayList;
  * ***********/
 public class Model implements Drawable {
 
+    private CoordinateSystem coordinates;
     private ArrayList<ObjData> dataList;
-    //public static boolean wasUsed = false;
 
+
+    /**
+     * constructor
+     */
     public Model(ArrayList<ObjData> list) {
         setDataList(list);
+        coordinates = World.player.coordinates;
     }
 
+
+    /**
+     * setDataList
+     */
     private void setDataList(ArrayList<ObjData> list) {
         this.dataList = list;
     }
+
 
     /**
      * scale
@@ -89,18 +100,9 @@ public class Model implements Drawable {
     @Override
     public void draw(GL2 gl) {
         for (ObjData data : dataList) {
-            if (World.player.coordinates.getTraced()) {
-                if (data.getPath().contains("carpet")) {
-                    if (data.wasUsed) {
-                        dataList.remove(data);
-                        if (dataList.isEmpty()) {
-                            return;
-                        }
-                        continue;
-                    }
-                    data.drawModelThatFollowsPlayer(gl);
-                    continue;
-                }
+            if (data.getPath().contains("carpet") && coordinates.onFly) {
+                data.drawModelThatFollowsPlayer(gl);
+                continue;
             }
             data.draw(gl);
         }

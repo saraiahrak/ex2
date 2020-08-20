@@ -6,7 +6,6 @@
 package Sensor;
 
 import View.CoordinateSystem;
-import World.CollisionDetection.Collidable;
 import World.CollisionDetection.CollisionDetection;
 import World.Space.World;
 import Math.*;
@@ -14,8 +13,6 @@ import com.sun.corba.se.spi.orbutil.threadpool.Work;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 /*****************
  * Class KeySensor
@@ -23,7 +20,8 @@ import java.util.ArrayList;
 public class KeySensor implements KeyListener {
 
     public static CoordinateSystem coordinates;
-    private boolean onFly;
+    private boolean canBuy;
+    private boolean purchased;
     private float angleAmount;
 
     /*****************
@@ -31,7 +29,8 @@ public class KeySensor implements KeyListener {
      * ***************/
     public KeySensor(CoordinateSystem myCoordinates) {
         coordinates = myCoordinates;
-        onFly = false;
+        canBuy = false;
+        purchased = false;
         angleAmount = 0;
     }
 
@@ -57,14 +56,21 @@ public class KeySensor implements KeyListener {
 //            World.showMenu = false;
 //        }
 
-        if ((e.getKeyChar() == 'i' || e.getKeyChar() == 'I') && onFly) {
-            World.playerDisqualified = true;
-            if (angleAmount + angle <= 1) {
+        if ((e.getKeyChar() == 'b' || e.getKeyChar() == 'B') && canBuy && !purchased) {
+            purchased = true;
+            World.player.reduceScore();
+            World.showMessage = false;
+            coordinates.init(42f, 10f, 67f);
+            coordinates.onFly = true;
+        }
+
+        if ((e.getKeyChar() == 'i' || e.getKeyChar() == 'I') && coordinates.onFly) {
+            if (angleAmount + angle <= 0.5) {
                 angleAmount += angle;
                 coordinates.rotate('X', angle);
             }
-        } else if ((e.getKeyChar() == 'k' || e.getKeyChar() == 'K') && onFly) {
-            if (angleAmount - angle >= -1) {
+        } else if ((e.getKeyChar() == 'k' || e.getKeyChar() == 'K') && coordinates.onFly) {
+            if (angleAmount - angle >= -0.2) {
                 angleAmount -= angle;
                 coordinates.rotate('X', -angle);
             }
@@ -84,16 +90,15 @@ public class KeySensor implements KeyListener {
             coordinates.move('X', step);
         } else if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
             coordinates.move('X', -step);
-        } else if ((e.getKeyChar() == 'e' || e.getKeyChar() == 'E') && onFly) {
+        } else if ((e.getKeyChar() == 'e' || e.getKeyChar() == 'E') && coordinates.onFly) {
             coordinates.move('Y', step);
-        } else if ((e.getKeyChar() == 'q' || e.getKeyChar() == 'Q') && onFly) {
+        } else if ((e.getKeyChar() == 'q' || e.getKeyChar() == 'Q') && coordinates.onFly) {
             coordinates.move('Y', -step);
         }
 
 
         if (e.getKeyCode() == KeyEvent.VK_F2) {
-            //coordinates.init(32f, 35f, 5f);
-            coordinates.init(32f, 3.5f, 86f);
+//            coordinates.init(32f, 3.5f, 86f);
             World.firstLevel = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -134,13 +139,9 @@ public class KeySensor implements KeyListener {
 
 
 
-        // checks if the carpet was found
-        if (World.secondLevel && !onFly) {
-            if (fly()) {
-                coordinates.init(42f, 10f, 67f);
-                coordinates.setTraced();
-                onFly = true;
-            }
+        // checks if the player can buy the carpet
+        if (World.secondLevel && !coordinates.onFly) {
+            carpetWasFound();
         }
     }
 
@@ -152,22 +153,26 @@ public class KeySensor implements KeyListener {
         // TODO Auto-generated method stub
     }
 
-    public void mouseDragged(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-    }
-
-    public void mouseMoved(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-    }
 
     /**
-     * fly
-     * Checks if was Collision between the player and the carpet
-     * Models collision!!!
-     *
-     * @return true if was collision, otherwise false
+     * carpetWasFound
+     * If the carpet was found fly, otherwise continue to search
      */
-    public boolean fly() {
+    private void carpetWasFound() {
+        if (buy() && !canBuy) {
+            canBuy = true;
+            World.showMessage = true;
+        }
+    }
+
+
+    /**
+     * buy
+     * Checks if the player gets to the carpet and can buy it
+     *
+     * @return true if the player sees the carpet, otherwise false
+     */
+    public boolean buy() {
         boolean xFlag = CollisionDetection.checkBoundaries
                 ("x", coordinates.getOrigin(), 35, 48);
         boolean zFlag = CollisionDetection.checkBoundaries

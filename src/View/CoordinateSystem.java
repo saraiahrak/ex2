@@ -7,6 +7,7 @@ package View;
 
 import Math.Vector;
 import World.CollisionDetection.Collidable;
+import World.CollisionDetection.CollisionDetection;
 import World.CollisionDetection.CollisionFactory;
 import World.CollisionDetection.CollisionHandler;
 import World.Space.World;
@@ -22,15 +23,19 @@ public class CoordinateSystem {
     private float angleX;
     private float angleY;
     private float angleZ;
-    private boolean traced;
+    public boolean onFly;
+    public boolean inPalace;
+
 
     /**
      * constructor
      */
     public CoordinateSystem(float xPos, float yPos, float zPos) {
         init(xPos, yPos, zPos);
-        traced = false;
+        onFly = false;
+        inPalace = false;
     }
+
 
     /**
      * init
@@ -43,6 +48,7 @@ public class CoordinateSystem {
         angleY = 0;
         angleZ = 0;
     }
+
 
     /**
      * initAxes
@@ -65,6 +71,7 @@ public class CoordinateSystem {
     public void initOrigin(float xPos, float yPos, float zPos) {
         origin = new Vector(xPos, yPos, zPos);
     }
+
 
     /********
      * Getters
@@ -98,9 +105,6 @@ public class CoordinateSystem {
         return angleZ;
     }
 
-    public boolean getTraced() {
-        return traced;
-    }
 
     /********
      * Setters
@@ -118,9 +122,6 @@ public class CoordinateSystem {
         this.angleZ += 150 * z;
     }
 
-    public void setTraced() {
-        traced = true;
-    }
 
     /**
      * rotate
@@ -156,6 +157,7 @@ public class CoordinateSystem {
         }
     }
 
+
     /**
      * move
      * Multiply the step with the correct axis and add it to the origin
@@ -176,6 +178,17 @@ public class CoordinateSystem {
             next = origin.add(zAxis.multByScalar(step));
         }
 
+        if (World.firstLevel) {
+            // check
+            firstLevelBoundaries(next);
+        }
+
+        if (World.secondLevel) {
+            // check
+            if (secondLevelBoundaries(next) == 0) {
+                return;
+            }
+        }
 
         for (Collidable c : World.collidables) {
             CollisionHandler handler = CollisionFactory.create(c, next);
@@ -185,7 +198,37 @@ public class CoordinateSystem {
             }
         }
 
+        // move to the next step
         origin = next;
+    }
+
+    private void firstLevelBoundaries(Vector next) {
+        if (!CollisionDetection.checkBoundaries("z", next, -113.02f, 190)) {
+            World.firstLevel = false;
+        }
+    }
+
+    private int secondLevelBoundaries(Vector next) {
+        if (!CollisionDetection.checkBoundaries("y", next, 3f, 78)) {
+            return 0;
+        }
+
+        // if the player enters the palace
+        if ((next.getZ() <= 0) && onFly && !inPalace) {
+            origin.setVector(50, 40, -10);
+            initAxes();
+            onFly = false;
+            inPalace = true;
+            return 0;
+        }
+
+        // if the player leaves the palace
+        if ((next.getZ() > 0) && !onFly && inPalace) {
+            onFly = true;
+            inPalace = false;
+        }
+
+        return 1;
     }
 
 }

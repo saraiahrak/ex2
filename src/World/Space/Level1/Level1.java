@@ -15,7 +15,6 @@ import World.Objects.CoinObject;
 import World.Objects.CopObject;
 import World.Objects.LightObject;
 import Math.*;
-
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 

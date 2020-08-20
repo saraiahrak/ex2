@@ -46,11 +46,12 @@ public class PointBoxCollision implements CollisionHandler {
     }
 
     private void notifyWorld(Vector v, IObject obj) {
-//        if (isCop(obj)) {
+        if (isCop(obj)) {
+            World.playerDisqualified = true;
 //            World.removeLife();
-//        }
+        }
         if (isCoin(obj)) {
-            World.addScore(10);
+            World.player.addScore();
             World.removeDrawable((CoinObject) obj);
             World.removeCollidable((CoinObject) obj);
             System.out.println("score: " + World.player.getScore());

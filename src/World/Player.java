@@ -80,20 +80,22 @@ public class Player {
         life.display();
     }
 
+    public void reduceLife() {
+        life.reduceLife();
+    }
+
     public void displayCoins() {
         coins.display();
+    }
+
+    public int getScore() {
+        return coins.counter;
     }
 
     public void addScore() {
         coins.addCoin();
     }
 
-    public void reduceLife() {
-        life.reduceLife();
-    }
-
-    public int getScore() {
-        return coins.counter;
-    }
+    public void reduceScore() { coins.reduceCoin(); }
 
 }

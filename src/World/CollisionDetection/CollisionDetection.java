@@ -5,12 +5,6 @@
 package World.CollisionDetection;
 
 import Math.Vector;
-import World.Objects.Box;
-import World.Objects.Polygon;
-import World.Objects.Wall;
-import World.*;
-
-import java.util.ArrayList;
 
 /*************
  * Class Collision Detection

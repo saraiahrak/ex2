@@ -5,12 +5,9 @@
 
 package World.Models;
 
-import View.CoordinateSystem;
 import World.Space.World;
 import com.jogamp.opengl.util.texture.Texture;
 import World.Drawable;
-import sun.plugin.services.WPlatformService;
-
 import javax.media.opengl.GL2;
 
 /*************
@@ -21,7 +18,6 @@ public class ObjData implements Drawable {
     private String path;
     private String fly;
     public boolean wasCollision;
-    public boolean wasUsed;
     private Texture texture;
     private int list;
     private Material material;
@@ -38,7 +34,6 @@ public class ObjData implements Drawable {
         path = modelPath;
         fly = null;
         wasCollision = false;
-        wasUsed = false;
     }
 
     /*************
@@ -134,6 +129,7 @@ public class ObjData implements Drawable {
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR);
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR);
 
+        // models movement
         if (this.wasCollision) {
             this.wasCollision = false;
             for (int i = 0; i < 3; i++) {
@@ -187,13 +183,12 @@ public class ObjData implements Drawable {
 
         gl.glTranslatef(World.player.getPosition().getX(),
                 World.player.getPosition().getY() - 2.5f,
-                World.player.getPosition().getZ() - 2f);
+                World.player.getPosition().getZ() - 1f);
 
         gl.glScalef(scale[0],scale[1],scale[2]);
 
-        gl.glRotatef(World.player.coordinates.getAngleX(), 1, 0, 0);
-        gl.glRotatef(World.player.coordinates.getAngleY(), 0, 1, 0);
-        gl.glRotatef(World.player.coordinates.getAngleZ(), 0, 0, 1);
+        gl.glRotatef(World.player.coordinates.getAngleX() * 0.6f, 1, 0, 0);
+        gl.glRotatef(World.player.coordinates.getAngleY() * 1.06f, 0, 1, 0);
 
         if (texture != null) {
             texture.bind(gl);

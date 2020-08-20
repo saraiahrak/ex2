@@ -6,7 +6,6 @@
 package Math;
 
 import World.CollisionDetection.Collidable;
-
 import java.util.Arrays;
 
 /*************
@@ -16,7 +15,6 @@ public class Vector implements Collidable {
 
     private float[] vector;
     private int dim;
-
 
     /*************
      * Constructors
@@ -70,6 +68,24 @@ public class Vector implements Collidable {
 
     public float getSize() {
         return (float) Math.sqrt(this.dot(this));
+    }
+
+    public void setX(float x) {
+         vector[0] = x;
+    }
+
+    public void setY(float y) {
+        vector[1] = y;
+    }
+
+    public void setZ(float z) {
+        vector[2] = z;
+    }
+
+    public void setVector(float x, float y, float z) {
+        this.setX(x);
+        this.setY(y);
+        this.setZ(z);
     }
 
 
