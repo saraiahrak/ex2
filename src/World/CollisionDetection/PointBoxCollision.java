@@ -18,12 +18,17 @@ public class PointBoxCollision implements CollisionHandler {
 
     @Override
     public boolean handle(Collidable c1, Collidable c2) {
-
-        IObject obj = (IObject) c1;
-        Box box = obj.getBox();
+        Box b = null;
+        IObject obj = null;
+        if (isBox(c1)) {
+            b = (Box) c1;
+        } else {
+            obj = (IObject) c1;
+            b = obj.getBox();
+        }
 
         Vector position = (Vector) c2;
-        init(box);
+        init(b);
 
         float x = position.getX();
         float y = position.getY();
@@ -31,7 +36,7 @@ public class PointBoxCollision implements CollisionHandler {
 
         boolean intersection = x < xMax && x > xMin && y < yMax && y > yMin && z < zMax && z > zMin;
 
-        if (intersection) {
+        if (intersection && obj != null) {
             notifyWorld(position, obj);
         }
 
@@ -56,6 +61,15 @@ public class PointBoxCollision implements CollisionHandler {
     private boolean isCop(IObject obj) {
         try {
             CopObject cop = (CopObject) obj;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean isBox(Collidable obj) {
+        try {
+            Box b = (Box) obj;
             return true;
         } catch (Exception e) {
             return false;

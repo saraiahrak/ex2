@@ -14,6 +14,7 @@ import World.Objects.Box;
 import World.Objects.CarpetObject;
 import World.Objects.Wall;
 import World.Space.World;
+
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +150,8 @@ public class Level2 implements Level {
         collidables.add(garden.back);
         collidables.add(garden.left);
         collidables.add(garden.right);
+        collidables.addAll(garden.getObstacles());
+        collidables.add(garden.floor);
 //        //World.collidables.add(garden.palaceEntry);
 //        World.collidables.add(garden.back);
 //        World.collidables.add(garden.left);
@@ -170,7 +173,8 @@ public class Level2 implements Level {
      *
      * @param d - drawable
      */
-    private void addDrawable(Drawable d) {drawables.add(d);
+    private void addDrawable(Drawable d) {
+        drawables.add(d);
     }
 
 }

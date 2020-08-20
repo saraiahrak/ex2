@@ -97,4 +97,8 @@ public class Floor implements Drawable, Polygon {
     public ArrayList<Vertex> getVertices() {
         return vertices;
     }
+
+    public String getTextureKey() {
+        return textureKey;
+    }
 }

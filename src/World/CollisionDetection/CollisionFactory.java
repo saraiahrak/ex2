@@ -22,6 +22,10 @@ public class CollisionFactory {
             return new PointBoxCollision();
         }
 
+        if ((isBox(c1) && isVector(c2)) || (isVector(c1) && isBox(c2))) {
+            return new PointBoxCollision();
+        }
+
         if (isObject(c1) && isObject(c2)) {
             return new AAABCollision();
         }

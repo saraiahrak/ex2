@@ -10,6 +10,7 @@ import World.CollisionDetection.Collidable;
 import World.CollisionDetection.CollisionDetection;
 import World.Space.World;
 import Math.*;
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -89,6 +90,7 @@ public class KeySensor implements KeyListener {
             coordinates.move('Y', -step);
         }
 
+
         if (e.getKeyCode() == KeyEvent.VK_F2) {
             //coordinates.init(32f, 35f, 5f);
             coordinates.init(32f, 3.5f, 86f);
@@ -97,6 +99,41 @@ public class KeySensor implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             World.exit();
         }
+//        if (e.getKeyCode() == KeyEvent.VK_F1) {
+//            World.showMenu = true;
+//        }
+
+        if (e.getKeyCode() == KeyEvent.VK_F1) {
+            if (!World.showMenu) {
+                World.showMenu = true;
+            }
+            else {
+                if (World.showInstructions) {
+                    World.showInstructions = false;
+                }
+            }
+        }
+
+        if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+            if (World.showMenu && !World.showInstructions) {
+                World.showMenu = false;
+            }
+        }
+
+        if (e.getKeyChar() == 'h' || e.getKeyChar() == 'H') {
+            if (World.showMenu) {
+                World.showInstructions  = true;
+            }
+        }
+//        if (e.getKeyChar() == 'b' || e.getKeyChar() == 'B') {
+//            if (World.showMenu) {
+//                World.showInstructions  = false;
+//            }
+//        }
+
+
+
+
         // checks if the carpet was found
         if (World.secondLevel && !onFly) {
             if (fly()) {

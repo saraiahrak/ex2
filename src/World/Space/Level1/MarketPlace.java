@@ -32,8 +32,8 @@ public class MarketPlace implements Drawable {
      * Constructor
      * ***************/
     public MarketPlace() {
-        floor = new Floor("floor", new Vertex(-10f, -2f, -13f), 0f, 30f, 187f);
-        ceiling = new Ceiling("ceiling", new Vertex(-10f, 8f, -13f), 0f, 30f, 187f);
+        floor = new Floor("floor", new Vertex(-10f, -2f, -13f), 0f, 30f, 200f);
+        ceiling = new Ceiling("ceiling", new Vertex(-10f, 8f, -13f), 0f, 30f, 200f);
         left = new Wall("brick", new Vertex(-10f, -2f, -13f), 10f, 0f, 200f);
         right = new Wall("brick", new Vertex(20f, -2f, -13f), 10f, 0f, 200f);
         back = new Wall("back", new Vertex(-10f, -2f, 187f), 10f, 30f, 0f);

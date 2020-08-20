@@ -26,6 +26,7 @@ import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import java.awt.*;
 import java.util.ArrayList;
+import Game.Menu;
 
 /*************
  * Class World
@@ -43,8 +44,9 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
 
     private Level level;
 
-//    public static boolean showMenu = false;
-//    private Menu menu = null;
+    public static boolean showMenu = true;
+    public static boolean showInstructions = false;
+    private Menu menu = null;
 
 
 
@@ -65,12 +67,9 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();  // Reset The View
 
-//
-//        if (menu == null)
-//            menu = new Menu(gl);
 
-//        if (showMenu)
-//            menu.draw(gl);
+        if (menu == null)
+            menu = new Menu(gl);
 
 
         if (!firstLevel && !secondLevel) {
@@ -93,10 +92,26 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
                 player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
                 player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
 
-        this.draw(gl);
-        player.displayLife();
-        player.displayCoins();
-        levelText.display();
+
+//        menu.draw(gl);
+        if (showMenu) {
+            menu.draw(gl);
+        }
+        else {
+            draw(gl);
+            player.displayLife();
+            player.displayCoins();
+            levelText.display();
+//            System.out.println("Hi");
+        }
+//        if (!showMenu) {
+//            draw(gl);
+//            player.displayLife();
+//            player.displayCoins();
+//            levelText.display();
+//        } else {
+//            menu.draw(gl);
+//        }
     }
 
 

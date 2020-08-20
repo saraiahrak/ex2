@@ -2,7 +2,10 @@ package World.CollisionDetection;
 
 import Math.Vector;
 import Math.Vertex;
+import World.Objects.Ceiling;
+import World.Objects.Floor;
 import World.Objects.Polygon;
+import World.Space.World;
 
 import java.util.ArrayList;
 
@@ -17,6 +20,28 @@ public class PolyPointCollision implements CollisionHandler {
         ArrayList<Vector> vectors = createVectors(polygon, position);
 
         float sum = getAngleSum(vectors);
+
+        if (isFloor(polygon)) {
+            System.out.println("x: " + World.player.getPosition().getX() + " y: " + World.player.getPosition().getY() + " z: " + World.player.getPosition().getZ());
+            System.out.println("sum of angles: " + sum);
+            System.out.println("floor y: " + vertices.get(0).getY());
+            System.out.println(((Floor)polygon).getTextureKey());
+
+            Floor f = (Floor)polygon;
+            Vertex bottom = f.corner.clone();
+
+            boolean inRange =isPlayerInRange(bottom.getX(), f.width, bottom.getZ(), f.depth, position);
+            float lim = vertices.get(0).getY();
+            return inRange && position.getY() + 2 < lim ;
+//            if () {
+//            }
+
+        }
+
+        if (isCeiling(polygon)) {
+            float lim = vertices.get(0).getY();
+            return position.getY() > lim;
+        }
 
         return sum > 360 - polygon.getDistFactor();
     }
@@ -45,6 +70,31 @@ public class PolyPointCollision implements CollisionHandler {
             }
         }
         return sum;
+    }
+
+    private boolean isFloor(Polygon p) {
+        try {
+            Floor f = (Floor) p;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean isCeiling(Polygon p) {
+        try {
+            Ceiling f = (Ceiling) p;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean isPlayerInRange(float x, float w, float z, float d, Vector position) {
+        float xPos = position.getX();
+        float zPos = position.getZ();
+
+        return (xPos > x && xPos < x + w && zPos > z && zPos < z + d);
     }
 }
 
