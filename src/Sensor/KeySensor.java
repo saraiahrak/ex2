@@ -17,6 +17,7 @@ import java.awt.event.KeyListener;
 public class KeySensor implements KeyListener {
 
     public static CoordinateSystem coordinates;
+    private boolean canBuy;
     private boolean purchased;
     private float angleAmount;
 
@@ -25,6 +26,7 @@ public class KeySensor implements KeyListener {
      * ***************/
     public KeySensor(CoordinateSystem myCoordinates) {
         coordinates = myCoordinates;
+        canBuy = false;
         purchased = false;
         angleAmount = 0;
     }
@@ -51,7 +53,8 @@ public class KeySensor implements KeyListener {
 //            World.showMenu = false;
 //        }
 
-        if (e.getKeyChar() == 'b' || e.getKeyChar() == 'B') {
+        if ((e.getKeyChar() == 'b' || e.getKeyChar() == 'B') && canBuy && !purchased) {
+            purchased = true;
             World.player.reduceScore();
             World.showMessage = false;
             coordinates.init(42f, 10f, 67f);
@@ -59,12 +62,12 @@ public class KeySensor implements KeyListener {
         }
 
         if ((e.getKeyChar() == 'i' || e.getKeyChar() == 'I') && coordinates.onFly) {
-            if (angleAmount + angle <= 1) {
+            if (angleAmount + angle <= 0.5) {
                 angleAmount += angle;
                 coordinates.rotate('X', angle);
             }
         } else if ((e.getKeyChar() == 'k' || e.getKeyChar() == 'K') && coordinates.onFly) {
-            if (angleAmount - angle >= -1) {
+            if (angleAmount - angle >= -0.2) {
                 angleAmount -= angle;
                 coordinates.rotate('X', -angle);
             }
@@ -118,8 +121,8 @@ public class KeySensor implements KeyListener {
      * If the carpet was found fly, otherwise continue to search
      */
     private void carpetWasFound() {
-        if (buy() && !purchased) {
-            purchased = true;
+        if (buy() && !canBuy) {
+            canBuy = true;
             World.showMessage = true;
         }
     }

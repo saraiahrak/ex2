@@ -19,7 +19,7 @@ public class Message {
      * Constructor
      */
     public Message() {
-        textRenderer = new TextRenderer(new Font("david", Font.PLAIN, 40));
+        textRenderer = new TextRenderer(new Font("david", Font.BOLD, 40));
     }
 
 

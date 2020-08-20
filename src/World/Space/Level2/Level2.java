@@ -89,17 +89,10 @@ public class Level2 implements Level {
     public void createModels(GL2 gl2) {
 
         OBJLoader carpet = new OBJLoader("models/carpet/PersianCarpet.obj", gl2);
-        CarpetObject carpetObject = new CarpetObject(carpet.getModel(), new Vertex(42f, 0.5f, 62f));
-        carpetObject.translate(42f, 0.5f, 62f);
-        carpetObject.scale(0.07f, 0.07f, 0.09f);
+        CarpetObject carpetObject = new CarpetObject(carpet.getModel(), new Vertex(42f, 0.6f, 60f));
+        carpetObject.translate(42f, 0.7f, 60);
+        carpetObject.scale(0.09f, 0.07f, 0.15f);
         addDrawable(carpetObject);
-
-//        OBJLoader carpet = new OBJLoader("models/carpet/PersianCarpet.obj", gl2);
-//        addDrawable(carpet.getModel());
-//        carpet.getModel().translate(42f, 0.5f, 62f);
-//        //carpet.getModel().translate(coordinates.getOrigin().getX(),0.5f,
-//        //       coordinates.getOrigin().getZ() + 5f);
-//        carpet.getModel().scale(0.07f, 0.07f, 0.09f);
     }
 
 
