@@ -45,7 +45,7 @@ public class PointBoxCollision implements CollisionHandler {
         float z = position.getZ();
 
         boolean intersection =
-                x - 2 < xMax && x + 2 > xMin && y - 2 < yMax && y + 2 > yMin && z - 2 < zMax && z + 2 > zMin;
+                x - 2 < xMax && x + 2 > xMin && y - 3 < yMax && y + 3 > yMin && z - 2 < zMax && z + 2 > zMin;
 
         if (intersection && obj != null) {
             notifyWorld(obj);
