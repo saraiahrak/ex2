@@ -260,7 +260,7 @@ public class CoordinateSystem {
 
         // if the player enters the palace
         if ((next.getZ() <= 0) && onFly && !inPalace) {
-            origin.setVector(50, 40, -10);
+            origin.setVector(50, 40, -5);
             initAxes();
             onFly = false;
             inPalace = true;

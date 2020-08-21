@@ -134,7 +134,6 @@ public class Level2 implements Level {
         collidables.add(garden.left);
         collidables.add(garden.right);
         collidables.addAll(garden.getObstacles());
-        collidables.add(garden.floor);
     }
 
 

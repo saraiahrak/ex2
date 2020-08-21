@@ -67,6 +67,13 @@ public class Box implements Drawable, Collidable {
         return bottomLeft;
     }
 
+    public ArrayList<Polygon> getPolygons() {
+        return polygons;
+    }
+
+    /**
+     * createPolygons
+     */
     private void createPolygons() {
         float x = bottomLeft.getX();
         float y = bottomLeft.getY();
@@ -81,15 +88,13 @@ public class Box implements Drawable, Collidable {
 
         polygons.add(front);
         polygons.add(back);
-        polygons.add(bottom);
         polygons.add(left);
         polygons.add(right);
-        polygons.add(top);
+        if (textureKey.contains("bush")) {
+            polygons.add(bottom);
+            polygons.add(top);
+        }
 
-    }
-
-    public ArrayList<Polygon> getPolygons() {
-        return polygons;
     }
 
     @Override
