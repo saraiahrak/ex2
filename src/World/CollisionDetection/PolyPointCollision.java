@@ -27,30 +27,6 @@ public class PolyPointCollision implements CollisionHandler {
         ArrayList<Vector> vectors = createVectors(polygon, position);
 
         float sum = getAngleSum(vectors);
-<<<<<<< HEAD
-//
-//        if (isFloor(polygon)) {
-////            System.out.println("x: " + World.player.getPosition().getX() + " y: " + World.player.getPosition().getY() + " z: " + World.player.getPosition().getZ());
-////            System.out.println("sum of angles: " + sum);
-////            System.out.println("floor y: " + vertices.get(0).getY());
-////            System.out.println(((Floor)polygon).getTextureKey());
-//
-//            Floor f = (Floor)polygon;
-//            Vertex bottom = f.corner.clone();
-////
-////            boolean inRange =isPlayerInRange(bottom.getX(), f.width, bottom.getZ(), f.depth, position);
-////            float lim = vertices.get(0).getY();
-////            return inRange && position.getY() + 2 < lim ;
-////            if () {
-////            }
-//
-//        }
-//
-//        if (isCeiling(polygon)) {
-//            float lim = vertices.get(0).getY();
-//            return position.getY() > lim;
-//        }
-=======
 
         if (isFloor(polygon)) {
             Floor f = (Floor)polygon;
@@ -65,7 +41,6 @@ public class PolyPointCollision implements CollisionHandler {
             float lim = vertices.get(0).getY();
             return position.getY() > lim;
         }
->>>>>>> 519a1c4741f99456d95ce3851b897124e1fbde70
 
         return sum > 360 - polygon.getDistFactor();
     }

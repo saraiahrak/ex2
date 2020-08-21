@@ -43,13 +43,7 @@ public class Coins {
      * Pay for the carpet
      */
     public void reduceCoin() {
-        if (counter >= 200) {
-            counter -= 200;
-        } else {
-            // end game
-            World.showMenu = true;
-            World.showGameOver = true;
-        }
+        counter -= 200;
     }
 
 

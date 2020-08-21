@@ -234,7 +234,8 @@ public class CoordinateSystem {
      */
     private void firstLevelBoundaries(Vector next) {
         if (!CollisionDetection.checkBoundaries("z", next, -113.02f, 190)) {
-            World.firstLevel = false;
+            World.showMenu = true;
+            World.showLevel2Menu = true;
         }
     }
 

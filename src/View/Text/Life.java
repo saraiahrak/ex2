@@ -15,6 +15,7 @@ import java.awt.*;
 public class Life {
 
     int counter;
+    public static boolean reduced = false;
     TextRenderer textRenderer;
 
     /*************
@@ -43,11 +44,11 @@ public class Life {
      */
     public void reduceLife() {
         counter -= 1;
-        if (counter == 0) {
-            // end game
-            World.showMenu = true;
-            World.showGameOver = true;
-        }
+//        if (counter == 0) {
+//            // end game
+//            World.showMenu = true;
+//            World.showGameOver = true;
+//        }
     }
 
 }

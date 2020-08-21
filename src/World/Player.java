@@ -22,7 +22,6 @@ public class Player {
     private Vector up;
     private Life life;
     private Coins coins;
-    public boolean isInMotion = false;
 
     /*************
      * Constructors
@@ -34,7 +33,7 @@ public class Player {
         init(xPos, yPos, zPos);
     }
 
-    private void init(float xPos, float yPos, float zPos) {
+    public void init(float xPos, float yPos, float zPos) {
         coordinates = new CoordinateSystem(xPos, yPos, zPos);
         position = coordinates.getOrigin();
         lookAt = position.sub(coordinates.getzAxis());
