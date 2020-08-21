@@ -34,10 +34,11 @@ import Game.Menu;
 
 public class World extends KeyAdapter implements GLEventListener, Drawable {
 
-    public static Player player = new Player(5f, 0.2f, 180f);
+    public static Player player = new Player(5f, 0.2f, 380f);
 
     public static ArrayList<Drawable> drawables = new ArrayList<>();
     public static ArrayList<Collidable> collidables = new ArrayList<>();
+    public static ArrayList<Collidable> jasmineCollidables = new ArrayList<>();
 
     public static boolean firstLevel = true;
     public static boolean secondLevel = false;
@@ -47,10 +48,16 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     private Level level;
 
     public static boolean showMenu = true;
+    public static boolean showMainMenu = true;
     public static boolean showInstructions = false;
-    private Menu menu = null;
-
-
+    public static boolean showGameOver = false;
+    public static boolean showSuccess = false;
+    public static boolean showLevel2Menu = false;
+    private Menu mainMenu = null;
+    private Menu instructionsMenu = null;
+    private Menu gameOverMenu = null;
+    private Menu successMenu = null;
+    private Menu level2Menu = null;
 
     private static GLU glu = new GLU();
     private static GLCanvas canvas = new GLCanvas();
@@ -70,16 +77,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();  // Reset The View
 
-
-        if (menu == null)
-            menu = new Menu(gl);
-
-
-        if (!firstLevel && !secondLevel) {
-            secondLevel = true;
-            initLevel2(gl);
-        }
-
         // set world light
         setLight(gl);
 
@@ -90,29 +87,52 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
                 player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
 
 
-//        menu.draw(gl);
         if (showMenu) {
-            menu.draw(gl);
-        }
-        else {
+            player.coordinates.init(5, 0.2f, 380);
+            findMenuType(gl);
             draw(gl);
-            player.displayLife();
-            player.displayCoins();
-            levelText.display();
-            if (showMessage) {
-                message.display();
-            }
-//            System.out.println("Hi");
+            return;
         }
-//        if (!showMenu) {
-//            draw(gl);
-//            player.displayLife();
-//            player.displayCoins();
-//            levelText.display();
-//        } else {
-//            menu.draw(gl);
-//        }
-//
+
+        draw(gl);
+
+        player.displayLife();
+        player.displayCoins();
+        levelText.display();
+
+        if (showMessage) {
+            message.display();
+        }
+
+        if (!firstLevel && !secondLevel) {
+            level2Menu.data.draw(gl);
+            initLevel2(gl);
+            secondLevel = true;
+            showLevel2Menu = false;
+        }
+    }
+
+
+    /**
+     * findMenuType
+     *
+     * @param gl - GL2 object
+     */
+    private void findMenuType(GL2 gl) {
+        if (showInstructions) {
+            instructionsMenu.data.draw(gl);
+        } else if (showMainMenu) {
+            mainMenu.data.draw(gl);
+        } else if (showGameOver) {
+            gameOverMenu.data.draw(gl);
+        } else if (showSuccess) {
+            successMenu.data.draw(gl);
+        } else {
+            // wait for level2 menu
+            level2Menu.data.draw(gl);
+            World.showMenu = false;
+            firstLevel = false;
+        }
     }
 
 
@@ -126,8 +146,10 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         // enable light
         gl.glEnable(GL2.GL_LIGHTING);
 
-        initLevel1(gl);
+        initLevels(gl);
         initGL(gl);
+
+        setMenus(gl);
 
         setLight(gl);
 
@@ -142,6 +164,21 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
 
 
     /**
+     * setMenus
+     *
+     * @param gl - GL2 object
+     */
+    private void setMenus(GL2 gl) {
+        mainMenu = new Menu(gl, "textures/mainMenu.png");
+        instructionsMenu = new Menu(gl, "textures/instructionsMenu.png");
+        gameOverMenu = new Menu(gl, "textures/tryAgain.png");
+        successMenu = new Menu(gl, "textures/goodJob.png");
+        level2Menu = new Menu(gl, "textures/level2.png");
+
+    }
+
+
+    /**
      * setLight
      *
      * @param gl - GL2 object
@@ -149,18 +186,34 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
     private void setLight(GL2 gl) {
         float[] ambient, diffuse0, diffuse1;
 
+        float LightPos0[] = {0f, 0f, -13f, 1.0f};
+        float LightPos1[] = {0f, 0f, 0f, 1.0f};
+
+        if (secondLevel) {
+          //  LightPos0 = new float[]{-160, 40, 1000, 1.0f};
+           // LightPos1 = new float[]{140, 40, 0, 1.0f};
+        }
+
         // set colors
         if (playerDisqualified) {
             ambient = new float[]{1f, 0f, 0f, 0f};
             diffuse0 = new float[]{0.5f, 0f, 0f, 0f};
             diffuse1 = new float[]{0.5f, 0f, 0f, 0f};
             playerDisqualified = false;
+        } else if (showMenu) {
+            ambient = new float[]{1f, 1f, 1f, 1f};
+            diffuse0 = new float[]{1f, 1f, 1f, 1f};
+            diffuse1 = new float[]{1f, 1f, 1f, 1f};
+            // set lighting positions
+            LightPos0 = new float[]{-160f, 200f, -1000f, 1.0f};
+            LightPos1 = new float[]{160f, 1f, -1000, 1.0f};
         } else {
             ambient = new float[]{1f, 1f, 1f, 1f};
             diffuse0 = new float[]{0f, 0f, 0f, 1f};
             diffuse1 = new float[]{1f, 1f, 0f, 0f};
         }
 
+        // set light source
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambient, 0);
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, diffuse0, 0);
         gl.glEnable(GL2.GL_LIGHT0);
@@ -169,10 +222,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse1, 0);
         gl.glEnable(GL2.GL_LIGHT1);
 
-        // set lighting positions
-        float LightPos0[] = {0f, 0f, -13f, 1.0f};
-        float LightPos1[] = {0f, 0f, 0f, 1.0f};
-
+        // position
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos0, 0);
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, LightPos1, 0);
 
@@ -186,13 +236,12 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
      *
      * @param gl - GL2 object
      */
-    public void initLevel1(GL2 gl) {
+    public void initLevels(GL2 gl) {
+
         level = new Level1(gl);
 
         initCollidables();
         initDrawables();
-
-//        new Level1(gl);
     }
 
 
@@ -202,6 +251,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
      * @param gl - GL2 object
      */
     public  void initLevel2(GL2 gl) {
+
         level = new Level2(gl);
         player.coordinates.init(32f, 3.5f, 86f);
         initCollidables();

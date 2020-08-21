@@ -188,6 +188,12 @@ public class CoordinateSystem {
             if (secondLevelBoundaries(next) == 0) {
                 return;
             }
+
+            if (jasmineWasFound(next)) {
+                World.showMenu = true;
+                World.showSuccess = true;
+                return;
+            }
         }
 
         for (Collidable c : World.collidables) {
@@ -202,12 +208,42 @@ public class CoordinateSystem {
         origin = next;
     }
 
+
+    /**
+     * jasmineWasFound
+     * Checks if the player can rescue jasmine
+     *
+     * @param next - next step
+     */
+    private boolean jasmineWasFound(Vector next) {
+        for (Collidable c : World.jasmineCollidables) {
+            CollisionHandler handler = CollisionFactory.create(c, next);
+            boolean intersection = handler.handle(c, next);
+            if (intersection) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * firstLevelBoundaries
+     *
+     * @param next - next step
+     */
     private void firstLevelBoundaries(Vector next) {
         if (!CollisionDetection.checkBoundaries("z", next, -113.02f, 190)) {
             World.firstLevel = false;
         }
     }
 
+
+    /**
+     * secondLevelBoundaries
+     *
+     * @param next - next step
+     */
     private int secondLevelBoundaries(Vector next) {
         if (!CollisionDetection.checkBoundaries("y", next, 3f, 78)) {
             return 0;
@@ -227,7 +263,6 @@ public class CoordinateSystem {
             onFly = true;
             inPalace = false;
         }
-
         return 1;
     }
 

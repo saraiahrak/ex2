@@ -1,11 +1,18 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package World.Objects;
 
 import World.Drawable;
 import World.Models.Model;
 import Math.*;
-
 import javax.media.opengl.GL2;
 
+/*************
+ * Class Light Object
+ * ***********/
 public class LightObject implements IObject, Drawable {
 
     private Model model = null;
@@ -232,4 +239,3 @@ public class LightObject implements IObject, Drawable {
         model.setMotion(dx, dy, dz);
     }
 }
-

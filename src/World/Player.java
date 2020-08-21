@@ -99,4 +99,6 @@ public class Player {
 
     public void reduceScore() { coins.reduceCoin(); }
 
+    public void setScore() { coins.setCoins(); }
+
 }

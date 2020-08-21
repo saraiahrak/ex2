@@ -30,7 +30,7 @@ public class Message {
     public void display() {
         textRenderer.beginRendering(1000, 600);
         textRenderer.setColor(1f, 0.6f, 0f, 1f);
-        textRenderer.draw("Press 'B' to buy the carpet", 300, 500);
+        textRenderer.draw("Press 'B' to buy the carpet for 200$", 300, 500);
         textRenderer.endRendering();
     }
 

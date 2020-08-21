@@ -5,12 +5,10 @@
 
 package World.Objects;
 
-import Design.TextureFactory;
 import Math.Vertex;
 import World.CollisionDetection.Collidable;
 import World.Drawable;
 import com.jogamp.opengl.util.texture.Texture;
-
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +22,17 @@ public class Box implements Drawable, Collidable {
     private Texture texture;
     private Vertex bottomLeft;
 
-    private float depth = 1;
-    private float height = 1;
-    private float width = 1;
+    private float depth;
+    private float height;
+    private float width;
 
-    private Vertex center = null;
+    private Vertex center;
 
     private ArrayList<Polygon> polygons;
 
+    /*************
+     * Constructor
+     * ***********/
     public Box(String key, Vertex left, float d, float h, float w) {
         textureKey = key;
         bottomLeft = left.clone();
@@ -94,83 +95,6 @@ public class Box implements Drawable, Collidable {
         for (Polygon p : polygons) {
             p.draw(gl);
         }
-
-//
-//        if (texture == null)
-//            texture = TextureFactory.create(textureKey, gl);
-//
-//        gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
-//        gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_S, GL2.GL_REPEAT);
-//
-//        texture.bind(gl);
-//
-//        gl.glBegin(GL2.GL_QUADS);
-//
-//        float x = bottomLeft.getX();
-//        float y = bottomLeft.getY();
-//        float z = bottomLeft.getZ();
-//
-//        // Front Face
-//        gl.glTexCoord2f(0.0f, 0.0f);
-//        gl.glVertex3f(x, y + height, z + depth);
-//        gl.glTexCoord2f(0f, 1.0f);
-//        gl.glVertex3f(x, y, z + depth);
-//        gl.glTexCoord2f(1f, 1f);
-//        gl.glVertex3f(x + width, y, z + depth);
-//        gl.glTexCoord2f(1f, 0.0f);
-//        gl.glVertex3f(x + width, y + height, z + depth);
-//
-//        // Back Face
-//        gl.glTexCoord2f(0.0f, 0.0f);
-//        gl.glVertex3f(x, y + height, z);
-//        gl.glTexCoord2f(0f, 1.0f);
-//        gl.glVertex3f(x, y, z);
-//        gl.glTexCoord2f(1f, 1f);
-//        gl.glVertex3f(x + width, y, z);
-//        gl.glTexCoord2f(1f, 0.0f);
-//        gl.glVertex3f(x + width, y + height, z);
-//
-//        // Top Face
-//        gl.glTexCoord2f(0.0f, 0.0f);
-//        gl.glVertex3f(x, y + height, z);
-//        gl.glTexCoord2f(0f, 1.0f);
-//        gl.glVertex3f(x, y + height, z + depth);
-//        gl.glTexCoord2f(1f, 1f);
-//        gl.glVertex3f(x + width, y + height, z + depth);
-//        gl.glTexCoord2f(1f, 0.0f);
-//        gl.glVertex3f(x + width, y + height, z);
-//
-//        // Bottom Face
-//        gl.glTexCoord2f(0.0f, 0.0f);
-//        gl.glVertex3f(x, y, z);
-//        gl.glTexCoord2f(0f, 1.0f);
-//        gl.glVertex3f(x, y, z + depth);
-//        gl.glTexCoord2f(1f, 1f);
-//        gl.glVertex3f(x + width, y, z + depth);
-//        gl.glTexCoord2f(1f, 0.0f);
-//        gl.glVertex3f(x + width, y, z);
-//
-//        // Left face
-//        gl.glTexCoord2f(0.0f, 0.0f);
-//        gl.glVertex3f(x, y + height, z + depth);
-//        gl.glTexCoord2f(0f, 1.0f);
-//        gl.glVertex3f(x, y, z + depth);
-//        gl.glTexCoord2f(1f, 1f);
-//        gl.glVertex3f(x, y, z);
-//        gl.glTexCoord2f(1f, 0.0f);
-//        gl.glVertex3f(x, y + height, z);
-//
-//        // Right Face
-//        gl.glTexCoord2f(0.0f, 0.0f);
-//        gl.glVertex3f(x + width, y + height, z + depth);
-//        gl.glTexCoord2f(0f, 1.0f);
-//        gl.glVertex3f(x + width, y, z + depth);
-//        gl.glTexCoord2f(1f, 1f);
-//        gl.glVertex3f(x + width, y, z);
-//        gl.glTexCoord2f(1f, 0.0f);
-//        gl.glVertex3f(x + width, y + height, z);
-//
-//        gl.glEnd();
     }
 
 

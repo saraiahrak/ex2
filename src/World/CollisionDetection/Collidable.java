@@ -8,5 +8,4 @@ package World.CollisionDetection;
 /*************
  * Class Collidable
  * ***********/
-public interface Collidable {
-}
+public interface Collidable { }

@@ -8,7 +8,6 @@ package World.Models;
 import View.CoordinateSystem;
 import World.Drawable;
 import World.Space.World;
-
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 

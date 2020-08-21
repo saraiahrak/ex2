@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*************
- * Class LevelText 2
+ * Class Level 2
  * ***********/
 public class Level2 implements Level {
 
@@ -55,7 +55,6 @@ public class Level2 implements Level {
         return drawables;
     }
 
-
     public void createSpace() {
 
         Garden garden = new Garden();
@@ -80,8 +79,9 @@ public class Level2 implements Level {
         addDrawable(jasmine);
         addDrawable(cage);
 
-        addCollidable(jasmine);
-        collidables.addAll(cage.getPolygons());
+        // collision with jasmine
+        World.jasmineCollidables.add(jasmine);
+        World.jasmineCollidables.addAll(cage.getPolygons());
     }
 
 
@@ -120,14 +120,6 @@ public class Level2 implements Level {
 
         collidables.addAll(internalWalls);
         collidables.addAll(externalWalls);
-
-//        for (Wall wall: internalWalls) {
-//            World.collidables.add(wall);
-////        }
-//
-//        for (Wall wall: externalWalls) {
-//            World.collidables.add(wall);
-//        }
     }
 
 
@@ -144,18 +136,6 @@ public class Level2 implements Level {
         collidables.add(garden.right);
         collidables.addAll(garden.getObstacles());
         collidables.add(garden.floor);
-//        //World.collidables.add(garden.palaceEntry);
-//        World.collidables.add(garden.back);
-//        World.collidables.add(garden.left);
-//        World.collidables.add(garden.right);
-//        //World.collidables.add(garden.floor);
-//        //World.collidables.add(garden.ceiling);
-//
-//    //    List<Box> boxes = garden.getObstacles();
-//   //     World.collidables.addAll(boxes);
-//
-////        List<Box> boxes = garden.getObstacles();
-////        World.collidables.addAll(boxes);
     }
 
 

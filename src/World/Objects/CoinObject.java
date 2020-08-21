@@ -1,11 +1,18 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package World.Objects;
 
 import World.Drawable;
 import World.Models.*;
 import Math.*;
-
 import javax.media.opengl.GL2;
 
+/*************
+ * Class Coin Object
+ * ***********/
 public class CoinObject implements IObject, Drawable {
 
     private Vertex position;

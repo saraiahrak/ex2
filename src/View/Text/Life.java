@@ -5,6 +5,7 @@
 
 package View.Text;
 
+import World.Space.World;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import java.awt.*;
 
@@ -44,6 +45,8 @@ public class Life {
         counter -= 1;
         if (counter == 0) {
             // end game
+            World.showMenu = true;
+            World.showGameOver = true;
         }
     }
 

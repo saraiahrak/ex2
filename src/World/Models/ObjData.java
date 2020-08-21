@@ -27,11 +27,17 @@ public class ObjData implements Drawable {
     private float[] motion = {0,0,0};
 
     /*****************
-     * Constructor
+     * Constructors
      * ***************/
 
     public ObjData(String modelPath) {
         path = modelPath;
+        fly = null;
+        wasCollision = false;
+    }
+
+    public ObjData() {
+        path = null;
         fly = null;
         wasCollision = false;
     }
@@ -57,6 +63,7 @@ public class ObjData implements Drawable {
         this.list = l;
     }
     public void setMaterial(Material m) { this.material = m; }
+    public void setPath(String name) { this.path = name; }
 
 
     /**
@@ -125,6 +132,7 @@ public class ObjData implements Drawable {
     public void draw(GL2 gl) {
 
         gl.glPushMatrix();
+        gl.glEnable(GL2.GL_TEXTURE_2D);
 
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR);
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR);
@@ -151,6 +159,7 @@ public class ObjData implements Drawable {
         if (texture != null) {
             texture.bind(gl);
         }
+
         // causes the named display list to be executed
         gl.glCallList(list);
         gl.glPopMatrix();

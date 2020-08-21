@@ -19,15 +19,16 @@ import javax.media.opengl.GL2;
 import java.util.ArrayList;
 
 /*************
- * Class LevelText 1
+ * Class Level 1
  * ***********/
 public class Level1 implements Level {
-
 
     private ArrayList<Collidable> collidables;
     private ArrayList<Drawable> drawables;
 
-
+    /*************
+     * Constructor
+     * ***********/
     public Level1(GL2 gl) {
         init();
         createSpace();
@@ -35,6 +36,9 @@ public class Level1 implements Level {
     }
 
 
+    /**
+     * init
+     */
     private void init() {
         collidables = new ArrayList<>();
         drawables = new ArrayList<>();
@@ -105,16 +109,6 @@ public class Level1 implements Level {
             light.scale(0.014f, 0.014f, 0.014f);
             addDrawable(light);
             addCollidable(light);
-//        ArrayList<String> lines = Reader.readLines("resources/models/dualLight/Lights.txt");
-//        for (String line : lines) {
-//            String[] values = line.split(" ");
-//
-//            OBJLoader singleLight =
-//                    new OBJLoader("models/dualLight/classic_dual_light.obj", gl);
-//            addDrawable(singleLight.getModel());
-//            singleLight.getModel().translate(Float.parseFloat(values[0]),
-//                    Float.parseFloat(values[1]), Float.parseFloat(values[2]));
-//            singleLight.getModel().scale(0.014f, 0.014f, 0.014f);
         }
     }
 
@@ -138,17 +132,6 @@ public class Level1 implements Level {
             benchObject.rotate(Float.parseFloat(values[3]), 0, 1, 0);
             addDrawable(benchObject);
             addCollidable(benchObject);
-//
-//        ArrayList<String> lines = Reader.readLines("resources/models/bench/Benches.txt");
-//        for (String line : lines) {
-//            String[] values = line.split(" ");
-//
-//            OBJLoader bench = new OBJLoader("models/bench/classic_park_bench.obj", gl);
-//            addDrawable(bench.getModel());
-//            bench.getModel().translate(Float.parseFloat(values[0]),
-//                    Float.parseFloat(values[1]), Float.parseFloat(values[2]));
-//            bench.getModel().scale(0.014f, 0.014f, 0.014f);
-//            bench.getModel().rotate(Float.parseFloat(values[3]), 0, 1, 0);
         }
     }
 
@@ -172,23 +155,8 @@ public class Level1 implements Level {
             coinObject.rotate(0.01f, 0, 1, 0);
             addDrawable(coinObject);
             addCollidable(coinObject);
-
-
-//        ArrayList<String> lines = Reader.readLines("resources/models/coin/coins.txt");
-//        for (String line : lines) {
-//            String[] values = line.split(" ");
-//
-//            OBJLoader coin = new OBJLoader("models/coin/coin.obj", gl);
-//            addDrawable(coin.getModel());
-//            coin.getModel().translate(Float.parseFloat(values[0]),
-//                    Float.parseFloat(values[1]), Float.parseFloat(values[2]));
-//            coin.getModel().scale(0.2f, 0.2f, 0.2f);
-//            coin.getModel().rotate(0.01f, 0, 1, 0);
-//        }
         }
-
     }
-
 
 
     /**
@@ -211,65 +179,34 @@ public class Level1 implements Level {
             addDrawable(copObject);
             addCollidable(copObject);
         }
-//        ArrayList<String> lines = Reader.readLines("resources/models/cops/cops.txt");
-//        for (String line : lines) {
-//            String[] values = line.split(" ");
-//
-//            OBJLoader cop = new OBJLoader("models/cops/Dusty_2.obj", gl);
-//            addDrawable(cop.getModel());
-//            cop.getModel().translate(Float.parseFloat(values[0]),
-//                    -1.85f, Float.parseFloat(values[1]));
-//            cop.getModel().scale(0.0007f, 0.0007f, 0.0007f);
-//            cop.getModel().setMotion(0.01f, 0f, 0f);
-//        }
     }
 
 
+    /**
+     * addDrawable
+     *
+     * @param d - Drawable
+     */
     private void addDrawable (Drawable d){
         drawables.add(d);
     }
 
+    /**
+     * addCollidable
+     *
+     * @param c - Collidable
+     */
     private void addCollidable (Collidable c){
         collidables.add(c);
     }
 
+    /**
+     * addCollidables
+     *
+     * @param c - array of Collidables
+     */
     private void addCollidables (ArrayList < Collidable > c) {
         collidables.addAll(c);
     }
-
-//
-//        /**
-//         * addCollidable
-//         * Add collidable to list of collision objects
-//         *
-//         * @param marketPlace - collidables
-//         */
-//        private static void addCollidable (MarketPlace marketPlace){
-//            World.collidables.addAll(marketPlace.getCollidables());
-//        }
-//
-//        /**
-//         * addCollidable
-//         * Add collidable to list of collision objects
-//         *
-//         * @param cave - collidables
-//         */
-//        private static void addCollidable (Cave cave){
-//            World.collidables.addAll(cave.getCollidables());
-////        World.collidables.add(cave.genie);
-////        List<Wall> walls = cave.getMaze();
-////        World.collidables.addAll(walls);
-//        }
-//
-//
-//        /**
-//         * addDrawable
-//         * Add drawable to list of drawable objects
-//         *
-//         * @param d - drawable
-//         */
-//        private static void addDrawable (Drawable d){
-//            World.drawables.add(d);
-//        }
 
 }
