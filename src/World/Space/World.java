@@ -211,7 +211,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
             diffuse1 = new float[]{1f, 1f, 0f, 0f};
         }
 
-
         // set light source
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambient, 0);
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, diffuse0, 0);
@@ -294,7 +293,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         float h = (float) width / (float) height;
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(48, h, 1.0, 200);
+        glu.gluPerspective(48, h, 1.0, 300);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
