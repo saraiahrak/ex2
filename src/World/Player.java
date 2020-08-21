@@ -33,7 +33,7 @@ public class Player {
         init(xPos, yPos, zPos);
     }
 
-    private void init(float xPos, float yPos, float zPos) {
+    public void init(float xPos, float yPos, float zPos) {
         coordinates = new CoordinateSystem(xPos, yPos, zPos);
         position = coordinates.getOrigin();
         lookAt = position.sub(coordinates.getZAxis());

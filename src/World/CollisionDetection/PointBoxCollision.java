@@ -12,6 +12,8 @@ import World.Objects.CopObject;
 import World.Objects.IObject;
 import World.Space.World;
 
+import javax.swing.plaf.synth.SynthStyle;
+
 /****************
  * Class Point Box Collision
  * **************/
@@ -43,7 +45,7 @@ public class PointBoxCollision implements CollisionHandler {
         float z = position.getZ();
 
         boolean intersection =
-                x - 2 < xMax && x + 2 > xMin && y - 2 < yMax && y + 2 > yMin && z - 2 < zMax && z + 2> zMin;
+                x - 2 < xMax && x + 2 > xMin && y - 2 < yMax && y + 2 > yMin && z - 2 < zMax && z + 2 > zMin;
 
         if (intersection && obj != null) {
             notifyWorld(obj);
@@ -62,6 +64,9 @@ public class PointBoxCollision implements CollisionHandler {
     private void notifyWorld(IObject obj) {
         if (isCop(obj)) {
             World.playerDisqualified = true;
+            World.player.reduceLife();
+//            World.player.coordinates.move('Z', -0.35f);
+//            World.removeLife();
         }
         if (isCoin(obj)) {
             World.player.addScore();
@@ -139,9 +144,9 @@ public class PointBoxCollision implements CollisionHandler {
      * Initialize the size
      *
      * @param bottom
-     * @param h - height
-     * @param w - width
-     * @param d - depth
+     * @param h      - height
+     * @param w      - width
+     * @param d      - depth
      */
     private void initValues(Vertex bottom, float h, float w, float d) {
         xMin = bottom.getX();

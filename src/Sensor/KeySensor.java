@@ -8,8 +8,10 @@ package Sensor;
 import View.CoordinateSystem;
 import World.CollisionDetection.CollisionDetection;
 import World.Space.World;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import Math.*;
 
 /*****************
@@ -25,6 +27,8 @@ public class KeySensor implements KeyListener {
     private boolean canBuy;
     private boolean purchased;
     private float angleAmount;
+    public boolean isKeyPressed = false;
+
 
     /*****************
      * Constructor
@@ -52,6 +56,10 @@ public class KeySensor implements KeyListener {
         float step = 0.35f;
         if (coordinates.inPalace) {
             step += 0.2;
+        }
+
+        if (isMotionKey(e.getKeyChar())) {
+            isKeyPressed = true;
         }
 
         if ((e.getKeyChar() == 'b' || e.getKeyChar() == 'B') && canBuy && !purchased) {
@@ -139,7 +147,17 @@ public class KeySensor implements KeyListener {
         }
     }
 
+
+    private boolean isMotionKey(char key) {
+        return (key == 'w' || key == 'W' || key == 'a' || key == 'A' || key == 's' || key == 'S' | key == 'd'
+                || key == 'D' || key == 'q' || key == 'Q' || key == 'e' || key == 'E');
+    }
+
     public void keyReleased(KeyEvent arg0) {
+
+        if (isMotionKey(arg0.getKeyChar())) {
+            isKeyPressed = false;
+        }
         // TODO Auto-generated method stub
     }
 
