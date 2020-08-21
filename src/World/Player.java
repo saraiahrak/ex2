@@ -22,6 +22,7 @@ public class Player {
     private Vector up;
     private Life life;
     private Coins coins;
+    public boolean isInMotion = false;
 
     /*************
      * Constructors

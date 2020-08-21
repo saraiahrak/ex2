@@ -23,6 +23,8 @@ public class KeySensor implements KeyListener {
     private boolean canBuy;
     private boolean purchased;
     private float angleAmount;
+    public static boolean isPressed = false;
+
 
     /*****************
      * Constructor
@@ -47,6 +49,12 @@ public class KeySensor implements KeyListener {
     public void keyPressed(KeyEvent e) {
         double angle = 0.1;
         float step = 0.35f;
+        char key = e.getKeyChar();
+
+        if (isMotionKey(key)) {
+            isPressed = true;
+            World.player.isInMotion = true;
+        }
 
 //
 //        if (e.getKeyChar() == 'm' || e.getKeyChar() == 'M') {
@@ -56,7 +64,7 @@ public class KeySensor implements KeyListener {
 //            World.showMenu = false;
 //        }
 
-        if ((e.getKeyChar() == 'b' || e.getKeyChar() == 'B') && canBuy && !purchased) {
+        if ((key == 'b' || key == 'B') && canBuy && !purchased) {
             purchased = true;
             World.player.reduceScore();
             World.showMessage = false;
@@ -64,80 +72,71 @@ public class KeySensor implements KeyListener {
             coordinates.onFly = true;
         }
 
-        if ((e.getKeyChar() == 'i' || e.getKeyChar() == 'I') && coordinates.onFly) {
+        if ((key == 'i' || key == 'I') && coordinates.onFly) {
             if (angleAmount + angle <= 0.5) {
                 angleAmount += angle;
                 coordinates.rotate('X', angle);
             }
-        } else if ((e.getKeyChar() == 'k' || e.getKeyChar() == 'K') && coordinates.onFly) {
+        } else if ((key == 'k' || key == 'K') && coordinates.onFly) {
             if (angleAmount - angle >= -0.2) {
                 angleAmount -= angle;
                 coordinates.rotate('X', -angle);
             }
-        } else if (e.getKeyChar() == 'l' || e.getKeyChar() == 'L') {
+        } else if (key == 'l' || key == 'L') {
             coordinates.rotate('Y', -angle);
-        } else if (e.getKeyChar() == 'j' || e.getKeyChar() == 'J') {
+        } else if (key == 'j' || key == 'J') {
             coordinates.rotate('Y', angle);
 //        } else if (e.getKeyChar() == 'o' || e.getKeyChar() == 'O') {
 //            coordinates.rotate('Z', angle);
 //        } else if (e.getKeyChar() == 'u' || e.getKeyChar() == 'U') {
 //            coordinates.rotate('Z', -angle);
-        } else if (e.getKeyChar() == 'w' || e.getKeyChar() == 'W') {
+        } else if (key == 'w' || key == 'W') {
             coordinates.move('Z', -step);
-        } else if (e.getKeyChar() == 's' || e.getKeyChar() == 'S') {
+        } else if (key == 's' || key == 'S') {
             coordinates.move('Z', step);
-        } else if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D') {
+        } else if (key == 'd' || key == 'D') {
             coordinates.move('X', step);
-        } else if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
+        } else if (key == 'a' || key == 'A') {
             coordinates.move('X', -step);
-        } else if ((e.getKeyChar() == 'e' || e.getKeyChar() == 'E') && coordinates.onFly) {
+        } else if ((key == 'e' || key == 'E') && coordinates.onFly) {
             coordinates.move('Y', step);
-        } else if ((e.getKeyChar() == 'q' || e.getKeyChar() == 'Q') && coordinates.onFly) {
+        } else if ((key == 'q' || key == 'Q') && coordinates.onFly) {
             coordinates.move('Y', -step);
         }
 
 
-        if (e.getKeyCode() == KeyEvent.VK_F2) {
+        if (key == KeyEvent.VK_F2) {
 //            coordinates.init(32f, 3.5f, 86f);
             World.firstLevel = false;
         }
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        if (key == KeyEvent.VK_ESCAPE) {
             World.exit();
         }
 //        if (e.getKeyCode() == KeyEvent.VK_F1) {
 //            World.showMenu = true;
 //        }
 
-        if (e.getKeyCode() == KeyEvent.VK_F1) {
+        if (key == KeyEvent.VK_F1) {
             if (!World.showMenu) {
                 World.showMenu = true;
-            }
-            else {
+            } else {
                 if (World.showInstructions) {
                     World.showInstructions = false;
                 }
             }
         }
 
-        if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+        if (key == KeyEvent.VK_ENTER) {
             if (World.showMenu && !World.showInstructions) {
                 World.showMenu = false;
             }
         }
 
-        if (e.getKeyChar() == 'h' || e.getKeyChar() == 'H') {
+        if (key == 'h' || key == 'H') {
             if (World.showMenu) {
-                World.showInstructions  = true;
+                World.showInstructions = true;
             }
         }
-//        if (e.getKeyChar() == 'b' || e.getKeyChar() == 'B') {
-//            if (World.showMenu) {
-//                World.showInstructions  = false;
-//            }
-//        }
-
-
-
 
         // checks if the player can buy the carpet
         if (World.secondLevel && !coordinates.onFly) {
@@ -145,8 +144,19 @@ public class KeySensor implements KeyListener {
         }
     }
 
+    private boolean isMotionKey(char key) {
+
+        return (key == 'i' || key == 'I' || key == 'k' || key == 'K' || key == 'l' || key == 'L' || key == 'w'
+        || key == 'W' || key == 's' || key == 'S' || key == 'd' || key == 'D' || key == 'a' || key == 'A'
+        || key == 'e' || key == 'E' || key == 'q' || key == 'Q');
+    }
+
     public void keyReleased(KeyEvent arg0) {
-        // TODO Auto-generated method stub
+        if(isMotionKey(arg0.getKeyChar())) {
+            isPressed = false;
+            World.player.isInMotion = true;
+        }
+        System.out.println(isPressed);
     }
 
     public void keyTyped(KeyEvent arg0) {
@@ -177,9 +187,7 @@ public class KeySensor implements KeyListener {
                 ("x", coordinates.getOrigin(), 35, 48);
         boolean zFlag = CollisionDetection.checkBoundaries
                 ("z", coordinates.getOrigin(), 50, 70);
-        if (xFlag && zFlag) {
-            return true;
-        }
-        return false;
+
+        return xFlag && zFlag;
     }
 }

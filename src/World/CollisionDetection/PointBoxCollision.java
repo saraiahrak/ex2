@@ -1,11 +1,14 @@
 package World.CollisionDetection;
 
 import Math.*;
+import Sensor.KeySensor;
 import World.Objects.Box;
 import World.Objects.CoinObject;
 import World.Objects.CopObject;
 import World.Objects.IObject;
 import World.Space.World;
+
+import java.security.Key;
 
 public class PointBoxCollision implements CollisionHandler {
 
@@ -34,20 +37,23 @@ public class PointBoxCollision implements CollisionHandler {
         float y = position.getY();
         float z = position.getZ();
 
-        boolean intersection = x < xMax && x > xMin && y < yMax && y > yMin && z < zMax && z > zMin;
+
+        boolean intersection = x - 2 < xMax && x + 2 > xMin && y - 2 < yMax && y + 2 > yMin && z - 2 < zMax && z + 2 > zMin;
 
         if (intersection && obj != null) {
             notifyWorld(position, obj);
         }
 
         return intersection;
-//        return (x < xMax && x > xMin && y < yMax && y > yMin && z < zMax && z > zMin);
 
     }
 
     private void notifyWorld(Vector v, IObject obj) {
         if (isCop(obj)) {
-            World.playerDisqualified = true;
+            if (KeySensor.isPressed) {
+                World.player.reduceLife();
+                World.playerDisqualified = true;
+            }
 //            World.removeLife();
         }
         if (isCoin(obj)) {
