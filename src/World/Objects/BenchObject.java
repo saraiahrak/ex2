@@ -1,15 +1,22 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package World.Objects;
 
 import World.Drawable;
 import World.Models.*;
 import Math.*;
-
 import javax.media.opengl.GL2;
 
+/*************
+ * Class Bench Object
+ * ***********/
 public class BenchObject implements IObject, Drawable {
 
-    private Vertex position = null;
-    private Model model = null;
+    private Vertex position;
+    private Model model;
     private final float depth = 4;
     private final float height = 2;
     private final float width = 2;
@@ -62,9 +69,6 @@ public class BenchObject implements IObject, Drawable {
     @Override
     public void draw(GL2 gl) {
         model.draw(gl);
-//        wrap.draw(gl);
-//        drawLeft(gl);
-//        drawWrap(gl);
     }
 
 
@@ -74,11 +78,9 @@ public class BenchObject implements IObject, Drawable {
 
         Vertex v = new Vertex(position.getX() - (width / 4), position.getY(), position.getZ() - (depth / 2));
 
-
         float x = v.getX();
         float y = v.getY();
         float z = v.getZ();
-
 
         gl.glBegin(GL2.GL_LINES);
 
@@ -136,7 +138,6 @@ public class BenchObject implements IObject, Drawable {
         gl.glVertex3f(x + width, y, z);
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
         gl.glVertex3f(x, y, z);
-
 
         gl.glEnd();
 

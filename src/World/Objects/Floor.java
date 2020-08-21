@@ -9,7 +9,6 @@ import Design.TextureFactory;
 import Math.Vertex;
 import World.Drawable;
 import com.jogamp.opengl.util.texture.Texture;
-
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 

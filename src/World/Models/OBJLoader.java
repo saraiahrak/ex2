@@ -5,19 +5,13 @@
 
 package World.Models;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
 import javax.media.opengl.GL2;
-
-import World.Space.World;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
 
@@ -65,22 +59,10 @@ public class OBJLoader {
     private void LoadOBJModel(String ModelPath, GL2 gl) {
         try {
             BufferedReader br = null;
-            if (ModelPath.endsWith(".zip")) {
-                ZipInputStream tZipInputStream =
-                        new ZipInputStream(new BufferedInputStream((new Object()).getClass().getResourceAsStream(ModelPath)));
-                ZipEntry tZipEntry;
-                tZipEntry = tZipInputStream.getNextEntry();
-                String inZipEntryName = tZipEntry.getName();
-                if (!tZipEntry.isDirectory()) {
-                    br = new BufferedReader(new InputStreamReader(tZipInputStream));
-                }
-            } else {
-                Object obj = new Object();
-                InputStream myis = ClassLoader.getSystemClassLoader().getResourceAsStream(ModelPath);
+            InputStream myis = ClassLoader.getSystemClassLoader().getResourceAsStream(ModelPath);
 
-                InputStreamReader isr = new InputStreamReader(myis);
-                br = new BufferedReader(isr);
-            }
+            InputStreamReader isr = new InputStreamReader(myis);
+            br = new BufferedReader(isr);
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.startsWith("#")) { //read any descriptor data in the file
@@ -139,21 +121,9 @@ public class OBJLoader {
     private void LoadMTLModel() {
         try {
             BufferedReader br = null;
-            if (MTLModelPath.endsWith(".zip")) {
-                ZipInputStream tZipInputStream =
-                        new ZipInputStream(new BufferedInputStream((new Object()).getClass().getResourceAsStream(MTLModelPath)));
-                ZipEntry tZipEntry;
-                tZipEntry = tZipInputStream.getNextEntry();
-                String inZipEntryName = tZipEntry.getName();
-                if (!tZipEntry.isDirectory()) {
-                    br = new BufferedReader(new InputStreamReader(tZipInputStream));
-                }
-            } else {
-                Object obj = new Object();
-                InputStream myis = ClassLoader.getSystemClassLoader().getResourceAsStream(MTLModelPath);
-                InputStreamReader isr = new InputStreamReader(myis);
-                br = new BufferedReader(isr);
-            }
+            InputStream myis = ClassLoader.getSystemClassLoader().getResourceAsStream(MTLModelPath);
+            InputStreamReader isr = new InputStreamReader(myis);
+            br = new BufferedReader(isr);
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
@@ -410,6 +380,12 @@ public class OBJLoader {
         return tDisplayListID;
     }
 
+
+    /**
+     * cleanup
+     *
+     * Clear all lists
+     */
     private void cleanup() {
         vData.clear();
         vtData.clear();
@@ -420,6 +396,12 @@ public class OBJLoader {
         texturesMap.clear();
     }
 
+
+    /**
+     * clean
+     *
+     * Clear data
+     */
     private void clean() {
         fv.clear();
         ft.clear();

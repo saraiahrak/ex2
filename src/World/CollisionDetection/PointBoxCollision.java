@@ -1,3 +1,8 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package World.CollisionDetection;
 
 import Math.*;
@@ -7,6 +12,9 @@ import World.Objects.CopObject;
 import World.Objects.IObject;
 import World.Space.World;
 
+/****************
+ * Class Point Box Collision
+ * **************/
 public class PointBoxCollision implements CollisionHandler {
 
     private float xMax = 0;
@@ -37,7 +45,7 @@ public class PointBoxCollision implements CollisionHandler {
         boolean intersection = x < xMax && x > xMin && y < yMax && y > yMin && z < zMax && z > zMin;
 
         if (intersection && obj != null) {
-            notifyWorld(position, obj);
+            notifyWorld(obj);
         }
 
         return intersection;
@@ -45,7 +53,14 @@ public class PointBoxCollision implements CollisionHandler {
 
     }
 
-    private void notifyWorld(Vector v, IObject obj) {
+
+    /**
+     * notifyWorld
+     * Checks the type of the model
+     *
+     * @return obj - model
+     */
+    private void notifyWorld(IObject obj) {
         if (isCop(obj)) {
             World.playerDisqualified = true;
 //            World.removeLife();
@@ -54,11 +69,16 @@ public class PointBoxCollision implements CollisionHandler {
             World.player.addScore();
             World.removeDrawable((CoinObject) obj);
             World.removeCollidable((CoinObject) obj);
-            System.out.println("score: " + World.player.getScore());
         }
     }
 
 
+    /**
+     * isCop
+     * If it's a cop return true, otherwise return false
+     *
+     * @param obj collidable model
+     */
     private boolean isCop(IObject obj) {
         try {
             CopObject cop = (CopObject) obj;
@@ -68,6 +88,13 @@ public class PointBoxCollision implements CollisionHandler {
         }
     }
 
+
+    /**
+     * isBox
+     * If it's a box return true, otherwise return false
+     *
+     * @param obj collidable object
+     */
     private boolean isBox(Collidable obj) {
         try {
             Box b = (Box) obj;
@@ -78,6 +105,12 @@ public class PointBoxCollision implements CollisionHandler {
     }
 
 
+    /**
+     * isCoin
+     * If it's a coin return true, otherwise return false
+     *
+     * @param obj collidable model
+     */
     private boolean isCoin(IObject obj) {
         try {
             CoinObject coin = (CoinObject) obj;
@@ -87,6 +120,12 @@ public class PointBoxCollision implements CollisionHandler {
         }
     }
 
+
+    /**
+     * init
+     *
+     * @param box - to initialize
+     */
     private void init(Box box) {
         float height = box.getHeight();
         float width = box.getWidth();
@@ -96,6 +135,16 @@ public class PointBoxCollision implements CollisionHandler {
         initValues(bottom, height, width, depth);
     }
 
+
+    /**
+     * initValues
+     * Initialize the size
+     *
+     * @param bottom
+     * @param h - height
+     * @param w - width
+     * @param d - depth
+     */
     private void initValues(Vertex bottom, float h, float w, float d) {
         xMin = bottom.getX();
         yMin = bottom.getY();
@@ -106,6 +155,5 @@ public class PointBoxCollision implements CollisionHandler {
         zMax = zMin + d;
 
     }
-
 
 }

@@ -1,9 +1,17 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package World.CollisionDetection;
 
 import World.Objects.Box;
 import Math.*;
 import World.Objects.IObject;
 
+/****************
+ * Class AAABCollision
+ * **************/
 public class AAABCollision implements CollisionHandler {
 
     @Override

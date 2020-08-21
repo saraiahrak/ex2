@@ -5,6 +5,7 @@
 
 package View.Text;
 
+import World.Space.World;
 import com.jogamp.opengl.util.awt.TextRenderer;
 import java.awt.*;
 
@@ -45,7 +46,9 @@ public class Coins {
         if (counter >= 200) {
             counter -= 200;
         } else {
-            // end game!!!
+            // end game
+            World.showMenu = true;
+            World.showGameOver = true;
         }
     }
 
@@ -55,5 +58,14 @@ public class Coins {
      */
     public void addCoin(){
         this.counter += 10;
+    }
+
+
+    /**
+     * setCoins
+     * Set 200 coins when Moving to the next step without completing the task
+     */
+    public void setCoins(){
+        this.counter = 200;
     }
 }

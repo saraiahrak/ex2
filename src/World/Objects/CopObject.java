@@ -1,3 +1,8 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package World.Objects;
 
 import World.CollisionDetection.Collidable;
@@ -7,15 +12,15 @@ import World.Drawable;
 import World.Models.Model;
 import Math.*;
 import World.Space.World;
-
-
 import javax.media.opengl.GL2;
 
+/*************
+ * Class Cop Object
+ * ***********/
 public class CopObject implements IObject, Drawable {
 
-
-    private Model model = null;
-    private Vertex position = null;
+    private Model model;
+    private Vertex position;
     private final float depth = 2;
     private final float width = 0.75f;
     private final float height = 4f;
@@ -266,3 +271,21 @@ public class CopObject implements IObject, Drawable {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

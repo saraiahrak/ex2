@@ -1,16 +1,22 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package World.Objects;
 
 import World.Drawable;
 import World.Models.*;
 import Math.*;
-
 import javax.media.opengl.GL2;
 
-
+/*************
+ * Class Carpet Object
+ * ***********/
 public class CarpetObject implements IObject, Drawable {
 
-    private Vertex position = null;
-    private Model model = null;
+    private Vertex position;
+    private Model model;
     private final float depth = 2;
     private final float height = 2;
     private final float width = 2;

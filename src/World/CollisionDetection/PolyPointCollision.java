@@ -1,3 +1,8 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package World.CollisionDetection;
 
 import Math.Vector;
@@ -6,12 +11,14 @@ import World.Objects.Ceiling;
 import World.Objects.Floor;
 import World.Objects.Polygon;
 import World.Space.World;
-
 import java.util.ArrayList;
 
-
+/****************
+ * Class Polygon Point Collision
+ * **************/
 public class PolyPointCollision implements CollisionHandler {
 
+    @Override
     public boolean handle(Collidable c1, Collidable c2) {
         Polygon polygon = (Polygon) c1;
         Vector position = (Vector) c2;
@@ -22,20 +29,12 @@ public class PolyPointCollision implements CollisionHandler {
         float sum = getAngleSum(vectors);
 
         if (isFloor(polygon)) {
-            System.out.println("x: " + World.player.getPosition().getX() + " y: " + World.player.getPosition().getY() + " z: " + World.player.getPosition().getZ());
-            System.out.println("sum of angles: " + sum);
-            System.out.println("floor y: " + vertices.get(0).getY());
-            System.out.println(((Floor)polygon).getTextureKey());
-
             Floor f = (Floor)polygon;
             Vertex bottom = f.corner.clone();
 
             boolean inRange =isPlayerInRange(bottom.getX(), f.width, bottom.getZ(), f.depth, position);
             float lim = vertices.get(0).getY();
             return inRange && position.getY() + 2 < lim ;
-//            if () {
-//            }
-
         }
 
         if (isCeiling(polygon)) {

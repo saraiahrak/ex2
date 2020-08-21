@@ -1,10 +1,17 @@
+/************************
+ * Dekel Yosef 315634071 *
+ * Sarai Ahrak 204894000 *
+ * *********************/
+
 package World.Objects;
 
 import Math.*;
-import World.*;
 import World.CollisionDetection.Collidable;
 import World.Models.*;
 
+/*************
+ * Interface IObject
+ * ***********/
 public interface IObject extends Collidable {
 
     Model getModel();
