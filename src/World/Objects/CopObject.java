@@ -27,15 +27,14 @@ public class CopObject implements IObject, Drawable {
     private float[] motion;
     private Box wrap = null;
 
+    /*************
+     * Constructors
+     * ***********/
     public CopObject(Model m, Vertex p) {
         model = m;
         position = p;
         createWrap();
     }
-//
-//    public void setMotion(float[] m) {
-//        motion = m;
-//    }
 
     @Override
     public void setMotion(float dx, float dy, float dz) {
@@ -47,6 +46,10 @@ public class CopObject implements IObject, Drawable {
         Vertex v = new Vertex(position.getX() - (width / 2), position.getY(), position.getZ() - (depth / 2));
         wrap = new Box("wood", v, depth, height, width);
     }
+
+    /**********
+     * Getters
+     * ********/
 
     @Override
     public Box getBox() {
@@ -81,10 +84,6 @@ public class CopObject implements IObject, Drawable {
     @Override
     public void draw(GL2 gl) {
         model.draw(gl);
-//        wrap.draw(gl);
-//        drawLeft(gl);
-//        drawWrap(gl);
-
 
         for (Collidable c : World.collidables) {
             if (this == c) {
@@ -102,10 +101,12 @@ public class CopObject implements IObject, Drawable {
         }
 
         addMotion();
-
     }
 
 
+    /**
+     * addMotion
+     */
     private void addMotion() {
         position = new Vertex(position.getX() + motion[0], position.getY() + motion[1], position.getZ() + motion[2]);
         wrap = new Box("wood", new Vertex(position.getX() - (width / 2), position.getY(), position.getZ() - (depth / 2)), depth, height, width);
@@ -117,11 +118,9 @@ public class CopObject implements IObject, Drawable {
 
         Vertex v = new Vertex(position.getX() - (width / 2), position.getY(), position.getZ() - (depth / 2));
 
-
         float x = v.getX();
         float y = v.getY();
         float z = v.getZ();
-
 
         gl.glBegin(GL2.GL_LINES);
 
@@ -142,7 +141,6 @@ public class CopObject implements IObject, Drawable {
         gl.glVertex3f(x, y, z + depth);
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
         gl.glVertex3f(x, y, z);
-
 
         // Left Face
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
@@ -180,10 +178,7 @@ public class CopObject implements IObject, Drawable {
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
         gl.glVertex3f(x, y, z);
 
-
         gl.glEnd();
-
-
     }
 
     private void drawWrap(GL2 gl) {
@@ -198,7 +193,6 @@ public class CopObject implements IObject, Drawable {
         float x = v.getX();
         float y = v.getY();
         float z = v.getZ();
-
 
         // top Face
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
@@ -215,7 +209,6 @@ public class CopObject implements IObject, Drawable {
         gl.glVertex3f(x + width, y + height, z);
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
         gl.glVertex3f(x + width, y + height, z + depth);
-
 
         // Right Face
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
@@ -249,10 +242,7 @@ public class CopObject implements IObject, Drawable {
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
         gl.glVertex3f(x + width, y + height, z + depth);
 
-
         gl.glEnd();
-
-
     }
 
     @Override
@@ -271,21 +261,3 @@ public class CopObject implements IObject, Drawable {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

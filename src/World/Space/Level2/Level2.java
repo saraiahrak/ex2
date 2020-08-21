@@ -14,7 +14,6 @@ import World.Objects.Box;
 import World.Objects.CarpetObject;
 import World.Objects.Wall;
 import World.Space.World;
-
 import javax.media.opengl.GL2;
 import java.util.ArrayList;
 import java.util.List;

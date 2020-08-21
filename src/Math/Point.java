@@ -12,7 +12,6 @@ public class Point {
     private double x;
     private double y;
 
-
     /*************
      * Constructors
      * ***********/
@@ -38,7 +37,6 @@ public class Point {
     public double getY() {
         return y;
     }
-
 
     /*************
      * Methods

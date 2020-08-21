@@ -53,10 +53,18 @@ public class Cave implements Drawable {
         }
     }
 
+
+    /**
+     * getCollidables
+     */
     public ArrayList<Collidable> getCollidables() {
         return collidables;
     }
 
+
+    /**
+     * setCollidables
+     */
     private void setCollidables() {
         collidables = new ArrayList<>();
         collidables.addAll(maze);

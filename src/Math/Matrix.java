@@ -10,10 +10,10 @@ import java.util.Arrays;
  * Class Matrix
  * ***********/
 public class Matrix {
+
     private int rows;
     private int cols;
     private float[][] matrix;
-
 
     /*************
      * Constructors

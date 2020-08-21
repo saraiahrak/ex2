@@ -19,7 +19,6 @@ public class Model implements Drawable {
     private CoordinateSystem coordinates;
     private ArrayList<ObjData> dataList;
 
-
     /**
      * constructor
      */
@@ -82,6 +81,7 @@ public class Model implements Drawable {
         }
     }
 
+
     /**
      * setMotion
      * move the OBJ over the x,y,z axis according to the given parameters
@@ -95,6 +95,7 @@ public class Model implements Drawable {
             data.motion(xStep, yStep, zStep);
         }
     }
+
 
     @Override
     public void draw(GL2 gl) {

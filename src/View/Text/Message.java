@@ -19,7 +19,7 @@ public class Message {
      * Constructor
      */
     public Message() {
-        textRenderer = new TextRenderer(new Font("david", Font.BOLD, 40));
+        textRenderer = new TextRenderer(new Font("david", Font.PLAIN, 40));
     }
 
 
@@ -30,7 +30,7 @@ public class Message {
     public void display() {
         textRenderer.beginRendering(1000, 600);
         textRenderer.setColor(1f, 0.6f, 0f, 1f);
-        textRenderer.draw("Press 'B' to buy the carpet for 200$", 300, 500);
+        textRenderer.draw("Press 'B' to buy the carpet for 200$", 200, 500);
         textRenderer.endRendering();
     }
 

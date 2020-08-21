@@ -27,7 +27,6 @@ public class Box implements Drawable, Collidable {
     private float width;
 
     private Vertex center;
-
     private ArrayList<Polygon> polygons;
 
     /*************
@@ -43,6 +42,10 @@ public class Box implements Drawable, Collidable {
         center = new Vertex(bottomLeft.getX() + w / 2, bottomLeft.getY() + h / 2, bottomLeft.getZ() + d / 2);
         createPolygons();
     }
+
+    /**************
+     * Getters
+     * ***********/
 
     public float getHeight() {
         return height;
@@ -106,7 +109,6 @@ public class Box implements Drawable, Collidable {
      * @param texture name
      * @return boxes array
      */
-
     public static ArrayList<Box> createBoxes(List<String> lines, String texture) {
         ArrayList<Box> boxesList = new ArrayList<>();
 
@@ -123,4 +125,5 @@ public class Box implements Drawable, Collidable {
         }
         return boxesList;
     }
+
 }

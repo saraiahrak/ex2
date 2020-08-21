@@ -31,7 +31,6 @@ import Game.Menu;
 /*************
  * Class World
  * ***********/
-
 public class World extends KeyAdapter implements GLEventListener, Drawable {
 
     public static Player player = new Player(5f, 0.2f, 380f);
@@ -85,7 +84,6 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         glu.gluLookAt(player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ(),
                 player.getLookAt().getX(), player.getLookAt().getY(), player.getLookAt().getZ(),
                 player.getUp().getX(), player.getUp().getY(), player.getUp().getZ());
-
 
         if (showMenu) {
             player.coordinates.init(5, 0.2f, 380);
@@ -189,29 +187,30 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         float LightPos0[] = {0f, 0f, -13f, 1.0f};
         float LightPos1[] = {0f, 0f, 0f, 1.0f};
 
-        if (secondLevel) {
-          //  LightPos0 = new float[]{-160, 40, 1000, 1.0f};
-           // LightPos1 = new float[]{140, 40, 0, 1.0f};
-        }
-
         // set colors
         if (playerDisqualified) {
             ambient = new float[]{1f, 0f, 0f, 0f};
             diffuse0 = new float[]{0.5f, 0f, 0f, 0f};
             diffuse1 = new float[]{0.5f, 0f, 0f, 0f};
             playerDisqualified = false;
-        } else if (showMenu) {
+        } else if (showMenu || showLevel2Menu) {
             ambient = new float[]{1f, 1f, 1f, 1f};
             diffuse0 = new float[]{1f, 1f, 1f, 1f};
             diffuse1 = new float[]{1f, 1f, 1f, 1f};
             // set lighting positions
-            LightPos0 = new float[]{-160f, 200f, -1000f, 1.0f};
-            LightPos1 = new float[]{160f, 1f, -1000, 1.0f};
+            if (secondLevel) {
+                LightPos0 = new float[]{-200, 200, 10000, 1.0f};
+                LightPos1 = new float[]{200, 1, 10000, 1.0f};
+            } else {
+                LightPos0 = new float[]{-160f, 200f, -1000f, 1.0f};
+                LightPos1 = new float[]{160f, 1f, -1000, 1.0f};
+            }
         } else {
             ambient = new float[]{1f, 1f, 1f, 1f};
             diffuse0 = new float[]{0f, 0f, 0f, 1f};
             diffuse1 = new float[]{1f, 1f, 0f, 0f};
         }
+
 
         // set light source
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambient, 0);
@@ -295,7 +294,7 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         float h = (float) width / (float) height;
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(50.0f, h, 1.0, 1000.0);
+        glu.gluPerspective(48, h, 1.0, 200);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
@@ -380,9 +379,8 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
         // TODO Auto-generated method stub
     }
 
-
     public void displayChanged(GLAutoDrawable gLDrawable,
                                boolean modeChanged, boolean deviceChanged) {
     }
-}
 
+}

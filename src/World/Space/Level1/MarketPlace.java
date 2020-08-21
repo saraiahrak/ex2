@@ -42,10 +42,18 @@ public class MarketPlace implements Drawable {
         setCollidables();
     }
 
+
+    /**
+     * getCollidables
+     */
     public ArrayList<Collidable> getCollidables() {
         return collidables;
     }
 
+
+    /**
+     * setCollidables
+     */
     private void setCollidables() {
         collidables = new ArrayList<>();
         collidables.add(back);
@@ -62,4 +70,5 @@ public class MarketPlace implements Drawable {
         back.draw(gl);
         cave.draw(gl);
     }
+
 }

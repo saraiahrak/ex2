@@ -39,9 +39,18 @@ public class AAABCollision implements CollisionHandler {
 
     }
 
+
+    /**
+     * checkOverlap
+     * Checks if there is an overlap between two boxes
+     *
+     * @param - boxes vertex
+     * @return true if there is an overlap, otherwise false
+     */
     private boolean checkOverlap(float minX1, float maxX1, float minY1, float maxY1, float minZ1, float maxZ1,
                                  float minX2, float maxX2, float minY2, float maxY2, float minZ2, float maxZ2) {
         return (minX1 <= maxX2 && maxX1 >= minX2) && (minY1 <= maxY2 && maxY1 >= minY2)
                 && (minZ1 <= maxZ2 && maxZ1 >= minZ2);
     }
+
 }

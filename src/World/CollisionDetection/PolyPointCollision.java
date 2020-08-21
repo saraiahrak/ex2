@@ -10,7 +10,6 @@ import Math.Vertex;
 import World.Objects.Ceiling;
 import World.Objects.Floor;
 import World.Objects.Polygon;
-import World.Space.World;
 import java.util.ArrayList;
 
 /****************
@@ -45,6 +44,15 @@ public class PolyPointCollision implements CollisionHandler {
         return sum > 360 - polygon.getDistFactor();
     }
 
+
+    /**
+     * createVectors
+     * Creates the vectors of the given polygon
+     *
+     * @param p - polygon
+     * @param position - player position
+     * @return list of vectors
+     */
     private ArrayList<Vector> createVectors(Polygon p, Vector position) {
         ArrayList<Vector> vectors = new ArrayList<>();
         ArrayList<Vertex> vertices = p.getVertices();
@@ -55,6 +63,14 @@ public class PolyPointCollision implements CollisionHandler {
         return vectors;
     }
 
+
+    /**
+     * getAngleSum
+     * Gets the angle between the player and the given vectors
+     *
+     * @param vectors
+     * @return angles amount
+     */
     private float getAngleSum(ArrayList<Vector> vectors) {
         // sum of angles
         float sum = 0;
@@ -71,6 +87,13 @@ public class PolyPointCollision implements CollisionHandler {
         return sum;
     }
 
+
+    /**
+     * isFloor
+     * If it's a floor return true, otherwise return false
+     *
+     * @param p - polygon
+     */
     private boolean isFloor(Polygon p) {
         try {
             Floor f = (Floor) p;
@@ -80,6 +103,13 @@ public class PolyPointCollision implements CollisionHandler {
         }
     }
 
+
+    /**
+     * isCeiling
+     * If it's a ceiling return true, otherwise return false
+     *
+     * @param p - polygon
+     */
     private boolean isCeiling(Polygon p) {
         try {
             Ceiling f = (Ceiling) p;
@@ -89,12 +119,17 @@ public class PolyPointCollision implements CollisionHandler {
         }
     }
 
+
+    /**
+     * isPlayerInRange
+     *
+     * @param - game range
+     */
     private boolean isPlayerInRange(float x, float w, float z, float d, Vector position) {
         float xPos = position.getX();
         float zPos = position.getZ();
 
         return (xPos > x && xPos < x + w && zPos > z && zPos < z + d);
     }
+
 }
-
-

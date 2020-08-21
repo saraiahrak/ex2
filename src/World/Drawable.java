@@ -4,7 +4,6 @@
  * *********************/
 
 package World;
-
 import javax.media.opengl.GL2;
 
 /********************

@@ -7,7 +7,6 @@ package Design;
 
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
-
 import javax.media.opengl.GL2;
 import java.io.File;
 import java.io.IOException;
@@ -15,23 +14,26 @@ import java.io.IOException;
 /*************
  * Class Texture Factory
  * ***********/
-
 public class TextureFactory {
 
     private TextureFactory factory = null;
 
-    public TextureFactory() {
-    }
+    /*************
+     * Constructor
+     * ***********/
+    public TextureFactory() { }
 
-    public TextureFactory getInstance() {
-        if (factory == null) {
-            factory = new TextureFactory();
-        }
-        return factory;
-    }
 
+    /**
+     * create
+     * Create texture to objects
+     *
+     * @param texture name
+     * @param gl - Gl2
+     * @return texture if success, otherwise exception
+     */
     public static Texture create(String texture, GL2 gl) {
-        Texture t = null;
+        Texture t;
         gl.glEnable(GL2.GL_TEXTURE_2D);
         try {
             String filename = "resources/textures/" + texture + ".png"; // the FileName to open
@@ -42,4 +44,5 @@ public class TextureFactory {
             throw new RuntimeException(e);
         }
     }
+
 }

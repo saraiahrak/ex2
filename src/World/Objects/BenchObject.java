@@ -24,12 +24,18 @@ public class BenchObject implements IObject, Drawable {
 
     private Box wrap = null;
 
-
+    /*****************
+     * Constructor
+     * ***************/
     public BenchObject(Model m, Vertex p) {
         model = m;
         position = p;
         createWrap();
     }
+
+    /*************
+     * Getters
+     * **********/
 
     @Override
     public Model getModel() {
@@ -230,4 +236,5 @@ public class BenchObject implements IObject, Drawable {
     public void rotate(float angle, float x, float y, float z) {
         model.rotate(angle, x, y, z);
     }
+
 }

@@ -34,11 +34,6 @@ public class Edge {
     }
 
 
-    /*********
-     * Setters
-     * *******/
-
-
     /**
      * SetVertexes
      * Set edge vertices according to x position
@@ -77,11 +72,9 @@ public class Edge {
         return v;
     }
 
-
     /*********
      * Methods
      *********/
-
 
     /**
      * getSmall

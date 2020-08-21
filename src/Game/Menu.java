@@ -30,6 +30,10 @@ public class Menu {
     }
 
 
+    /**
+     * setList
+     * Set menu vertex list
+     */
     public void setList() {
         // size
         float width = 160;
@@ -58,6 +62,11 @@ public class Menu {
     }
 
 
+    /**
+     * setTexture
+     *
+     * @param path - texture path
+     */
     private void setTexture(String path) {
         try {
             data.setPath(path);

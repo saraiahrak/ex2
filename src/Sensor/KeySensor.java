@@ -19,6 +19,9 @@ public class KeySensor implements KeyListener {
 
     public static CoordinateSystem coordinates;
     private Vector lastPosition;
+    private Vector lastXAxis;
+    private Vector lastYAxis;
+    private Vector lastZAxis;
     private boolean canBuy;
     private boolean purchased;
     private float angleAmount;
@@ -47,13 +50,21 @@ public class KeySensor implements KeyListener {
     public void keyPressed(KeyEvent e) {
         double angle = 0.1;
         float step = 0.35f;
+        if (coordinates.inPalace) {
+            step += 0.2;
+        }
 
         if ((e.getKeyChar() == 'b' || e.getKeyChar() == 'B') && canBuy && !purchased) {
-            purchased = true;
-            World.player.reduceScore();
+            if (World.player.getScore() < 200) {
+                World.showMenu = true;
+                World.showGameOver = true;
+            } else {
+                purchased = true;
+                World.player.reduceScore();
+                coordinates.init(42f, 10f, 67f);
+                coordinates.onFly = true;
+            }
             World.showMessage = false;
-            coordinates.init(42f, 10f, 67f);
-            coordinates.onFly = true;
         }
 
         if (!World.showMenu) {
@@ -86,16 +97,20 @@ public class KeySensor implements KeyListener {
             }
         }
 
-        if ((e.getKeyCode() == KeyEvent.VK_F2) && World.firstLevel && !World.showMainMenu) {
+        if ((e.getKeyCode() == KeyEvent.VK_F2) && World.firstLevel && !World.showMenu) {
             World.showMenu = true;
             World.showLevel2Menu = true;
             World.player.setScore();
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_F1) {
+        if ((e.getKeyCode() == KeyEvent.VK_F1) && !World.showSuccess && !World.showGameOver) {
             lastPosition = coordinates.getOrigin();
+            lastXAxis = coordinates.getXAxis();
+            lastYAxis = coordinates.getYAxis();
+            lastZAxis = coordinates.getZAxis();
             World.showMenu = true;
             World.showInstructions = true;
+            coordinates.onFly = false;
         }
 
         if ((e.getKeyChar() == KeyEvent.VK_ENTER)
@@ -105,8 +120,12 @@ public class KeySensor implements KeyListener {
             World.showMainMenu = false;
         }
 
-        if ((e.getKeyChar() == 'r' || e.getKeyChar() == 'R')
-                && World.showMenu && !World.showLevel2Menu) {
+        if ((e.getKeyChar() == 'r' || e.getKeyChar() == 'R') && World.showInstructions) {
+            if (purchased) {
+                if (!coordinates.inPalace) {
+                    coordinates.onFly = true;
+                }
+            }
             backTo();
         }
 
@@ -120,7 +139,6 @@ public class KeySensor implements KeyListener {
         }
     }
 
-
     public void keyReleased(KeyEvent arg0) {
         // TODO Auto-generated method stub
     }
@@ -128,7 +146,6 @@ public class KeySensor implements KeyListener {
     public void keyTyped(KeyEvent arg0) {
         // TODO Auto-generated method stub
     }
-
 
 
     /**
@@ -157,13 +174,9 @@ public class KeySensor implements KeyListener {
         if (!World.showMainMenu) {
             World.showMenu = false;
         }
-        if (World.showSuccess || World.showGameOver) {
-            World.showMainMenu = true;
-        }
         World.showInstructions = false;
-        World.showGameOver = false;
-        World.showSuccess = false;
         coordinates.init(lastPosition.getX(), lastPosition.getY(), lastPosition.getZ());
+        coordinates.setAxes(lastXAxis, lastYAxis, lastZAxis);
     }
 
 
@@ -177,4 +190,5 @@ public class KeySensor implements KeyListener {
             World.showMessage = true;
         }
     }
+
 }

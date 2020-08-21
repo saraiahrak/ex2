@@ -14,8 +14,13 @@ import java.util.ArrayList;
  * ***********/
 public interface Polygon extends Collidable, Drawable {
 
+    /**
+     * getVertices
+     */
     ArrayList<Vertex> getVertices();
-
+    /**
+     * getDistFactor
+     */
     float getDistFactor();
 
 }

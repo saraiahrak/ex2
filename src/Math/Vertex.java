@@ -15,7 +15,6 @@ public class Vertex {
     private float z;
     private float w;
 
-
     /*************
      * Constructors
      * ***********/
@@ -53,7 +52,6 @@ public class Vertex {
     public float getW() {
         return w;
     }
-
 
 
     /*************

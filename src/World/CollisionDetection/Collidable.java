@@ -6,6 +6,6 @@
 package World.CollisionDetection;
 
 /*************
- * Class Collidable
+ * Interface Collidable
  * ***********/
 public interface Collidable { }

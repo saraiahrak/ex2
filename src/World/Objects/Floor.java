@@ -42,10 +42,22 @@ public class Floor implements Drawable, Polygon {
         setVertices();
     }
 
+    /*************
+     * Getters
+     * ***********/
 
     @Override
     public float getDistFactor() {
         return ((float) Math.sqrt(height) + (float) Math.sqrt(width) + (float) Math.sqrt(depth)) / 2;
+    }
+
+    @Override
+    public ArrayList<Vertex> getVertices() {
+        return vertices;
+    }
+
+    public String getTextureKey() {
+        return textureKey;
     }
 
     @Override
@@ -76,6 +88,10 @@ public class Floor implements Drawable, Polygon {
         gl.glEnd();
     }
 
+
+    /**
+     * setCorners
+     */
     public void setCorners() {
         corner1 = new Vertex(corner.getX(), corner.getY() + height, corner.getZ());
         corner2 = new Vertex(corner.getX() + width,
@@ -84,6 +100,9 @@ public class Floor implements Drawable, Polygon {
     }
 
 
+    /**
+     * setVertices
+     */
     public void setVertices() {
         vertices = new ArrayList<>();
         vertices.add(corner);
@@ -92,12 +111,4 @@ public class Floor implements Drawable, Polygon {
         vertices.add(corner3);
     }
 
-    @Override
-    public ArrayList<Vertex> getVertices() {
-        return vertices;
-    }
-
-    public String getTextureKey() {
-        return textureKey;
-    }
 }

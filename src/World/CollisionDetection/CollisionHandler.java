@@ -6,7 +6,7 @@
 package World.CollisionDetection;
 
 /****************
- * Class Collision Handler
+ * Interface Collision Handler
  * **************/
 public interface CollisionHandler {
 
@@ -18,4 +18,5 @@ public interface CollisionHandler {
      * @return c2 second object
      */
     boolean handle(Collidable c1, Collidable c2);
+
 }

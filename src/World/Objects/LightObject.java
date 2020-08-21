@@ -23,19 +23,27 @@ public class LightObject implements IObject, Drawable {
     private float[] motion;
     private Box wrap = null;
 
-
+    /*************
+     * Constructor
+     * ***********/
     public LightObject(Model m, Vertex p) {
         model = m;
         position = p;
         createWrap();
-
     }
 
 
+    /**
+     * createWrap
+     */
     private void createWrap() {
         Vertex v = new Vertex(position.getX() - (width / 2), position.getY(), position.getZ() - (depth / 2));
         wrap = new Box("wood", v, depth, height, width);
     }
+
+    /**********
+     * Getters
+     * ********/
 
     @Override
     public Model getModel() {
@@ -63,18 +71,14 @@ public class LightObject implements IObject, Drawable {
     }
 
     @Override
-    public void draw(GL2 gl) {
-        model.draw(gl);
-//        wrap.draw(gl);
-//        drawLeft(gl);
-//        drawWrap(gl);
-    }
-
-    @Override
     public Box getBox() {
         return wrap;
     }
 
+    @Override
+    public void draw(GL2 gl) {
+        model.draw(gl);
+    }
 
     private void drawLeft(GL2 gl) {
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
@@ -82,11 +86,9 @@ public class LightObject implements IObject, Drawable {
 
         Vertex v = new Vertex(position.getX() - (width / 2), position.getY(), position.getZ() - (depth / 2));
 
-
         float x = v.getX();
         float y = v.getY();
         float z = v.getZ();
-
 
         gl.glBegin(GL2.GL_LINES);
 
@@ -107,7 +109,6 @@ public class LightObject implements IObject, Drawable {
         gl.glVertex3f(x, y, z + depth);
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
         gl.glVertex3f(x, y, z);
-
 
         // Left Face
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
@@ -145,13 +146,10 @@ public class LightObject implements IObject, Drawable {
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
         gl.glVertex3f(x, y, z);
 
-
         gl.glEnd();
-
     }
 
     private void drawWrap(GL2 gl) {
-        //
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_S, GL2.GL_REPEAT);
 
@@ -162,7 +160,6 @@ public class LightObject implements IObject, Drawable {
         float x = v.getX();
         float y = v.getY();
         float z = v.getZ();
-
 
         // top Face
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
@@ -179,7 +176,6 @@ public class LightObject implements IObject, Drawable {
         gl.glVertex3f(x + width, y + height, z);
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
         gl.glVertex3f(x + width, y + height, z + depth);
-
 
         // Right Face
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
@@ -213,10 +209,8 @@ public class LightObject implements IObject, Drawable {
         gl.glColor3f(174f / 255, 107f / 255, 107f / 255);
         gl.glVertex3f(x + width, y + height, z + depth);
 
-
         gl.glEnd();
     }
-
 
     @Override
     public void translate(float x, float y, float z) {
@@ -238,4 +232,5 @@ public class LightObject implements IObject, Drawable {
         motion = new float[]{dx, dy, dz};
         model.setMotion(dx, dy, dz);
     }
+
 }

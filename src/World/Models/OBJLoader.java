@@ -42,6 +42,10 @@ public class OBJLoader {
     private int FaceMultiplier; //number of possible coordinates per face
     private int PolyCount = 0; //the model polygon count
 
+
+    /**
+     * Constructor
+     */
     public OBJLoader(String inModelPath, GL2 gl) {
         OBJModelPath = inModelPath;
         LoadOBJModel(OBJModelPath, gl);
@@ -52,13 +56,22 @@ public class OBJLoader {
         cleanup();
     }
 
+
+    /**
+     * getModel
+     * @return model
+     */
     public Model getModel() {
         return this.model;
     }
 
+
+    /**
+     * LoadOBJModel
+     */
     private void LoadOBJModel(String ModelPath, GL2 gl) {
         try {
-            BufferedReader br = null;
+            BufferedReader br;
             InputStream myis = ClassLoader.getSystemClassLoader().getResourceAsStream(ModelPath);
 
             InputStreamReader isr = new InputStreamReader(myis);
@@ -93,6 +106,12 @@ public class OBJLoader {
     }
 
 
+    /**
+     * SetOBJ
+     * Creates new object data
+     *
+     * @param gl - Gl2
+     */
     private void SetOBJ(GL2 gl) {
         SetFaceRenderType();
         ObjData data = new ObjData(OBJModelPath);
@@ -102,11 +121,18 @@ public class OBJLoader {
         clean();
     }
 
+
+    /**
+     * addToList
+     *
+     * @param key - object data name
+     * @param objData
+     */
     public void addToList(String key, ObjData objData) {
         ArrayList<ObjData> objDataArrayList = objDataMap.get(key);
         // if list does not exist create it
         if (objDataArrayList == null) {
-            objDataArrayList = new ArrayList<ObjData>();
+            objDataArrayList = new ArrayList<>();
             objDataArrayList.add(objData);
             objDataMap.put(key, objDataArrayList);
         } else {
@@ -118,9 +144,12 @@ public class OBJLoader {
     }
 
 
+    /**
+     * LoadMTLModel
+     */
     private void LoadMTLModel() {
         try {
-            BufferedReader br = null;
+            BufferedReader br;
             InputStream myis = ClassLoader.getSystemClassLoader().getResourceAsStream(MTLModelPath);
             InputStreamReader isr = new InputStreamReader(myis);
             br = new BufferedReader(isr);
@@ -166,7 +195,9 @@ public class OBJLoader {
     }
 
 
-
+    /**
+     * setMaterial
+     */
     private void setMaterial() {
         ArrayList<ObjData> dataList = objDataMap.get(mtlName);
         for (ObjData data: dataList) {
@@ -230,6 +261,10 @@ public class OBJLoader {
         fn.add(vndata);
     }
 
+
+    /**
+     * SetFaceRenderType
+     */
     private void SetFaceRenderType() {
         final int temp[] = (int[]) fv.get(0);
         if (temp.length == 3) {
@@ -256,6 +291,9 @@ public class OBJLoader {
     }
 
 
+    /**
+     * ConstructInterleavedArray
+     */
     private int ConstructInterleavedArray(GL2 inGL) {
         final int tv[] = (int[]) fv.get(0);
         final int tt[] = (int[]) ft.get(0);

@@ -42,8 +42,8 @@ public class CoordinateSystem {
      * Call initializer
      */
     public void init(float xPos, float yPos, float zPos) {
-        initAxes();
         initOrigin(xPos, yPos, zPos);
+        initAxes();
         angleX = 0;
         angleY = 0;
         angleZ = 0;
@@ -77,15 +77,15 @@ public class CoordinateSystem {
      * Getters
      * ******/
 
-    public Vector getxAxis() {
+    public Vector getXAxis() {
         return xAxis;
     }
 
-    public Vector getyAxis() {
+    public Vector getYAxis() {
         return yAxis;
     }
 
-    public Vector getzAxis() {
+    public Vector getZAxis() {
         return zAxis;
     }
 
@@ -122,6 +122,14 @@ public class CoordinateSystem {
         this.angleZ += 150 * z;
     }
 
+    public void setAxes(Vector x, Vector y, Vector z) {
+        // X-Axis
+        xAxis = x;
+        // Y-Axis
+        yAxis = y;
+        // Z-Axis
+        zAxis = z;
+    }
 
     /**
      * rotate
@@ -234,7 +242,8 @@ public class CoordinateSystem {
      */
     private void firstLevelBoundaries(Vector next) {
         if (!CollisionDetection.checkBoundaries("z", next, -113.02f, 190)) {
-            World.firstLevel = false;
+            World.showMenu = true;
+            World.showLevel2Menu = true;
         }
     }
 

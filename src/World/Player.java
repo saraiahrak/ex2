@@ -36,7 +36,7 @@ public class Player {
     private void init(float xPos, float yPos, float zPos) {
         coordinates = new CoordinateSystem(xPos, yPos, zPos);
         position = coordinates.getOrigin();
-        lookAt = position.sub(coordinates.getzAxis());
+        lookAt = position.sub(coordinates.getZAxis());
         up = new Vector(0, 1, 0);
     }
 
@@ -44,8 +44,8 @@ public class Player {
     public void update() {
         coordinates = KeySensor.coordinates;
         position = coordinates.getOrigin();
-        lookAt = position.sub(coordinates.getzAxis());
-        up = coordinates.getyAxis();
+        lookAt = position.sub(coordinates.getZAxis());
+        up = coordinates.getYAxis();
     }
 
     /*************
@@ -76,28 +76,47 @@ public class Player {
         this.up = up;
     }
 
+    public void setScore() { coins.setCoins(); }
+
+
+    /**
+     * displayLife
+     */
     public void displayLife() {
         life.display();
     }
 
+    /**
+     * reduceLife
+     */
     public void reduceLife() {
         life.reduceLife();
     }
 
+    /**
+     * displayCoins
+     */
     public void displayCoins() {
         coins.display();
     }
 
+    /**
+     * getScore
+     */
     public int getScore() {
         return coins.counter;
     }
 
+    /**
+     * addScore
+     */
     public void addScore() {
         coins.addCoin();
     }
 
+    /**
+     * reduceScore
+     */
     public void reduceScore() { coins.reduceCoin(); }
-
-    public void setScore() { coins.setCoins(); }
 
 }

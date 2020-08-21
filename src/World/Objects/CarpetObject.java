@@ -22,10 +22,17 @@ public class CarpetObject implements IObject, Drawable {
     private final float width = 2;
     private float[] motion = {0f, 0f, 0f};
 
+    /*****************
+     * Constructor
+     * ***************/
     public CarpetObject(Model m, Vertex p) {
         position = p;
         model = m;
     }
+
+    /*************
+     * Getters
+     * **********/
 
     @Override
     public float getDepth() {

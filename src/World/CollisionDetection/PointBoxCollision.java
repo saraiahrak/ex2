@@ -42,15 +42,14 @@ public class PointBoxCollision implements CollisionHandler {
         float y = position.getY();
         float z = position.getZ();
 
-        boolean intersection = x < xMax && x > xMin && y < yMax && y > yMin && z < zMax && z > zMin;
+        boolean intersection =
+                x - 2 < xMax && x + 2 > xMin && y - 2 < yMax && y + 2 > yMin && z - 2 < zMax && z + 2> zMin;
 
         if (intersection && obj != null) {
             notifyWorld(obj);
         }
 
         return intersection;
-//        return (x < xMax && x > xMin && y < yMax && y > yMin && z < zMax && z > zMin);
-
     }
 
 
@@ -63,7 +62,6 @@ public class PointBoxCollision implements CollisionHandler {
     private void notifyWorld(IObject obj) {
         if (isCop(obj)) {
             World.playerDisqualified = true;
-//            World.removeLife();
         }
         if (isCoin(obj)) {
             World.player.addScore();
@@ -153,7 +151,6 @@ public class PointBoxCollision implements CollisionHandler {
         xMax = xMin + w;
         yMax = yMin + h;
         zMax = zMin + d;
-
     }
 
 }
