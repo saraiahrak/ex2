@@ -173,7 +173,7 @@ public class Level1 implements Level {
             OBJLoader cop = new OBJLoader("models/cops/Dusty_2.obj", gl);
             CopObject copObject = new CopObject(cop.getModel(), new Vertex(Float.parseFloat(values[0]), -2f,
                     Float.parseFloat(values[1])));
-            copObject.setMotion(0.01f, 0f, 0f);
+            copObject.setMotion(0.1f, 0f, 0f);
             copObject.translate(Float.parseFloat(values[0]), -2f, Float.parseFloat(values[1]));
             copObject.scale(0.0007f, 0.0007f, 0.0007f);
             addDrawable(copObject);

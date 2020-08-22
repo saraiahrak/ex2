@@ -63,10 +63,9 @@ public class PointBoxCollision implements CollisionHandler {
      */
     private void notifyWorld(IObject obj) {
         if (isCop(obj)) {
+            intersection((CopObject) obj);
             World.playerDisqualified = true;
             World.player.reduceLife();
-//            World.player.coordinates.move('Z', -0.35f);
-//            World.removeLife();
         }
         if (isCoin(obj)) {
             World.player.addScore();
@@ -75,6 +74,10 @@ public class PointBoxCollision implements CollisionHandler {
         }
     }
 
+
+    private void intersection(CopObject cop) {
+        cop.setPlayerIntersection();
+    }
 
     /**
      * isCop

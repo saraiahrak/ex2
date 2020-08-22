@@ -26,6 +26,7 @@ public class CopObject implements IObject, Drawable {
     private final float height = 4f;
     private float[] motion;
     private Box wrap = null;
+    public boolean playerIntersection;
 
     /*************
      * Constructors
@@ -33,6 +34,7 @@ public class CopObject implements IObject, Drawable {
     public CopObject(Model m, Vertex p) {
         model = m;
         position = p;
+        playerIntersection = false;
         createWrap();
     }
 
@@ -81,6 +83,14 @@ public class CopObject implements IObject, Drawable {
         return width;
     }
 
+    public float getXMotion() {
+        return motion[0];
+    }
+
+    public void setPlayerIntersection() {
+        playerIntersection = true;
+    }
+
     @Override
     public void draw(GL2 gl) {
         model.draw(gl);
@@ -96,13 +106,45 @@ public class CopObject implements IObject, Drawable {
                     setMotion(-motion[0], motion[1], motion[2]);
                     break;
                 }
-
             }
+        }
+
+        CollisionHandler handler = CollisionFactory.create(this, World.player.getPosition());
+        if (handler != null) {
+            boolean intersection = handler.handle(this, World.player.getPosition());
+            if (intersection) {
+                this.playerIntersection = true;
+            }
+        }
+
+        if (this.playerIntersection) {
+            playerIntersection = false;
+            moveCop();
         }
 
         addMotion();
     }
 
+
+    /**
+     * moveCop
+     * Moves the cop after hit the player
+     */
+    public void moveCop() {
+        if (this.getPosition().getX() >= 5) {
+            this.position.setX(this.position.getX() - 5);
+            this.translate(-5, 0, 0);
+            if (this.getXMotion() >= 0) {
+                setMotion(-motion[0], motion[1], motion[2]);
+            }
+        } else {
+            this.position.setX(this.position.getX() + 5);
+            this.translate(5, 0, 0);
+            if (this.getXMotion() < 0) {
+                setMotion(-motion[0], motion[1], motion[2]);
+            }
+        }
+    }
 
     /**
      * addMotion
@@ -111,6 +153,7 @@ public class CopObject implements IObject, Drawable {
         position = new Vertex(position.getX() + motion[0], position.getY() + motion[1], position.getZ() + motion[2]);
         wrap = new Box("wood", new Vertex(position.getX() - (width / 2), position.getY(), position.getZ() - (depth / 2)), depth, height, width);
     }
+
 
     private void drawLeft(GL2 gl) {
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
@@ -182,7 +225,6 @@ public class CopObject implements IObject, Drawable {
     }
 
     private void drawWrap(GL2 gl) {
-        //
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
         gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_S, GL2.GL_REPEAT);
 
