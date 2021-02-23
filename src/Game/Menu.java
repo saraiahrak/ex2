@@ -72,7 +72,7 @@ public class Menu {
             data.setPath(path);
             InputStream myis =
                     ClassLoader.getSystemClassLoader().getResourceAsStream(data.getPath());
-            Texture texture = TextureIO.newTexture(myis, true,"png");
+            Texture texture = TextureIO.newTexture(myis, true,"jpg");
             data.setTexture(texture);
         } catch (IOException e) {
             e.printStackTrace();

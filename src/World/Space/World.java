@@ -167,11 +167,11 @@ public class World extends KeyAdapter implements GLEventListener, Drawable {
      * @param gl - GL2 object
      */
     private void setMenus(GL2 gl) {
-        mainMenu = new Menu(gl, "textures/mainMenu.png");
-        instructionsMenu = new Menu(gl, "textures/instructionsMenu.png");
-        gameOverMenu = new Menu(gl, "textures/tryAgain.png");
-        successMenu = new Menu(gl, "textures/goodJob.png");
-        level2Menu = new Menu(gl, "textures/level2.png");
+        mainMenu = new Menu(gl, "textures/mainMenu.jpg");
+        instructionsMenu = new Menu(gl, "textures/instructionsMenu.jpg");
+        gameOverMenu = new Menu(gl, "textures/tryAgain.jpg");
+        successMenu = new Menu(gl, "textures/goodJob.jpg");
+        level2Menu = new Menu(gl, "textures/level2.jpg");
 
     }
 

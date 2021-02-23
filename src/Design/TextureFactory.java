@@ -36,7 +36,7 @@ public class TextureFactory {
         Texture t;
         gl.glEnable(GL2.GL_TEXTURE_2D);
         try {
-            String filename = "resources/textures/" + texture + ".png"; // the FileName to open
+            String filename = "resources/textures/" + texture + ".jpg"; // the FileName to open
             t = TextureIO.newTexture(new File(filename), true);
             return t;
         } catch (IOException e) {
